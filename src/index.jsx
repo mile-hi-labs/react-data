@@ -8,7 +8,7 @@
 import React from "react";
 
 const MyBoxComponent = (props) => {
-  const { width, height, bgColor, content } = props;
+  const { width, height, bgColor, color, children } = props;
 
   // Render
   return (
@@ -18,7 +18,7 @@ const MyBoxComponent = (props) => {
       backgroundColor: bgColor || "green",
 			color: color || "black"
     }}>
-      {content}
+      {children}
     </div>
   );
 };

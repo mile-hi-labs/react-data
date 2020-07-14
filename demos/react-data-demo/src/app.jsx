@@ -1,6 +1,6 @@
 import React from 'react';
 import logo from 'logo.svg';
-// import ReactBox from '../../../lib/index';
+import ReactData from 'react-data';
 
 const App = (props) => {
   const {} = props;
@@ -9,18 +9,12 @@ const App = (props) => {
   return (
     <div className='App'>
       <header className='App-header'>
-        <img src={logo} className='App-logo' alt='logo' />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className='App-link'
-          href='https://reactjs.org'
-          target='_blank'
-          rel='noopener noreferrer'
-        >
-          Learn React
-        </a>
+        <ReactData
+          width={200}
+          height={200}
+          bgColor='#f4f5f7'>
+          <h1>Testing</h1>
+        </ReactData>
       </header>
     </div>
   );
