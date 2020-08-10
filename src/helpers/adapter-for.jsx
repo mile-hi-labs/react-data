@@ -1,4 +1,3 @@
-import React, { Component } from 'react';
 import { dashToCapital } from 'utils/transforms';
 import * as Adapters from 'adapters/index';
 

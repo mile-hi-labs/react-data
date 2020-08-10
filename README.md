@@ -21,10 +21,22 @@ Add the following to your `app.jsx` file:
 # app.jsx
 
 import React from 'react';
-import { storeContext } from 'React-Data';
+import Routes from 'router';
+import { storeContext } from 'react-data';
 
 
+const App = (props) => {
+  
+  return (
+    <div id='application' className='application'>
+      <StoreContext>
+      	<Routes />
+    	</StoreContext>
+  	</div>
+	)
+}
 
+export default App;
 ```
 
 And then, use it like so from any component:
@@ -88,5 +100,15 @@ export default withStore(Homepage);
 # Options
 
 
+# Demo
+This package comes with a built-in demo that uses a generic back-end that resembles a library to demonstrate the various methods of data fetching, storage, and manipulation.
+- `cd demos/react-data-demo`
+- `npm run start`
 
-## Use
+
+# Development
+- Clone this repository
+- Run `npm link` from this directory
+- Open up another project where you'd like to use this library
+- Run `npm link react-data` from that project
+- You can now develop both projects simultaneously

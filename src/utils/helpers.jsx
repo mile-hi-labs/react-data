@@ -26,7 +26,3 @@ export const isEmpty = (data) => {
 	}
 	return data.length == 0 ? true : false;
 }
-
-export const logger = (...data) => {
-	console.log(...data);
-}

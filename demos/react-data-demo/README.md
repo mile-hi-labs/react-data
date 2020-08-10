@@ -9,4 +9,4 @@ This demo uses `react-data` as a state management library to showcase it's capab
 
 
 # Development
-- 
+- This project currently uses `npm link` to connect to the react-data lib.

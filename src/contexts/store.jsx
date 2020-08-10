@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
-import adapterFor from 'helpers/adapter-for';
+import adapterFor from 'helpers/adapter-for.jsx';
 import serializerFor from 'helpers/serializer-for';
 import modelFor from 'helpers/model-for';
 import JsonApiErrors from 'helpers/json-api-errors';
-import { addObject, removeObject, isEmpty, logger } from 'utils/helpers';
+
+import { addObject, removeObject, isEmpty } from 'utils/helpers';
+import DevLogger from 'utils/dev-logger';
 
 export const Store = React.createContext();
 
@@ -78,7 +80,7 @@ class StoreContext extends Component {
     const state = this.state;
     let models = this.state[modelName] || [];
     this.setState({ [modelName]:  models });
-    logger('Store: ', this.state);
+    DevLogger('Store: ', this.state);
     return true;
   }
 
@@ -100,7 +102,7 @@ class StoreContext extends Component {
     let models = this.state[modelName] || [];
     models.push(record);
     this.setState({ [modelName]:  models });
-    // logger('Store: ', this.state);
+    // DevLogger('Store: ', this.state);
     return record;
   };
 
@@ -113,10 +115,10 @@ class StoreContext extends Component {
       // Fetch All
       let response = await this.adapterFor(modelName).findAll(modelName, params);
       let records = this.serializerFor(modelName).normalizeArray(response.data, response.included, response.meta);
-      logger('Server Response: ', records);
+      DevLogger('Server Response: ', records);
       let models = this.pushAll(modelName, records.records);
       models.meta = records.meta;
-      logger('Store: ', this.state);
+      DevLogger('Store: ', this.state);
       return models;
     } catch(e) {
       throw JsonApiErrors.formatErrors(e);
@@ -132,9 +134,9 @@ class StoreContext extends Component {
       // Fetch Record
       let response = await this.adapterFor(modelName).findRecord(modelName, recordID, params);
       let record = this.serializerFor(modelName).normalize(response.data, response.included);
-      logger('Server Response: ', record);
+      DevLogger('Server Response: ', record);
       let model = this.createRecord(modelName, record);
-      logger('Store: ', this.state);
+      DevLogger('Store: ', this.state);
       return model;
     } catch(e) {
       throw JsonApiErrors.formatErrors(e);
@@ -145,10 +147,10 @@ class StoreContext extends Component {
     try {
       let response = await this.adapterFor(modelName).query(modelName, params);
       let records = this.serializerFor(modelName).normalizeArray(response.data, response.included, response.meta);
-      logger('Server Response: ', records);
+      DevLogger('Server Response: ', records);
       let models = this.pushAll(modelName, records.records);
       models.meta = records.meta;
-      logger('Store: ', this.state);
+      DevLogger('Store: ', this.state);
       return models;
     } catch(e) {
       throw JsonApiErrors.formatErrors(e);
@@ -159,10 +161,10 @@ class StoreContext extends Component {
     try {
       let response = await this.adapterFor(modelName).queryRecord(modelName, recordID, params);
       let record = this.serializerFor(modelName).normalize(response.data, response.included);
-      logger('Server Response: ', record);
+      DevLogger('Server Response: ', record);
       let storeRecord = this.peekRecord(modelName, record.id);
       let model = storeRecord ? this.updateRecord(modelName, storeRecord, record) : this.createRecord(modelName, record);
-      logger('Store: ', this.state);
+      DevLogger('Store: ', this.state);
       return model;
     } catch(e) {
       throw JsonApiErrors.formatErrors(e);
@@ -173,7 +175,7 @@ class StoreContext extends Component {
     try {
       let response = await this.adapterFor(modelName).queryRecord(modelName, recordID, params);
       let record = this.serializerFor(modelName).normalize(response.data, response.included);
-      logger('Server Response: ', record);
+      DevLogger('Server Response: ', record);
       return record;
     } catch(e) {
       throw e;
@@ -184,7 +186,7 @@ class StoreContext extends Component {
     const state = this.state;
     state[modelName] = [];
     this.setState(state);
-    logger('Store: ', state);
+    DevLogger('Store: ', state);
     return null;
   };
 
@@ -194,7 +196,7 @@ class StoreContext extends Component {
     let model = models.find(model => model.id == record.id);
     models = removeObject(models, model);
     this.setState(state);
-    logger('Store: ', this.state);
+    DevLogger('Store: ', this.state);
     return null;
   };
 

@@ -2,9 +2,9 @@
   "name": "react-data",
   "version": "1.0.0",
   "description": "A performant data store / state management solution for React applications.",
-  "homepage": "https://github.com/neciu/react-mixpanel#readme",
+  "homepage": "https://github.com/milehilabs/react-data#readme",
   "license": "MIT",
-  "main": "./lib/index.js",
+  "main": "./dist/index.js",
   "author": {
     "name": "Eric Hubbell",
     "email": "eric@erichubbell.com",
@@ -43,7 +43,11 @@
     "path": "^0.12.7",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
-    "webpack": "^4.5.0",
+    "webpack": "^4.44.1",
     "webpack-cli": "^3.2.1"
+  },
+  "dependencies": {
+    "axios": "^0.19.2",
+    "pluralize": "^8.0.0"
   }
 }

@@ -4,7 +4,6 @@ module.exports = {
   mode: 'production',
   entry: './src/index.jsx',
   output: {
-    path: path.resolve('lib'),
     filename: 'index.js',
     libraryTarget: 'commonjs2'
   },
@@ -19,5 +18,14 @@ module.exports = {
   },
   externals: {
     'react': 'commonjs react' 
+  },
+  resolve: {
+    modules: [path.resolve(__dirname, 'src'), 'node_modules'],
+    extensions: [
+      '.js',
+      '.jsx',
+      '.ts',
+      '.tsx',
+    ]
   }
 }
