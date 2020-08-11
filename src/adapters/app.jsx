@@ -1,13 +1,10 @@
 import React from 'react';
 import Pluralize from 'pluralize';
-import Axios from 'utils/axios';
+import Axios from 'axios';
 import { timeout } from 'utils/helpers';
 
 class AppAdapter {
-	constructor(store, props = {}) {
-		this.store = store;
-		this.props = props;
-	}
+	static API_DOMAIN = '';
 
 
 	// Methods
@@ -26,7 +23,8 @@ class AppAdapter {
 	}
 
 	static baseURL() {
-		return `${typeof window === 'undefined' ? '' : Config.API_DOMAIN}`;
+		console.log('baseURL: ', this.API_DOMAIN);
+		return typeof window === 'undefined' ? '' : this.API_DOMAIN;
 	}
 
 	
@@ -112,9 +110,8 @@ class AppAdapter {
 		try {
 			await timeout(300);
 			let url = this.urlForQuery(modelName);
-			let axios = new Axios().instance();
-			await Axios.authorize(axios);
-			let response = await axios.get(url, { params });
+			// await Axios.authorize(axios);
+			let response = await Axios.get(url, { params });
 			return response.data;
 		} catch(e) {
 			throw e;

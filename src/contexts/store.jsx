@@ -13,6 +13,7 @@ class StoreContext extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      API_DOMAIN: this.props.API_DOMAIN || '',
       adapterFor: this.adapterFor.bind(this),
       modelFor: this.modelFor.bind(this),
       serializerFor: this.serializerFor.bind(this),
@@ -33,6 +34,12 @@ class StoreContext extends Component {
       removeRecord: this.removeRecord.bind(this),
     };
   };
+
+  
+  // Hooks
+  componentDidMount() {
+    adapterFor('app').set('API_DOMAIN', this.state.API_DOMAIN);
+  }
 
   
   // Methods

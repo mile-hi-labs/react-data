@@ -1,6 +1,6 @@
 import React from 'react';
 import Pluralize from 'pluralize';
-import Axios from 'utils/axios';
+import Axios from 'axios';
 
 import { camelToDash } from 'utils/transforms';
 import { addObject, removeObject, timeout, isEmpty } from 'utils/helpers';

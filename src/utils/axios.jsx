@@ -7,7 +7,7 @@ class Axios {
 
   // Methods
   instance() {
-    let instance = axios.create({ baseURL: typeof window === 'undefined' ? '' : process.env.API_DOMAIN });
+    let instance = axios.create({ baseURL: typeof window === 'undefined' ? '' : process.env.REACT_APP_SERVER_DOMAIN });
     return instance;
   }
 
