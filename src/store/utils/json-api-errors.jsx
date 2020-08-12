@@ -1,5 +1,5 @@
-import { isEmpty } from 'utils/helpers';
-import DevLogger from 'utils/dev-logger';
+import { isEmpty } from 'store/utils/helpers';
+import DevLogger from 'store/utils/dev-logger';
 
 class JsonApiErrors {
 

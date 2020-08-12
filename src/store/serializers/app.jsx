@@ -1,8 +1,8 @@
 import React from 'react';
 import Pluralize from 'pluralize';
 
-import { camelToDash, dashToCamel, phoneToString } from 'utils/transforms';
-import { isEmpty } from 'utils/helpers';
+import { camelToDash, dashToCamel, phoneToString } from 'store/utils/transforms';
+import { isEmpty } from 'store/utils/helpers';
 
 class AppSerializer {
 	constructor(store, props = {}) {
@@ -150,19 +150,11 @@ class AppSerializer {
 			if(isEmpty(data[key])) { return }
 			
 			if(key =='id') {
-				formattedData[key] = data[key] // Does this need parseInt?? (merchant relies on string currently)
+				formattedData[key] = data[key]
 				return;
 			}	
 			if(key == 'type') {
 				formattedData[key] = data[key];
-				return;
-			}
-			if(key.includes('date')) {
-				formattedData[dashToCamel(key)] = moment(data[key]);
-				return;
-			}
-			if(key.includes('score')) {
-				formattedData[camelToDash(key)] = parseFloat(data[key]);
 				return;
 			}
 			if(Array.isArray(data[key]))  {

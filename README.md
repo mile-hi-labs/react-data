@@ -109,6 +109,10 @@ This package comes with a built-in demo that uses a generic back-end that resemb
 # Development
 - Clone this repository
 - Run `npm link` from this directory
-- Open up another project where you'd like to use this library
-- Run `npm link react-data` from that project
+- Open up a project where you'd like to use this library
+- Run `npm link react-data` from the project
 - You can now develop both projects simultaneously
+- Run `npm run build` to push code to the project
+
+
+

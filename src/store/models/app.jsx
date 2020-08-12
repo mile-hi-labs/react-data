@@ -2,9 +2,9 @@ import React from 'react';
 import Pluralize from 'pluralize';
 import Axios from 'axios';
 
-import { camelToDash } from 'utils/transforms';
-import { addObject, removeObject, timeout, isEmpty } from 'utils/helpers';
-import DevLogger from 'utils/dev-logger';
+import { camelToDash } from 'store/utils/transforms';
+import { addObject, removeObject, timeout, isEmpty } from 'store/utils/helpers';
+import DevLogger from 'store/utils/dev-logger';
 
 class AppModel {
 	constructor(type, store, props = {}) {
