@@ -5,7 +5,7 @@ React Data is a state management solution for React applications. The library is
 # How it Works
 React Data uses the [Context Hooks](https://reactjs.org/docs/context.html) to construct a global data store that consists of 4 main components that work in the following manner:
 
-![React Data Store](./src/assets/react-data-store.jpg)
+![React Data Store](./src/assets/react-data.jpg)
 
 As you might expect, the Store acts as a central data hub that interconnects your Adapters, Serializers, and Models to communicate with your API, retrieve your data, and then store that data locally in a ready-to-use format. 
 React Data currently assumes your using a [JSON API](https://jsonapi.org/) with REST patterns. For now, we think this approach offers a well-documented and efficient strategy to get up and running quickly.
