@@ -99,10 +99,10 @@ export default withStore(MktIndex);
 
 
 # Advanced Usage
-This section highlights the core components behind React Data. If you'd like more information, checkout the API Documentation.
+While React Data is designed to work right out-the-box with minimal configuration it's also highly configurable so you can extend any adapter, serializer, or model to match your needs. 
 
 
-### Store
+### The Store
 In React Data, the store acts as the central hub connecting your adapters, serializers, and models together to communciate with your API and store that data locally. 
 The store uses the React Context API to make itself available from any component using the `withStore` wrapper. Then, you can access the store via the props on the component. 
 
