@@ -10,10 +10,10 @@ React Data uses the [Context Hooks](https://reactjs.org/docs/context.html) to co
 - Models
 - Serializers
 
-As you might expect, the Store acts as a central data store that interconnects your Adapters, Serializers, and Models to communicate with your API and store that information locally in a logical and ready-to-use format. 
-The library currently assumes you're using a [JSON API](https://jsonapi.org/) with REST patterns. Collectively, we think this approach offers an intuitive and efficient way to get up and running quickly.
+As you might expect, the Store acts as a central data hub that interconnects your Adapters, Serializers, and Models to communicate with your API, retrieve your data, and then store that data locally in a ready-to-use format. 
+React Data currently assumes your using a [JSON API](https://jsonapi.org/) with REST patterns. For now, we think this approach offers a well-documented and efficient strategy to get up and running quickly.
 
-To learn more about how all these pieces work, checkout the **Advanced Usage** section or visit our [API Documentation](https://app.gitbook.com/@mile-hi-labs/s/react-data/) online. 
+To learn more about React Data, checkout the **Advanced Usage** section or visit our [API Documentation](https://app.gitbook.com/@mile-hi-labs/s/react-data/) online. 
 
 
 # Quick Start
