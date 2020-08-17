@@ -198,10 +198,12 @@ class StoreContext extends Component {
 
   async query(modelName, params) {
     try {
+      let start = Date.now();
       let response = await this.adapterFor(modelName).then(adapter => adapter.query(modelName, params));
       let records = await this.serializerFor(modelName).then(serializer => serializer.normalizeArray(response.data, response.included, response.meta));
       let models = await this.pushAll(modelName, records.records);
       models.meta = records.meta;
+      timeElapsed('serializerFor: ', start);
       logger('Store: ', this.state);
       return models;
     } catch(e) {
