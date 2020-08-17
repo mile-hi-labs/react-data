@@ -8,7 +8,7 @@ React Data uses the [Context Hooks](https://reactjs.org/docs/context.html) to co
 ![React Data Store](./src/assets/react-data.jpg)
 
 Per the image above, the Store acts as a central data hub that interconnects your Adapters, Serializers, and Models to communicate with your API, retrieve your data, and then store that data locally so it's ready to use. 
-React Data currently assumes your using a [JSON API](https://jsonapi.org/) with REST patterns. For now, we think this approach offers a well-documented and efficient strategy to get up and running quickly.
+React Data currently assumes your using a [JSON API](https://jsonapi.org/) with REST patterns. For now, we think this approach offers a well-documented and efficient way to get up and running quickly.
 
 To learn more about React Data, checkout the **Advanced Usage** section or visit our [API Documentation](https://app.gitbook.com/@mile-hi-labs/s/react-data/) online. 
 
