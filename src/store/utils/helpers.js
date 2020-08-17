@@ -14,6 +14,10 @@ export const removeObject = (array, record) => {
 	return newArray;
 }
 
+export const timeElapsed = (start) => {
+  return Date.now() - start;
+}
+
 export const isEmpty = (data) => {
 	if (data == null || data == undefined || data == 'undefined') {
 		return true

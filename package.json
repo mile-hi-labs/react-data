@@ -28,7 +28,8 @@
     "react models"
   ],
   "scripts": {
-    "build": "webpack"
+    "build": "webpack --env.development",
+    "build:prod": "webpack --env.production"
   },
   "peerDependencies": {
     "react": "^16.0.0",

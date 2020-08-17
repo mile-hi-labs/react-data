@@ -1,20 +1,20 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import logo from 'logo.svg';
-import ReactData from 'react-data';
+import { AppAdapter } from 'react-data';
 
 const App = (props) => {
   const {} = props;
+
+  useEffect(() => {
+    console.log('adapter: ', AppAdapter.baseUrl);
+  }, []);
+
 
   // Render
   return (
     <div className='App'>
       <header className='App-header'>
-        <ReactData
-          width={200}
-          height={200}
-          bgColor='#f4f5f7'>
-          <h1>Testing</h1>
-        </ReactData>
+        <h1>Hello, there.</h1>
       </header>
     </div>
   );

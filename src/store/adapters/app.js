@@ -69,8 +69,8 @@ class AppAdapter {
 	static async findAll(modelName, params) {
 		try {
 			let url = this.urlForFindAll(modelName);
-			let axios = new Axios().instance();
-			await Axios.authorize(axios);
+			// let axios = new Axios().instance();
+			// await Axios.authorize(axios);
 			let response = await axios.get(url, { params });
 			return response.data;
 		} catch(e) {
@@ -81,8 +81,8 @@ class AppAdapter {
 	static async findRecord(modelName, recordID, params = {}) {
 		try {
 			let url = this.urlForFindRecord(modelName, recordID);
-			let axios = new Axios().instance();
-			await Axios.authorize(axios);
+			// let axios = new Axios().instance();
+			// await Axios.authorize(axios);
 			let response = await axios.get(url, { params });
       return response.data;
 		} catch(e) {
@@ -104,8 +104,8 @@ class AppAdapter {
 	static async queryRecord(modelName, id = null, params = {}) {
 		try {
 			let url = this.urlForQueryRecord(modelName, id);
-			let axios = new Axios().instance();
-			await Axios.authorize(axios);
+			// let axios = new Axios().instance();
+			// await Axios.authorize(axios);
 			let response = await axios.get(url, { params });
 			return response.data;
 		} catch(e) {

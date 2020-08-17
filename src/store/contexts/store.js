@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import AppAdapter from 'store/adapters/app';
 
-import adapterFor from 'store/helpers/adapter-for.jsx';
+import adapterFor from 'store/helpers/adapter-for';
 import serializerFor from 'store/helpers/serializer-for';
 import modelFor from 'store/helpers/model-for';
 
 import JsonApiErrors from 'store/utils/json-api-errors';
-import { addObject, removeObject, isEmpty } from 'store/utils/helpers';
+import { addObject, removeObject, timeElapsed, isEmpty } from 'store/utils/helpers';
 import DevLogger from 'store/utils/dev-logger';
 
 export const Store = React.createContext();
@@ -26,6 +26,7 @@ class StoreContext extends Component {
       peekRecord: this.peekRecord.bind(this),
       peekOrCreateRecord: this.peekOrCreateRecord.bind(this),
       updateRecord: this.updateRecord.bind(this),
+      updateStore: this.updateStore.bind(this),
       findAll: this.findAll.bind(this),
       findRecord: this.findRecord.bind(this),
       query: this.query.bind(this),
@@ -33,44 +34,28 @@ class StoreContext extends Component {
       apiRequest: this.apiRequest.bind(this),
       removeAll: this.removeAll.bind(this),
       removeRecord: this.removeRecord.bind(this),
-      isLoaded: false,
+      isLoaded: true,
     };
   };
 
   
   // Hooks
   componentDidMount() {
-    AppAdapter.set('apiDomain', this.state.apiDomain);
-    this.init();
-    // I need to load && set the AMS from here
-    // Load and set the AMS into the state
-  }
-
-  
-  // Tasks
-  async init() {
-    try {
-      let start = Date.now();
-      let adapters = await import(/* webpackIgnore: true */ 'adapters/index');
-      let serializers = await import(/* webpackIgnore: true */ 'serializers/index');
-      let models = await import(/* webpackIgnore: true */ 'models/index');
-      await this.setState({
-        adapters: adapters,
-        serializers: serializers,
-        models: models,
-        isLoaded: true
-      })
-      let MS = Date.now() - start;
-      console.log('Store init: ', MS + 'ms');
-    } catch(e) {
-      throw e;
-    }
+    // this.adapterFor('').then(adapter => {
+    //   adapter.set('apiDomain', this.state.apiDomain);
+    //   console.log('apiDomain: ', adapter.get('apiDomain'));
+    //   this.setState({ isLoaded: true });
+    // });
   }
 
   
   // Helpers
-  adapterFor(modelName) {
-    return adapterFor(modelName, this.state);
+  async adapterFor(modelName) {
+    return adapterFor(modelName, this.state).then(adapter => {
+      adapter.set('apiDomain', this.state.apiDomain);
+      console.log('apiDomain: ', adapter.get('apiDomain'));
+      return adapter;
+    });
   }
 
   modelFor(modelName, data) {
@@ -110,6 +95,14 @@ class StoreContext extends Component {
     this.removeRecord(modelName, storeRecord);
     let newRecord = this.createRecord(modelName, record);
     return newRecord;
+  }
+
+  updateStore(modelName) {
+    const state = this.state;
+    let models = this.state[modelName] || [];
+    this.setState({ [modelName]:  models });
+    logger('Store: ', this.state);
+    return true;
   }
 
   pushAll(modelName, records) {
@@ -173,8 +166,8 @@ class StoreContext extends Component {
 
   async query(modelName, params) {
     try {
-      let response = await this.adapterFor(modelName).query(modelName, params);
-      let records = this.serializerFor(modelName).normalizeArray(response.data, response.included, response.meta);
+      let response = await this.adapterFor(modelName).then(adapter => adapter.query(modelName, params));
+      let records = await this.serializerFor(modelName).normalizeArray(response.data, response.included, response.meta);
       DevLogger('Server Response: ', records);
       let models = this.pushAll(modelName, records.records);
       models.meta = records.meta;
@@ -187,7 +180,7 @@ class StoreContext extends Component {
 
   async queryRecord(modelName, recordID, params) {
     try {
-      let response = this.adapterFor(modelName).queryRecord(modelName, recordID, params);
+      let response = await this.adapterFor(modelName).queryRecord(modelName, recordID, params);
       let record = this.serializerFor(modelName).normalize(response.data, response.included);
       DevLogger('Server Response: ', record);
       let storeRecord = this.peekRecord(modelName, record.id);
@@ -201,7 +194,7 @@ class StoreContext extends Component {
 
   async apiRequest(modelName, recordID, params) {
     try {
-      let response = this.adapterFor(modelName).queryRecord(modelName, recordID, params);
+      let response = await this.adapterFor(modelName).queryRecord(modelName, recordID, params);
       let record = this.serializerFor(modelName).normalize(response.data, response.included);
       DevLogger('Server Response: ', record);
       return record;
