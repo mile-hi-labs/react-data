@@ -6,8 +6,7 @@ import serializerFor from 'store/helpers/serializer-for';
 import modelFor from 'store/helpers/model-for';
 
 import JsonApiErrors from 'store/utils/json-api-errors';
-import { addObject, removeObject, timeElapsed, isEmpty } from 'store/utils/helpers';
-import DevLogger from 'store/utils/dev-logger';
+import { addObject, removeObject, timeElapsed, logger, isEmpty } from 'store/utils/helpers';
 
 export const Store = React.createContext();
 
@@ -41,25 +40,43 @@ class StoreContext extends Component {
   
   // Hooks
   componentDidMount() {
+    this.init();
+  }
+
+  init() {
+    let start = Date.now();
     this.adapterFor('').then(adapter => {
       adapter.set('apiDomain', this.state.apiDomain);
-      console.log('apiDomain: ', adapter.get('apiDomain'));
+      console.log('ApiDomain: ', adapter.get('apiDomain'));
       this.setState({ isLoaded: true });
+      timeElapsed('init: ', start);
     });
   }
 
   
   // Helpers
   adapterFor(modelName) {
-    return adapterFor(modelName, this.state);
+    let start = Date.now();
+    return adapterFor(modelName, this.state).then(adapter => {
+      timeElapsed('AdapterFor: ', start);
+      return adapter;
+    });
   }
 
   modelFor(modelName, data) {
-    return modelFor(modelName, this.state, data);
+    let start = Date.now();
+    return modelFor(modelName, this.state, data).then(model => {
+      timeElapsed('modelFor: ', start);
+      return model;
+    });
   }
 
   serializerFor(modelName, data) {
-    return serializerFor(modelName, this.state, data);
+    let start = Date.now();
+    return serializerFor(modelName, this.state, data).then(serializer => {
+      timeElapsed('serializerFor: ', start);
+      return serializer;
+    });
   }
 
 
@@ -122,8 +139,26 @@ class StoreContext extends Component {
     let models = this.state[modelName] || [];
     models.push(record);
     this.setState({ [modelName]:  models });
-    DevLogger('Store: ', this.state);
+    logger('Store: ', this.state);
     return record;
+  };
+
+  removeAll(modelName, records) {
+    const state = this.state;
+    state[modelName] = [];
+    this.setState(state);
+    logger('Store: ', state);
+    return null;
+  };
+
+  removeRecord(modelName, record) {
+    const state = this.state;
+    let models = state[modelName] || [];
+    let model = models.find(model => model.id == record.id);
+    models = removeObject(models, model);
+    this.setState(state);
+    logger('Store: ', this.state);
+    return null;
   };
 
   async findAll(modelName, params) {
@@ -137,7 +172,7 @@ class StoreContext extends Component {
       let records = await this.serializerFor(modelName).then(serializer => serializer.normalizeArray(response.data, response.included, response.meta));
       let models = await this.pushAll(modelName, records.records);
       models.meta = records.meta;
-      DevLogger('Store: ', this.state);
+      logger('Store: ', this.state);
       return models;
     } catch(e) {
       throw JsonApiErrors.formatErrors(e);
@@ -154,7 +189,7 @@ class StoreContext extends Component {
       let response = await this.adapterFor(modelName).then(adapter => adapter.findRecord(modelName, recordID, params));
       let record = await this.serializerFor(modelName).then(serializer => serializer.normalize(response.data, response.included));
       let model = await this.createRecord(modelName, record);
-      DevLogger('Store: ', this.state);
+      logger('Store: ', this.state);
       return model;
     } catch(e) {
       throw JsonApiErrors.formatErrors(e);
@@ -167,8 +202,7 @@ class StoreContext extends Component {
       let records = await this.serializerFor(modelName).then(serializer => serializer.normalizeArray(response.data, response.included, response.meta));
       let models = await this.pushAll(modelName, records.records);
       models.meta = records.meta;
-      DevLogger('Models: ', models);
-      DevLogger('Store: ', this.state);
+      logger('Store: ', this.state);
       return models;
     } catch(e) {
       throw JsonApiErrors.formatErrors(e);
@@ -181,7 +215,7 @@ class StoreContext extends Component {
       let record = this.serializerFor(modelName).then(serializer => serializer.normalize(response.data, response.included));
       let storeRecord = this.peekRecord(modelName, record.id);
       let model = storeRecord ? this.updateRecord(modelName, storeRecord, record) : this.createRecord(modelName, record);
-      DevLogger('Store: ', this.state);
+      logger('Store: ', this.state);
       return model;
     } catch(e) {
       throw JsonApiErrors.formatErrors(e);
@@ -192,30 +226,12 @@ class StoreContext extends Component {
     try {
       let response = await this.adapterFor(modelName).then(adapter => adapter.queryRecord(modelName, recordID, params));
       let record = this.serializerFor(modelName).then(serializer => serializer.normalize(response.data, response.included));
-      DevLogger('Server Response: ', record);
+      logger('Server Response: ', record);
       return record;
     } catch(e) {
       throw e;
     }
   }
-
-  removeAll(modelName, records) {
-    const state = this.state;
-    state[modelName] = [];
-    this.setState(state);
-    DevLogger('Store: ', state);
-    return null;
-  };
-
-  removeRecord(modelName, record) {
-    const state = this.state;
-    let models = state[modelName] || [];
-    let model = models.find(model => model.id == record.id);
-    models = removeObject(models, model);
-    this.setState(state);
-    DevLogger('Store: ', this.state);
-    return null;
-  };
 
 
   // Render

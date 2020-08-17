@@ -3,8 +3,7 @@ import Pluralize from 'pluralize';
 import Axios from 'axios';
 
 import { camelToDash } from 'store/utils/transforms';
-import { addObject, removeObject, timeout, isEmpty } from 'store/utils/helpers';
-import DevLogger from 'store/utils/dev-logger';
+import { addObject, removeObject, timeout, logger, isEmpty } from 'store/utils/helpers';
 
 class AppModel {
 	constructor(type, store, props = {}) {
@@ -103,7 +102,6 @@ class AppModel {
 			let data = this.store.serializerFor(this.type).serialize(this);
 			let response = this.id ? await this.update(data) : await this.create(data);
 			let formattedResponse = this.store.serializerFor(this.type).normalize(response.data, response.included, response.meta);
-			DevLogger('Server Response: ', formattedResponse);
 			this.updateProps(formattedResponse);
 			return formattedResponse;
 		} catch(e) {
@@ -137,7 +135,6 @@ class AppModel {
 			let url = this.store.adapterFor(this.type).urlForDestroyRecord(this.type, this.id);
 			let response = await Axios.delete(url);
 			let formattedResponse = this.store.serializerFor(this.type).normalize(response.data, response.included, response.meta);
-			DevLogger('Server Response: ', formattedResponse);
 			this.store.removeRecord(this.type, this);
 			return this;
 		} catch(e) {

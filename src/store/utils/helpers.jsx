@@ -14,8 +14,16 @@ export const removeObject = (array, record) => {
 	return newArray;
 }
 
-export const timeElapsed = (start) => {
-  return Date.now() - start;
+export const timeElapsed = (msg, start) => {
+	if (process.env.NODE_ENV == 'development') {
+  	return console.log(`${msg}: `, Date.now() - start + 'ms');
+  }
+}
+
+export const logger = (...data) => {
+	if (process.env.NODE_ENV == 'development') {
+		return console.log(...data);
+	}
 }
 
 export const isEmpty = (data) => {

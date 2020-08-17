@@ -1,20 +1,20 @@
 import { isEmpty } from 'store/utils/helpers';
-import DevLogger from 'store/utils/dev-logger';
+import { logger } from 'store/utils/helpers';
 
 class JsonApiErrors {
 
   static formatErrors(e) {
     let formattedError;
     if (e.response) {
-      DevLogger('Server error: ', e.response.data.errors);
+      logger('Server error: ', e.response.data.errors);
       formattedError = e.response.data.errors ? this.serverErrors(e.response.data.errors) : this.miscError(e.response.status, e.response.statusText, 'Sorry, there was a server error.');
 
     } else if (e.request) {
-      DevLogger('Request error: ', e.request);
+      logger('Request error: ', e.request);
       formattedError = this.miscError(500, 'Request Error', e);
 
     } else {
-      DevLogger('App error: ', e);
+      logger('App error: ', e);
       formattedError = this.miscError(500, 'Misc Error', e.message);
 
     }
