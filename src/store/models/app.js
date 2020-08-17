@@ -114,9 +114,7 @@ class AppModel {
 	async create(data) {
 		try {
 			let url = this.store.adapterFor(this.type).urlForCreateRecord(this.type);
-			let axios = new Axios().instance();
-			await Axios.authorize(axios);
-			let response = await axios.post(url, data);
+			let response = await Axios.post(url, data);
 			return response.data;
 		} catch(e) {
 			throw e;
@@ -126,9 +124,7 @@ class AppModel {
 	async update(data) {
 		try {
 			let url = this.store.adapterFor(this.type).urlForUpdateRecord(this.type, this.id);
-			let axios = new Axios().instance();
-			await Axios.authorize(axios);
-			let response = await axios.put(url, data);
+			let response = await Axios.put(url, data);
 			return response.data;
 		} catch(e) {
 			throw e;
@@ -139,9 +135,7 @@ class AppModel {
 		try {
 			await timeout(300);
 			let url = this.store.adapterFor(this.type).urlForDestroyRecord(this.type, this.id);
-			let axios = new Axios().instance();
-			await Axios.authorize(axios);
-			let response = await axios.delete(url);
+			let response = await Axios.delete(url);
 			let formattedResponse = this.store.serializerFor(this.type).normalize(response.data, response.included, response.meta);
 			DevLogger('Server Response: ', formattedResponse);
 			this.store.removeRecord(this.type, this);
