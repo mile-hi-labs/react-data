@@ -1,10 +1,10 @@
 {
-  "name": "react-data",
-  "version": "1.0.0",
+  "name": "@mile-hi-labs/react-data",
+  "version": "1.0.2",
   "description": "A performant data store / state management solution for React applications.",
   "homepage": "https://github.com/milehilabs/react-data#readme",
   "license": "MIT",
-  "main": "./dist/index.js",
+  "main": "./lib/index.js",
   "author": {
     "name": "Eric Hubbell",
     "email": "eric@erichubbell.com",
@@ -25,15 +25,18 @@
     "react store",
     "data store",
     "state management",
-    "react models"
+    "jsonapi",
+    "json-api",
+    "react-models",
+    "react-serializers",
+    "react-adapters"
   ],
   "scripts": {
     "build": "webpack --env.development",
     "build:prod": "webpack --env.production"
   },
   "peerDependencies": {
-    "react": "^16.0.0",
-    "react-dom": "^16.0.0"
+    "react": "^16.0.0"
   },
   "devDependencies": {
     "babel-core": "^6.21.0",
@@ -44,7 +47,6 @@
     "compression-webpack-plugin": "^5.0.0",
     "path": "^0.12.7",
     "react": "^16.13.1",
-    "react-dom": "^16.13.1",
     "webpack": "^4.44.1",
     "webpack-cli": "^3.2.1"
   },

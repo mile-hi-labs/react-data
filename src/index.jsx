@@ -1,7 +1,7 @@
-import { StoreContext, withStore } from 'store/contexts/store';
-import AppAdapter from 'store/adapters/app';
-import AppSerializer from 'store/serializers/app';
-import AppModel from 'store/models/app';
+import { StoreContext, withStore } from 'contexts/store';
+import AppAdapter from 'adapters/app';
+import AppSerializer from 'serializers/app';
+import AppModel from 'models/app';
 
 export {
 	StoreContext,

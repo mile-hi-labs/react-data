@@ -7,6 +7,7 @@ function sharedConfig() {
     mode: 'production',
     entry: './src/index.jsx',
     output: {
+      path: __dirname + '/lib',
       filename: 'index.js',
       libraryTarget: 'commonjs2'
     },
@@ -14,7 +15,12 @@ function sharedConfig() {
       rules: [
         {
           test: /\.jsx?$/,
-          exclude: /(node_modules)/,
+          exclude: path.resolve(__dirname, 'node_modules'),
+          use: 'babel-loader'
+        },
+        {
+          test: /\.jsx?$/,
+          exclude: path.resolve(__dirname, 'demos'),
           use: 'babel-loader'
         }
       ]
