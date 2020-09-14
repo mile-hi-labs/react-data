@@ -117,7 +117,7 @@ class StoreContext extends Component {
   async peekOrCreateRecord(modelName, record) {
     let models = this.state[modelName] || [];
     let storeRecord = this.peekRecord(modelName, record.id);
-    return storeRecord ? storeRecord : this.createRecord(modelName, record);
+    return storeRecord ? storeRecord : await this.createRecord(modelName, record);
   }
 
   // Misc
@@ -201,8 +201,10 @@ class StoreContext extends Component {
       let start = Date.now();
       let response = await this.adapterFor(modelName).then(adapter => adapter.query(modelName, params));
       timeElapsed('Query Adaption: ', start);
+      start = Date.now();
       let records = await this.serializerFor(modelName).then(serializer => serializer.normalizeArray(response.data, response.included, response.meta));
       timeElapsed('Query Serialization: ', start);
+      start = Date.now();
       let models = await this.pushAll(modelName, records.records);
       models.meta = records.meta;
       timeElapsed('Query Modeling: ', start);

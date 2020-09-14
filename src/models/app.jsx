@@ -130,9 +130,11 @@ class AppModel {
 
 	async destroy() {
 		try {
-			let url = this.store.adapterFor(this.type).urlForDestroyRecord(this.type, this.id);
-			let response = await Axios.delete(url);
-			let formattedResponse = this.store.serializerFor(this.type).normalize(response.data, response.included, response.meta);
+			if (this.id) {
+				let url = this.store.adapterFor(this.type).urlForDestroyRecord(this.type, this.id);
+				let response = await Axios.delete(url);
+				let formattedResponse = this.store.serializerFor(this.type).normalize(response.data, response.included, response.meta);
+			}
 			this.store.removeRecord(this.type, this);
 			return this;
 		} catch(e) {
