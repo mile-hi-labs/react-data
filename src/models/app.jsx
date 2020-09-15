@@ -2,6 +2,7 @@ import React from 'react';
 import Pluralize from 'pluralize';
 import Axios from 'axios';
 
+import JsonApiErrors from 'utils/json-api-errors';
 import { camelToDash } from 'utils/transforms';
 import { addObject, removeObject, logger, isEmpty } from 'utils/helpers';
 
@@ -98,47 +99,43 @@ class AppModel {
 	// Network calls
 	async save() {
 		try {
-			let data = this.store.serializerFor(this.type).serialize(this);
+			let serializer = await this.store.serializerFor(this.type);
+			let data = await serializer.serialize(this);
 			let response = this.id ? await this.update(data) : await this.create(data);
-			let formattedResponse = this.store.serializerFor(this.type).normalize(response.data, response.included, response.meta);
+			let formattedResponse = serializer.normalize(response.data, response.included, response.meta);
 			this.updateProps(formattedResponse);
 			return formattedResponse;
 		} catch(e) {
-			throw e;
+			throw JsonApiErrors.formatErrors(e);
 		}
 	}
 
 	async create(data) {
-		try {
-			let url = this.store.adapterFor(this.type).urlForCreateRecord(this.type);
-			let response = await Axios.post(url, data);
-			return response.data;
-		} catch(e) {
-			throw e;
-		}
+		let adapter = await this.store.adapterFor(this.type);
+		let url = await adapter.urlForCreateRecord(this.type);
+		let response = await Axios.post(url, data);
+		return response.data;
 	}
 
 	async update(data) {
-		try {
-			let url = this.store.adapterFor(this.type).urlForUpdateRecord(this.type, this.id);
-			let response = await Axios.put(url, data);
-			return response.data;
-		} catch(e) {
-			throw e;
-		}
+		let adapter = await this.store.adapterFor(this.type);
+		let url = await adapter.urlForUpdateRecord(this.type, this.id);
+		let response = await Axios.put(url, data);
+		return response.data;
 	}
 
 	async destroy() {
 		try {
 			if (this.id) {
-				let url = this.store.adapterFor(this.type).urlForDestroyRecord(this.type, this.id);
+				let adapter = await this.store.adapterFor(this.type);
+				let url = await adapter.urlForDestroyRecord(this.type, this.id);
 				let response = await Axios.delete(url);
-				let formattedResponse = this.store.serializerFor(this.type).normalize(response.data, response.included, response.meta);
+				let serializer = await this.store.serializerFor(this.type);
+				let formattedResponse = await serializer.normalize(response.data, response.included, response.meta);
 			}
-			this.store.removeRecord(this.type, this);
-			return this;
+			return this.store.removeRecord(this.type, this);
 		} catch(e) {
-			throw e;
+			throw JsonApiErrors.formatErrors(e);
 		}
 	}
 
