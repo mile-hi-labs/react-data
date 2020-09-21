@@ -8,7 +8,7 @@ import modelFor from 'helpers/model-for';
 import JsonApiErrors from 'utils/json-api-errors';
 import { addObject, removeObject, timeElapsed, logger, isEmpty } from 'utils/helpers';
 
-export const Store = React.createContext();
+const Store = React.createContext();
 
 class StoreContext extends Component {
   constructor(props) {
@@ -268,3 +268,4 @@ const withStore = function(WrappedComponent) {
 };
 
 export { StoreContext, withStore };
+
