@@ -1,6 +1,6 @@
 {
   "name": "@mile-hi-labs/react-data",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "A performant data store / state management solution for React applications.",
   "homepage": "https://github.com/milehilabs/react-data#readme",
   "license": "MIT",
@@ -11,14 +11,14 @@
     "url": "https://github.com/ehubbell"
   },
   "publishConfig": { 
-    "registry": "https://npm.pkg.github.com/milehilabs/react-data" 
+    "registry": "https://npm.pkg.github.com/mile-hi-labs/react-data" 
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/milehilabs/react-data.git"
+    "url": "https://github.com/mile-hi-labs/react-data.git"
   },
   "bugs": {
-    "url": "https://github.com//milehilabs/react-data/issues"
+    "url": "https://github.com//mile-hi-labs/react-data/issues"
   },
   "keywords": [
     "react",
