@@ -1,7 +1,6 @@
 import React from 'react';
 import Pluralize from 'pluralize';
-import Axios from 'axios';
-
+import Axios from 'services/axios-service';
 import JsonApiErrors from 'utils/json-api-errors';
 import { camelToDash } from 'utils/transforms';
 import { addObject, removeObject, logger, isEmpty } from 'utils/helpers';
@@ -112,15 +111,17 @@ class AppModel {
 
 	async create(data) {
 		let adapter = await this.store.adapterFor(this.type);
+		let axios = new Axios({ baseURL: adapter.apiDomain, token: adapter.token }).instance;
 		let url = await adapter.urlForCreateRecord(this.type);
-		let response = await Axios.post(url, data);
+		let response = await axios.post(url, data);
 		return response.data;
 	}
 
 	async update(data) {
 		let adapter = await this.store.adapterFor(this.type);
 		let url = await adapter.urlForUpdateRecord(this.type, this.id);
-		let response = await Axios.put(url, data);
+		let axios = new Axios({ baseURL: adapter.apiDomain, token: adapter.token }).instance;
+		let response = await axios.put(url, data);
 		return response.data;
 	}
 
@@ -128,8 +129,9 @@ class AppModel {
 		try {
 			if (this.id) {
 				let adapter = await this.store.adapterFor(this.type);
+				let axios = new Axios({ baseURL: adapter.apiDomain, token: adapter.token }).instance;
 				let url = await adapter.urlForDestroyRecord(this.type, this.id);
-				let response = await Axios.delete(url);
+				let response = await axios.delete(url);
 				let serializer = await this.store.serializerFor(this.type);
 				let formattedResponse = await serializer.normalize(response.data, response.included, response.meta);
 			}

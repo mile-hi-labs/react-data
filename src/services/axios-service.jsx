@@ -2,7 +2,7 @@ import Axios from 'axios';
 import { isEmpty } from 'utils/helpers';
 
 class AxiosService {
-  constructor(props) {
+  constructor(props = {}) {
     this.baseURL = props.baseURL;
     this.token = props.token;
   }
