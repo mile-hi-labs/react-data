@@ -11,7 +11,7 @@
     "url": "https://github.com/ehubbell"
   },
   "publishConfig": { 
-    "registry": "https://npm.pkg.github.com/" 
+    "registry": "https://npm.pkg.github.com/milehilabs/react-data" 
   },
   "repository": {
     "type": "git",
