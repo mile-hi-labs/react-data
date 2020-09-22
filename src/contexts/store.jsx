@@ -8,7 +8,7 @@ import modelFor from 'helpers/model-for';
 import JsonApiErrors from 'utils/json-api-errors';
 import { addObject, removeObject, timeElapsed, logger, isEmpty } from 'utils/helpers';
 
-const Store = React.createContext();
+export const Store = React.createContext();
 
 class StoreContext extends Component {
   constructor(props) {

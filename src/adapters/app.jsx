@@ -1,12 +1,17 @@
 import React from 'react';
 import Pluralize from 'pluralize';
-import Axios from 'axios';
+import Axios from 'services/axios-service';
 
 class AppAdapter {
 	static apiDomain = '';
+	static token = '';
 
 
 	// Methods
+	static get axios() {
+		return new Axios({ baseURL: this.apiDomain, token: this.token }).instance
+	}
+
 	static get(prop, value) {
 		return this[prop];
 	}
@@ -69,7 +74,7 @@ class AppAdapter {
 	static async findAll(modelName, params) {
 		try {
 			let url = this.urlForFindAll(modelName);
-			let response = await Axios.get(url, { params });
+			let response = await this.axios.get(url, { params });
 			return response.data;
 		} catch(e) {
 			throw e;
@@ -79,7 +84,7 @@ class AppAdapter {
 	static async findRecord(modelName, recordID, params = {}) {
 		try {
 			let url = this.urlForFindRecord(modelName, recordID);
-			let response = await Axios.get(url, { params });
+			let response = await this.axios.get(url, { params });
       return response.data;
 		} catch(e) {
 			throw e;
@@ -89,7 +94,7 @@ class AppAdapter {
 	static async query(modelName, params) {
 		try {
 			let url = this.urlForQuery(modelName);
-			let response = await Axios.get(url, { params });
+			let response = await this.axios.get(url, { params });
 			return response.data;
 		} catch(e) {
 			throw e;
@@ -99,7 +104,7 @@ class AppAdapter {
 	static async queryRecord(modelName, id = null, params = {}) {
 		try {
 			let url = this.urlForQueryRecord(modelName, id);
-			let response = await Axios.get(url, { params });
+			let response = await this.axios.get(url, { params });
 			return response.data;
 		} catch(e) {
 			throw e;
