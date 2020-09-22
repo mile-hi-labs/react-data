@@ -10,6 +10,9 @@
     "email": "eric@erichubbell.com",
     "url": "https://github.com/ehubbell"
   },
+  "publishConfig": { 
+    "registry": "https://npm.pkg.github.com/" 
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/milehilabs/react-data.git"
