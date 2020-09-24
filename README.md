@@ -1,22 +1,16 @@
-# Overview
-React Data is a state management solution for React applications. The library is lightweight, configurable, and scalable so you can get right into building your application rather than configuring your data layer.
+## Overview
+React Data is a state management solution for React applications. The library is lightweight, configurable so you can get up and running quickly.
 
 
-# How it Works
-React Data uses the [Context Hooks](https://reactjs.org/docs/context.html) to construct a global data store that consists of 4 main components that work in the following manner:
-
-![React Data Store](./src/assets/react-data.jpg)
-
-Per the image above, the Store acts as a central data hub that interconnects your Adapters, Serializers, and Models to communicate with your API, retrieve your data, and then store that data locally so it's ready to use. 
-React Data currently assumes your using a [JSON API](https://jsonapi.org/) with REST patterns. For now, we think this approach offers a well-documented and efficient way to get up and running quickly.
-
-To learn more about React Data, checkout the **Advanced Usage** section or visit our [API Documentation](https://app.gitbook.com/@mile-hi-labs/s/react-data/) online. 
+## How it Works
+React Data uses the [Context Hooks](https://reactjs.org/docs/context.html) to construct a global data store that interconnects adapters, serializers, and models to communicate with your API, retrieve your data, and then store that data locally so it's ready to use.
+React Data currently assumes your using a [JSON API](https://jsonapi.org/) with REST patterns. To learn more about React Data, visit the [API Documentation](https://app.gitbook.com/@mile-hi-labs/s/react-data/). 
 
 
-# Quick Start
+## Quick Start
 `npm install react-data`
 
-Add the following to your `app.jsx` file or near the top of your application. This will import the store and make it available to any route / component downstream. 
+Add the following to your `app.jsx` file or near the top of your application.
 
 ```
 # app.jsx
@@ -73,21 +67,16 @@ const MktIndex = (props) => {
 		}
 	}
 
-	// Render
-	render() {
-		const { store } = this.props;
-		const { users, isLoading } = this.state;
-		
-		return (
-			<div className='container'>
-				{loading ? (
-					<h6>...loading...</h6>
-				) : (
-					<UserList users={users}/>
-				)}
-			</div>
-		)
-	}
+	// Render	
+	return (
+		<div className='container'>
+			{loading ? (
+				<h6>...loading...</h6>
+			) : (
+				<UserList users={users}/>
+			)}
+		</div>
+	)
 }
 
 export default withStore(MktIndex);
@@ -95,7 +84,7 @@ export default withStore(MktIndex);
 ```
 
 
-# Advanced Usage
+## Advanced Usaged
 While React Data is designed to work right out-the-box with minimal configuration it's also highly configurable so you can extend any adapter, serializer, or model to match your needs. 
 
 
@@ -193,52 +182,52 @@ export default UserSerializer;
 ```
 
 
-# FAQ
+## FAQ
 
-### Why React Data?
-State management libraries are often complex, opinionated, and require quite a bit of configuration. We love React for it's simplicity and configuration so we wanted 
-to build a state management library to match. 
-
-
-### What inspired React Data? 
-React Data is heavily inspired by the core elements of [Ember-Data](https://emberjs.com) in a much smaller and, dare we say universal, package.
+#### Why React Data?
+State management libraries are often complex and require a lot of configuration. Then, you're constantly dealing with scalability. 
+React Data makes it incredible easy to get started and then scale efficiently. 
 
 
-### Tell me more about React Data's size?
+#### What inspired React Data? 
+React Data is heavily inspired by the core elements of [Ember-Data](https://emberjs.com).
+
+
+#### How big is React Data?
 At 84KB (22.5KB gzipped), React Data is tiny compared to it's utility as a data layer playing a pivotal role in your application development. 
 
 
-### Tell me more about performance?
-React Data uses dynamic imports to lazy load and cache any Adapters, Serializers, or Models that you've added to your project. 
+#### Tell me more about performance?
+React Data uses dynamic imports to lazyload and cache the Adapters, Serializers, or Models that you've added to your project. 
 That way, React Data maintains a small footprint during the initial page load and then loads more when it's requested. 
 
 
-### Tell me more about configuration?
+#### Tell me more about configuration?
 React Data uses on a base adapter, serializer, and model to provide the foundation for those  functionality that'll become second-nature as you get going.
 
 
-### Why should I use React Data
+#### Why should I use React Data
 React Data takes a conventional approach to app development while still allowing plenty of configuration for advanced developers. 
 
 
-### Are there any best-practices I should be aware of?
+#### Are there any best-practices I should be aware of?
 You shouldn't overload the store with data that isn't being used or is no longer needed. We suggest keeping an eye on the data being loaded into the store and clearing any unused data
 regularly to keep performance at it's best.
 
 
-### Development vs Production Mode
+#### Development vs Production Mode
 React Data comes pre-bundled for production however it does read your `NODE_ENV` variable to provide some logging and time stamps for performance.
 
 
-### Who's using React Data?
-React Data is currently being being used by [Beauty Broker](https://beautybroker.io), [Blush](https://blushednow.com), and [Chartz](https://chartz.io). 
-If you're using React Data in your application, we'd love to hear / see what you have going on!
+#### Who's using React Data?
+React Data is currently being being used by [Blush](https://blushednow.com).
+If you're using React Data in your application, send us a note!
 
 ### Does React Data support SSR?
-React Data currently does not support SSR as it relies on [Axios](https://github.com/axios/axios) for server communication which is an HTTP client. We're going to switch to a Fetch polyfill in an upcoming release that'll support SSR. 
+React Data will not block SSR however since it does rely on [Axios](https://github.com/axios/axios) you cannot fetch data serverside. This will change in an upcoming release. 
 
 
-# Development
+## Development
 - Clone this repository
 - Run `npm link` from this library
 - Open up a project where you'd like to use this library
@@ -247,7 +236,7 @@ React Data currently does not support SSR as it relies on [Axios](https://github
 - Run `npm run build` to push code from the library to your project
 
 
-# Links
+## Links
 - [Github](https://github.com/MileHiLabs/react-data)
 - [API Documentation](https://app.gitbook.com/@mile-hi-labs/s/react-data/)
 - [Mile Hi Labs](https://milehilabs.io)
