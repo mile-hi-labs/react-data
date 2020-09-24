@@ -155,7 +155,7 @@ class StoreContext extends Component {
     const state = this.state;
     let models = state[modelName] || [];
     let model = models.find(model => model.id == record.id);
-    models = removeObject(models, model);
+    models = model ? removeObject(models, model) : removeObject(models, record);
     this.setState(state);
     logger('Store: ', this.state);
     return null;
@@ -200,15 +200,9 @@ class StoreContext extends Component {
     try {
       let start = Date.now();
       let response = await this.adapterFor(modelName).then(adapter => adapter.query(modelName, params));
-      timeElapsed('Query Adaption: ', start);
-      start = Date.now();
       let records = await this.serializerFor(modelName).then(serializer => serializer.normalizeArray(response.data, response.included, response.meta));
-      timeElapsed('Query Serialization: ', start);
-      start = Date.now();
       let models = await this.pushAll(modelName, records.records);
       models.meta = records.meta;
-      timeElapsed('Query Modeling: ', start);
-      logger('Store: ', this.state);
       return models;
     } catch(e) {
       throw JsonApiErrors.formatErrors(e);
@@ -218,10 +212,10 @@ class StoreContext extends Component {
   async queryRecord(modelName, recordID, params) {
     try {
       let response = await this.adapterFor(modelName).then(adapter => adapter.queryRecord(modelName, recordID, params));
-      let record = this.serializerFor(modelName).then(serializer => serializer.normalize(response.data, response.included));
+      let record = await this.serializerFor(modelName).then(serializer => serializer.normalize(response.data, response.included));
       let storeRecord = this.peekRecord(modelName, record.id);
-      let model = storeRecord ? this.updateRecord(modelName, storeRecord, record) : this.createRecord(modelName, record);
-      logger('Store: ', this.state);
+      let model = storeRecord ? await this.updateRecord(modelName, storeRecord, record) : await this.createRecord(modelName, record);
+      logger('Store: ', this.state, record, model);
       return model;
     } catch(e) {
       throw JsonApiErrors.formatErrors(e);
@@ -231,7 +225,7 @@ class StoreContext extends Component {
   async apiRequest(modelName, recordID, params) {
     try {
       let response = await this.adapterFor(modelName).then(adapter => adapter.queryRecord(modelName, recordID, params));
-      let record = this.serializerFor(modelName).then(serializer => serializer.normalize(response.data, response.included));
+      let record = await this.serializerFor(modelName).then(serializer => serializer.normalize(response.data, response.included));
       logger('Server Response: ', record);
       return record;
     } catch(e) {
