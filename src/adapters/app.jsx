@@ -39,7 +39,6 @@ class AppAdapter {
 	}
 
 
-	
 	// URLs
 	static urlForFindAll(modelName) {
 		return this.buildURL(modelName);

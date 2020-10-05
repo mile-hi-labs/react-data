@@ -2,11 +2,18 @@ import AppAdapter from 'adapters/app';
 import { logger } from 'utils/helpers';
 import { dashToCapital } from 'utils/transforms';
 
-async function adapterFor(modelName, store, data = {}) {
+async function importAdapters() {
 	let adapters = await import(/* webpackIgnore: true */ /* webpackMode: "lazy" */ 'adapters');
-	logger('Adapters: ', adapters);
+	logger('adapters: ', adapters);
+	return adapters;
+}
+
+function adapterFor(adapters, modelName, store, data = {}) {
 	let Adapter = adapters[dashToCapital(modelName)];
 	return Adapter ? Adapter : AppAdapter;
 }
 
-export default adapterFor;
+export {
+	importAdapters,
+	adapterFor
+}

@@ -98,10 +98,9 @@ class AppModel {
 	// Network calls
 	async save() {
 		try {
-			let serializer = await this.store.serializerFor(this.type);
-			let data = await serializer.serialize(this);
+			let data = this.store.serializerFor(this.type).serialize(this);
 			let response = this.id ? await this.update(data) : await this.create(data);
-			let formattedResponse = serializer.normalize(response.data, response.included, response.meta);
+			let formattedResponse = this.store.serializerFor(this.type).normalize(response.data, response.included, response.meta);
 			this.updateProps(formattedResponse);
 			return formattedResponse;
 		} catch(e) {
@@ -110,16 +109,16 @@ class AppModel {
 	}
 
 	async create(data) {
-		let adapter = await this.store.adapterFor(this.type);
+		let adapter = this.store.adapterFor(this.type);
 		let axios = new Axios({ baseURL: adapter.apiDomain, token: adapter.token }).instance;
-		let url = await adapter.urlForCreateRecord(this.type);
+		let url = adapter.urlForCreateRecord(this.type);
 		let response = await axios.post(url, data);
 		return response.data;
 	}
 
 	async update(data) {
-		let adapter = await this.store.adapterFor(this.type);
-		let url = await adapter.urlForUpdateRecord(this.type, this.id);
+		let adapter = this.store.adapterFor(this.type);
+		let url = adapter.urlForUpdateRecord(this.type, this.id);
 		let axios = new Axios({ baseURL: adapter.apiDomain, token: adapter.token }).instance;
 		let response = await axios.put(url, data);
 		return response.data;
@@ -128,12 +127,11 @@ class AppModel {
 	async destroy() {
 		try {
 			if (this.id) {
-				let adapter = await this.store.adapterFor(this.type);
+				let adapter = this.store.adapterFor(this.type);
 				let axios = new Axios({ baseURL: adapter.apiDomain, token: adapter.token }).instance;
-				let url = await adapter.urlForDestroyRecord(this.type, this.id);
+				let url = adapter.urlForDestroyRecord(this.type, this.id);
 				let response = await axios.delete(url);
-				let serializer = await this.store.serializerFor(this.type);
-				let formattedResponse = await serializer.normalize(response.data, response.included, response.meta);
+				let formattedResponse = this.store.serializerFor(this.type).normalize(response.data, response.included, response.meta);
 			}
 			return this.store.removeRecord(this.type, this);
 		} catch(e) {
