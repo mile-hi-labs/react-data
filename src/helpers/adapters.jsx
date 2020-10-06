@@ -1,4 +1,4 @@
-import AppAdapter from 'adapters/app';
+import BaseAdapter from 'adapters/base';
 import { logger } from 'utils/helpers';
 import { dashToCapital } from 'utils/transforms';
 
@@ -10,7 +10,7 @@ async function importAdapters() {
 
 function adapterFor(adapters, modelName, store, data = {}) {
 	let Adapter = adapters[dashToCapital(modelName)];
-	return Adapter ? Adapter : AppAdapter;
+	return Adapter ? Adapter : BaseAdapter;
 }
 
 export {

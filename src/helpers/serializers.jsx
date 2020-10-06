@@ -1,4 +1,4 @@
-import AppSerializer from 'serializers/app';
+import BaseSerializer from 'serializers/base';
 import { logger } from 'utils/helpers';
 import { dashToCapital } from 'utils/transforms';
 
@@ -10,7 +10,7 @@ async function importSerializers() {
 
 function serializerFor(serializers, modelName, store, data = {}) {
 	let Serializer = serializers[dashToCapital(modelName)];
-	return Serializer ? new Serializer(store, data) : new AppSerializer(store, data);
+	return Serializer ? new Serializer(store, data) : new BaseSerializer(store, data);
 }
 
 export {

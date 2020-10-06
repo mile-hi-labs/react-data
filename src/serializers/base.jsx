@@ -4,7 +4,7 @@ import Pluralize from 'pluralize';
 import { camelToDash, dashToCamel, phoneToString } from 'utils/transforms';
 import { isEmpty } from 'utils/helpers';
 
-class AppSerializer {
+class BaseSerializer {
 	constructor(store, props = {}) {
 		this.store = store || {};
 	}
@@ -231,4 +231,4 @@ class AppSerializer {
 
 }
 
-export default AppSerializer;
+export default BaseSerializer;

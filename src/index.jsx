@@ -1,20 +1,21 @@
 import { Store, StoreContext, withStore } from 'contexts/store';
-import AppAdapter from 'adapters/app';
-import AppSerializer from 'serializers/app';
-import AppModel from 'models/app';
+import BaseAdapter from 'adapters/base';
+import BaseSerializer from 'serializers/base';
+import BaseModel from 'models/base';
 
 import JsonApiErrors from 'utils/json-api-errors';
-import { inputProp, setProp, setRelation, toggleProp, pushProp } from 'utils/store-helpers';
+import { inputProp, setProp, setProps, setRelation, toggleProp, pushProp } from 'utils/store-helpers';
 
 export {
 	Store,
 	StoreContext,
 	withStore,
-	AppAdapter,
-	AppSerializer,
-	AppModel,
+	BaseAdapter,
+	BaseSerializer,
+	BaseModel,
 	inputProp,
 	setProp,
+	setProps,
 	setRelation,
 	toggleProp,
 	pushProp,

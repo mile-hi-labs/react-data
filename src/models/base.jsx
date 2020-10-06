@@ -5,7 +5,7 @@ import JsonApiErrors from 'utils/json-api-errors';
 import { camelToDash } from 'utils/transforms';
 import { addObject, removeObject, logger, isEmpty } from 'utils/helpers';
 
-class AppModel {
+class BaseModel {
 	constructor(type, store, props = {}) {
 		this.id = props.id || '';
 		this.type = camelToDash(type).toLowerCase();
@@ -15,6 +15,24 @@ class AppModel {
 
 		this.store = store || {};
 		this.log = [];
+	}
+
+
+	// Storage
+	attr(type, prop = '') {
+		switch (type) {
+			case 'decimal':
+				return parseFloat(prop) || 0;
+
+			case 'integer':
+				return parseInt(prop) || 0;
+
+			case 'string':
+				return String(prop) || '';
+
+			default:
+				return prop;
+		}
 	}
 
 
@@ -47,7 +65,7 @@ class AppModel {
 		return this.set([relation], this.store.createRecord(relation, value));
 	}
 
-	updateProps(props) {
+	setProps(props) {
 		Object.keys(props).forEach(key => {
 			if (key == 'type') { return };
 			if (Array.isArray(this[key]) && !isEmpty(this[key][0]) && this[key][0].id) { return };
@@ -56,42 +74,12 @@ class AppModel {
 		});
 	}
 
-	
-	// Storage
-	attr(type, prop = '') {
-		switch (type) {
-			case 'decimal':
-				return parseFloat(prop) || 0;
-
-			case 'integer':
-				return parseInt(prop) || 0;
-
-			case 'string':
-				return String(prop) || '';
-
-			default:
-				return prop;
-		}
+	belongsTo(modelName, data = {}) {
+		return !isEmpty(data.id) ? this.store.peekRecord(modelName, props) : data;
 	}
 
-	belongsTo(modelName, props) {
-		let relationship = !isEmpty(props) ? this.store.peekOrCreateRecord(modelName, props) : {};
-		return relationship;
-	}
-
-	hasMany(modelName, props) {
-	 	let relationships = !isEmpty(props) ? props.map(p => this.store.peekOrCreateRecord(Pluralize.singular(modelName), p)) : [];
-	 	return relationships;
-	}
-
-	push(name, value) {
-		addObject(this[name], value);
-		return this.store.pushRecord(this.type, this);
-	}
-
-	remove(name, value) {
-		removeObject(this[name], value);
-		return this.store.pushRecord(this.type, this);
+	hasMany(modelName, data = []) {
+	 	return !isEmpty(data.map(item => item.id)) ? data.map(item => this.store.peekRecord(Pluralize.singular(modelName), item)) : data;
 	}
 
 
@@ -101,7 +89,7 @@ class AppModel {
 			let data = this.store.serializerFor(this.type).serialize(this);
 			let response = this.id ? await this.update(data) : await this.create(data);
 			let formattedResponse = this.store.serializerFor(this.type).normalize(response.data, response.included, response.meta);
-			this.updateProps(formattedResponse);
+			this.setProps(formattedResponse);
 			return formattedResponse;
 		} catch(e) {
 			throw JsonApiErrors.formatErrors(e);
@@ -141,4 +129,4 @@ class AppModel {
 
 }
 
-export default AppModel;
+export default BaseModel;

@@ -1,10 +1,7 @@
 import React, { Component } from 'react';
-import AppAdapter from 'adapters/app';
-
 import { importAdapters, adapterFor } from 'helpers/adapters';
 import { importSerializers, serializerFor } from 'helpers/serializers';
 import { importModels, modelFor } from 'helpers/models';
-
 import JsonApiErrors from 'utils/json-api-errors';
 import { addObject, removeObject, timeElapsed, logger, isEmpty } from 'utils/helpers';
 
@@ -14,10 +11,10 @@ class StoreContext extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      apiDomain: this.props.apiDomain || '',
       adapters: [],
       models: [],
       serializers: [],
+      apiDomain: this.props.apiDomain || '',
       adapterFor: this.adapterFor.bind(this),
       modelFor: this.modelFor.bind(this),
       serializerFor: this.serializerFor.bind(this),
@@ -26,7 +23,6 @@ class StoreContext extends Component {
       pushRecord: this.pushRecord.bind(this),
       peekAll: this.peekAll.bind(this),
       peekRecord: this.peekRecord.bind(this),
-      peekOrCreateRecord: this.peekOrCreateRecord.bind(this),
       updateRecord: this.updateRecord.bind(this),
       updateStore: this.updateStore.bind(this),
       findAll: this.findAll.bind(this),
@@ -113,12 +109,6 @@ class StoreContext extends Component {
     let models = this.state[modelName] || [];
     let storeRecord = models.find(model => model.id == recordID);
     return storeRecord ? storeRecord : {};
-  }
-
-  async peekOrCreateRecord(modelName, record) {
-    let models = this.state[modelName] || [];
-    let storeRecord = this.peekRecord(modelName, record.id);
-    return storeRecord ? storeRecord : this.createRecord(modelName, record);
   }
 
   // Misc

@@ -1,4 +1,4 @@
-import AppModel from 'models/app';
+import BaseModel from 'models/base';
 import { logger } from 'utils/helpers';
 import { dashToCapital } from 'utils/transforms';
 
@@ -10,7 +10,7 @@ async function importModels() {
 
 function modelFor(models, modelName, store, data = {}) {
 	let Model = models[dashToCapital(modelName)];
-	return Model ? new Model(modelName, store, data) : new AppModel(modelName, store, data);
+	return Model ? new Model(modelName, store, data) : new BaseModel(modelName, store, data);
 }
 
 export {

@@ -15,6 +15,10 @@ export const setProp = (model, name, value) => {
 	model.set(name, value);
 }
 
+export const setProps = (model, data) => {
+	model.setProps(data);
+}
+
 export const setRelation = (model, name, value) => {
 	model.setRelation(name, value);
 }

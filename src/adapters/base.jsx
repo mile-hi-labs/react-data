@@ -2,7 +2,7 @@ import React from 'react';
 import Pluralize from 'pluralize';
 import Axios from 'services/axios-service';
 
-class AppAdapter {
+class BaseAdapter {
 	static apiDomain = '';
 	static token = '';
 
@@ -111,4 +111,4 @@ class AppAdapter {
 	}
 }
 
-export default AppAdapter;
+export default BaseAdapter;
