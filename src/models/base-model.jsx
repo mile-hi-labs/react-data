@@ -69,17 +69,17 @@ class BaseModel {
 		Object.keys(props).forEach(key => {
 			if (key == 'type') { return };
 			if (Array.isArray(this[key]) && !isEmpty(this[key][0]) && this[key][0].id) { return };
-			if (typeof this[key] == 'object' && this[key].id) { return };
+			if (!isEmpty(this[key]) && typeof this[key] == 'object' && this[key].id) { return };
 			this[key] = props[key];
 		});
 	}
 
 	belongsTo(modelName, data = {}) {
-		return !isEmpty(data.id) ? this.store.peekRecord(modelName, props) : data;
+		return !isEmpty(data.id) ? this.store.peekOrCreateRecord(modelName, data) : data;
 	}
 
 	hasMany(modelName, data = []) {
-	 	return !isEmpty(data.map(item => item.id)) ? data.map(item => this.store.peekRecord(Pluralize.singular(modelName), item)) : data;
+	 	return !isEmpty(data.map(item => item.id)) ? data.map(item => this.store.peekOrCreateRecord(Pluralize.singular(modelName), item)) : data;
 	}
 
 

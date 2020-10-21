@@ -1,10 +1,10 @@
 import { Store, StoreContext, withStore } from 'contexts/store';
-import BaseAdapter from 'adapters/base';
-import BaseSerializer from 'serializers/base';
-import BaseModel from 'models/base';
+import BaseAdapter from 'adapters/base-adapter';
+import BaseSerializer from 'serializers/base-serializer';
+import BaseModel from 'models/base-model';
 
 import JsonApiErrors from 'utils/json-api-errors';
-import { inputProp, setProp, setProps, setRelation, toggleProp, pushProp } from 'utils/store-helpers';
+import { inputProp, inputCurrency, setProp, setProps, setRelation, toggleProp, pushProp } from 'utils/store-helpers';
 
 export {
 	Store,
@@ -14,6 +14,7 @@ export {
 	BaseSerializer,
 	BaseModel,
 	inputProp,
+	inputCurrency,
 	setProp,
 	setProps,
 	setRelation,

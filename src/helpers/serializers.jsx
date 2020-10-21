@@ -1,10 +1,10 @@
-import BaseSerializer from 'serializers/base';
+import BaseSerializer from 'serializers/base-serializer';
 import { logger } from 'utils/helpers';
 import { dashToCapital } from 'utils/transforms';
 
 async function importSerializers() {
 	let serilizers = await import(/* webpackIgnore: true */ /* webpackMode: "lazy" */ 'serializers');
-	logger('models: ', serilizers);
+	logger('serializers: ', serilizers);
 	return serilizers;
 }
 

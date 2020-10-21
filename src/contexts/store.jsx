@@ -23,6 +23,7 @@ class StoreContext extends Component {
       pushRecord: this.pushRecord.bind(this),
       peekAll: this.peekAll.bind(this),
       peekRecord: this.peekRecord.bind(this),
+      peekOrCreateRecord: this.peekOrCreateRecord.bind(this),
       updateRecord: this.updateRecord.bind(this),
       updateStore: this.updateStore.bind(this),
       findAll: this.findAll.bind(this),
@@ -108,7 +109,13 @@ class StoreContext extends Component {
   peekRecord(modelName, recordID) {
     let models = this.state[modelName] || [];
     let storeRecord = models.find(model => model.id == recordID);
-    return storeRecord ? storeRecord : {};
+    return storeRecord ? storeRecord : null;
+  }
+
+  peekOrCreateRecord(modelName, record) {
+    let models = this.state[modelName] || [];
+    let storeRecord = this.peekRecord(modelName, record.id);
+    return storeRecord ? this.updateRecord(modelName, storeRecord, record) : this.createRecord(modelName, record);
   }
 
   // Misc
@@ -155,9 +162,7 @@ class StoreContext extends Component {
   async findAll(modelName, params) {
     try {
       let storeRecords = this.state[modelName] || [];
-      if(!isEmpty(storeRecords)) {
-        return storeRecords;
-      }
+      if (!isEmpty(storeRecords)) { return storeRecords }
       // Fetch All
       let response = await this.adapterFor(modelName).findAll(modelName, params);
       let records = this.serializerFor(modelName).normalizeArray(response.data, response.included, response.meta);
@@ -173,9 +178,7 @@ class StoreContext extends Component {
   async findRecord(modelName, recordID, params) {
     try {
       let storeRecord = this.peekRecord(modelName, recordID);
-      if(storeRecord) {
-        return storeRecord;
-      }
+      if (!isEmpty(storeRecord)) { return storeRecord }
       // Fetch Record
       let response = await this.adapterFor(modelName).findRecord(modelName, recordID, params);
       let record = this.serializerFor(modelName).normalize(response.data, response.included);
@@ -206,7 +209,7 @@ class StoreContext extends Component {
       let record = this.serializerFor(modelName).normalize(response.data, response.included);
       let storeRecord = this.peekRecord(modelName, record.id);
       let model = storeRecord ? this.updateRecord(modelName, storeRecord, record) : this.createRecord(modelName, record);
-      logger('Store: ', this.state, record, model);
+      logger('Store: ', this.state);
       return model;
     } catch(e) {
       throw JsonApiErrors.formatErrors(e);

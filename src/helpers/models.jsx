@@ -1,4 +1,4 @@
-import BaseModel from 'models/base';
+import BaseModel from 'models/base-model';
 import { logger } from 'utils/helpers';
 import { dashToCapital } from 'utils/transforms';
 

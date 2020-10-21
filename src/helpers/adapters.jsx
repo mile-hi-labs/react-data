@@ -1,4 +1,4 @@
-import BaseAdapter from 'adapters/base';
+import BaseAdapter from 'adapters/base-adapter';
 import { logger } from 'utils/helpers';
 import { dashToCapital } from 'utils/transforms';
 
