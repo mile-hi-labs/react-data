@@ -2,7 +2,7 @@ const path = require('path');
 const webpack = require('webpack');
 const CompressionPlugin = require('compression-webpack-plugin');
 
-function sharedConfig() {
+function sharedConfig(production = false) {
   return {
     mode: 'production',
     entry: './src/index.jsx',
@@ -42,7 +42,7 @@ function sharedConfig() {
 
 module.exports = env => {
   console.log('Production: ', env.production ? true : false);
-  let config = sharedConfig();
+  let config = sharedConfig(env.production);
   if (env.production) {
     config.plugins = [
       new CompressionPlugin()

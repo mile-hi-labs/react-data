@@ -80,9 +80,6 @@ class BaseSerializer {
 			if (this.checkRelationships(key).serialize == 'id') {
 				formattedData.push({ id: parseInt(relation.id) });
 			}
-			if (!relation.type) {
-				formattedData.push(this.serializeAttrs(relation));
-			}
 		});
 		return formattedData;
 	}
@@ -96,42 +93,39 @@ class BaseSerializer {
 		if (this.checkRelationships(key).serialize == 'id') {
 			return { id: parseInt(data[key].id) };
 		}
-		return this.serializeAttrs(data[key]);
 	}
 
 	
 	// Normalize
 	normalizeArray(data = [], included = [], meta = {}) {
-		let formattedArray = [];
-		if (isEmpty(data)) { return  { records: formattedArray, meta: this.normalizeAttrs(meta) } };
-
-		data.map(record => {
-			let formattedData = this.normalize(record, included);
-			return formattedArray.push(formattedData);
-		});
-		return { records: formattedArray, meta: this.normalizeAttrs(meta) };
+		let normalizedData = [];
+		data.map(record => normalizedData.push(this.normalize(record, included)));
+		logger('normalizedData: ', normalizedData);
+		return { records: normalizedData, meta: this.normalizeAttrs(meta) };
 	}
 
 	normalize(data, included = [], meta) {
-		let formattedData = this.normalizeAttrs(data, included);
-		return formattedData;
+		let normalizedData = this.normalizeAttrs(data, included);
+		logger('normalizedData: ', normalizedData);
+		return normalizedData;
 	}
 
 	normalizeAttrs(data, included = []) {
-		let formattedData = {};
+		let normalizedAttrs = {};
 		if (isEmpty(data)) { return; }
 		Object.keys(data).forEach(key => {
 			if (typeof data[key] == 'object') {
 				if (key == 'attributes') {
-					return Object.assign(formattedData, this.normalizeAttrs(data[key], included));
+					return Object.assign(normalizedAttrs, this.normalizeAttrs(data[key], included));
 				}
 				if (key == 'relationships') {
-					return Object.assign(formattedData, this.normalizeRelationships(data[key], included));
+					return Object.assign(normalizedAttrs, this.normalizeRelationships(data[key], included));
 				}
 			}
-			return formattedData[dashToCamel(key)] = this.normalizeAttr(data, key);
+			return normalizedAttrs[dashToCamel(key)] = this.normalizeAttr(data, key);
 		});
-		return formattedData;
+		logger('normalizedAttrs: ', normalizedAttrs);
+		return normalizedAttrs;
 	}
 
 	normalizeAttr(data, key) {
@@ -144,6 +138,7 @@ class BaseSerializer {
 
 		Object.keys(data).forEach(key => {
 			let relationshipData = data[key].data;
+			if (isEmpty(relationshipData)) { return; }
 
 			if (Array.isArray(relationshipData)) {
 				return formattedRelationships[dashToCamel(key)] = relationshipData.map(relationship => this.normalizeRelationship(relationship, included));
@@ -151,8 +146,9 @@ class BaseSerializer {
 			if (typeof relationshipData == 'object') {
 				return formattedRelationships[dashToCamel(key)] = this.normalizeRelationship(relationshipData, included);
 			}
+			return formattedRelationships[dashToCamel(key)] = this.normalizeRelationship(relationshipData, included);
 		});
-		logger('normalizedRelations: ', formattedRelationships);
+		logger('normalizedRelationships: ', formattedRelationships);
 		return formattedRelationships;
 	}
 
