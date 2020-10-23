@@ -29,7 +29,7 @@ export const toggleProp = (model, name) => {
 }
 
 export const pushProp = (model, name, value) => {
-	model[name].includes(value) ? this.removeObject(model, name, value) : this.addObject(model, name, value);
+	model[name].includes(value) ? removeObject(model, name, value) : addObject(model, name, value);
 }
 
 export const removeObject = (model, name, value) => {

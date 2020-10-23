@@ -1,7 +1,7 @@
 import React from 'react';
 import Pluralize from 'pluralize';
 
-import { camelToDash, dashToCamel, phoneToString } from 'utils/transforms';
+import { camelToDash, dashToCamel } from 'utils/transforms';
 import { isEmpty, logger } from 'utils/helpers';
 
 class BaseSerializer {
@@ -40,13 +40,13 @@ class BaseSerializer {
 	// Serialize
 	serialize(data) {
 		let formattedData = this.serializeAttrs(data);
+		logger('formattedData: ', formattedData);
 		return { data: { attributes: formattedData }};
 	}
 
 	serializeAttrs(data) {
 		let formattedData = {};
 		Object.keys(data).forEach(key => {
-			if (isEmpty(data[key])) { return; }
 			formattedData[camelToDash(key)] = this.serializeAttr(data, key);
 		});
 		return formattedData;
@@ -60,12 +60,14 @@ class BaseSerializer {
 			return parseInt(data[key])
 		}
 		if (Array.isArray(data[key]))  {
+			if (isEmpty(data[key])) { return null }
 			if(typeof data[key][0] == 'object') {
 				return this.serializeRelationships(data, key);
 			}
 			return JSON.stringify(data[key]);
 		}
 		if (typeof data[key] == 'object') {
+			if (isEmpty(data[key])) { return null }
 			return this.serializeRelationship(data, key);
 		}
 		return data[key];
@@ -121,10 +123,10 @@ class BaseSerializer {
 				if (key == 'relationships') {
 					return Object.assign(normalizedAttrs, this.normalizeRelationships(data[key], included));
 				}
+				return normalizedAttrs[dashToCamel(key)] = this.normalizeAttrs(data[key], key);
 			}
 			return normalizedAttrs[dashToCamel(key)] = this.normalizeAttr(data, key);
 		});
-		logger('normalizedAttrs: ', normalizedAttrs);
 		return normalizedAttrs;
 	}
 
@@ -148,7 +150,6 @@ class BaseSerializer {
 			}
 			return formattedRelationships[dashToCamel(key)] = this.normalizeRelationship(relationshipData, included);
 		});
-		logger('normalizedRelationships: ', formattedRelationships);
 		return formattedRelationships;
 	}
 

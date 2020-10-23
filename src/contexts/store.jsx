@@ -47,7 +47,7 @@ class StoreContext extends Component {
   // Setup
   async init() {
     let start = Date.now();
-    timeElapsed('init started: ', start);
+    logger('store initialized...');
     
     let adapters = await importAdapters();
     this.setState({ 'adapters': adapters });
@@ -60,7 +60,8 @@ class StoreContext extends Component {
 
     this.adapterFor('app').set('apiDomain', this.state.apiDomain);
     this.setState({ loaded: true });
-    timeElapsed('init ended: ', start);
+    
+    timeElapsed('store ready: ', start);
   }
 
   

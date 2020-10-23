@@ -14,6 +14,10 @@ export const dashToCapital = (key) => {
   return key.split('-').map(key => key.replace(key.charAt(0), key.charAt(0).toUpperCase())).join('');
 }
 
+export const underscoreToCamel = (key) => {
+  return key.replace(/_([a-z])/g, function (g) { return g[1].toUpperCase() });
+}
+
 export const phoneToString = (data) => {
 	return data.replace(/\D+/g, '');
 }
