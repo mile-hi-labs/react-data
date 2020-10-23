@@ -67,7 +67,6 @@ class BaseSerializer {
 			return JSON.stringify(data[key]);
 		}
 		if (typeof data[key] == 'object') {
-			if (isEmpty(data[key])) { return null }
 			return this.serializeRelationship(data, key);
 		}
 		return data[key];
@@ -87,12 +86,12 @@ class BaseSerializer {
 	}
 
 	serializeRelationship(data, key) {
-		if (isEmpty(data[key])) { return; }
-
 		if (this.checkRelationships(key).serialize == true) {
+			if (isEmpty(data[key])) { return null }
 			return this.serializeAttrs(data[key]);
 		}
 		if (this.checkRelationships(key).serialize == 'id') {
+			if (isEmpty(data[key])) { return null }
 			return { id: parseInt(data[key].id) };
 		}
 	}
