@@ -2,7 +2,7 @@ import React from 'react';
 import Pluralize from 'pluralize';
 
 import { camelToDash, dashToCamel } from 'utils/transforms';
-import { isEmpty, logger } from 'utils/helpers';
+import { isBlank, isEmpty, logger } from 'utils/helpers';
 
 class BaseSerializer {
 	constructor(store, props = {}) {
@@ -53,6 +53,7 @@ class BaseSerializer {
 	}
 
 	serializeAttr(data, key) {
+		if (isBlank(data[key])) { return }
 		if (this.checkAttrs(key).serialize == false) { 
 			return; 
 		}
