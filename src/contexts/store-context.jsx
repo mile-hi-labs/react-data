@@ -5,9 +5,9 @@ import { importModels, modelFor } from 'helpers/models';
 import JsonApiErrors from 'utils/json-api-errors';
 import { addObject, removeObject, timeElapsed, logger, isEmpty } from 'utils/helpers';
 
-export const Store = React.createContext();
+const StoreContext = React.createContext();
 
-class StoreContext extends Component {
+class StoreProvider extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -37,7 +37,7 @@ class StoreContext extends Component {
     };
   };
 
-  
+
   // Hooks
   componentDidMount() {
     this.init();
@@ -48,23 +48,23 @@ class StoreContext extends Component {
   async init() {
     let start = Date.now();
     logger('store initialized...');
-    
+
     let adapters = await importAdapters();
     this.setState({ 'adapters': adapters });
-    
+
     let models = await importModels();
     this.setState({ 'models': models });
-    
+
     let serializers = await importSerializers();
     this.setState({ 'serializers': serializers });
 
     this.adapterFor('app').set('apiDomain', this.state.apiDomain);
     this.setState({ loaded: true });
-    
+
     timeElapsed('store ready: ', start);
   }
 
-  
+
   // Helpers
   adapterFor(modelName) {
     return adapterFor(this.state.adapters, modelName, this.state);
@@ -232,29 +232,26 @@ class StoreContext extends Component {
   // Render
   render() {
     const { loaded } = this.state;
+    const { children } = this.props;
 
     if (loaded) {
       return (
-        <Store.Provider value={this.state}>
-          {this.props.children}
-        </Store.Provider>
+        <StoreContext.Provider value={this.state}>
+          {children}
+        </StoreContext.Provider>
       );
     }
     return null;
   }
 };
 
-const withStore = function(WrappedComponent) {
-  return class extends Component {
-    render() {
-      return (
-        <Store.Consumer>
-          {state => <WrappedComponent store={state} {...this.props} />}
-        </Store.Consumer>
-      );
-    }
-  };
+const withStore = function(WrappedFunction) {
+  return (props) => (
+    <StoreContext.Consumer>
+      {context => <WrappedFunction store={context} {...props} />}
+    </StoreContext.Consumer>
+  )
 };
 
-export { StoreContext, withStore };
+export { StoreContext, StoreProvider, withStore };
 
