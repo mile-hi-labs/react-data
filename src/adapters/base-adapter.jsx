@@ -27,10 +27,10 @@ class BaseAdapter {
 	}
 
 	static baseURL() {
-		return typeof window === 'undefined' ? '' : this.apiDomain;
+		return typeof window == 'undefined' ? '' : this.apiDomain;
 	}
 
-	
+
 	static buildURL(modelName, id) {
 		if (id) {
 			return this.baseURL() + `/${Pluralize(modelName)}/${String(id)}`;

@@ -50,15 +50,15 @@ class StoreProvider extends Component {
     logger('store initialized...');
 
     let adapters = await importAdapters();
-    this.setState({ 'adapters': adapters });
+    this.setState({ adapters: adapters });
 
     let models = await importModels();
-    this.setState({ 'models': models });
+    this.setState({ models: models });
 
     let serializers = await importSerializers();
     this.setState({ 'serializers': serializers });
 
-    this.adapterFor('app').set('apiDomain', this.state.apiDomain);
+    this.adapterFor('').set('apiDomain', this.state.apiDomain);
     this.setState({ loaded: true });
 
     timeElapsed('store ready: ', start);
@@ -234,14 +234,11 @@ class StoreProvider extends Component {
     const { loaded } = this.state;
     const { children } = this.props;
 
-    if (loaded) {
-      return (
-        <StoreContext.Provider value={this.state}>
-          {children}
-        </StoreContext.Provider>
-      );
-    }
-    return null;
+    return (
+      <StoreContext.Provider value={this.state}>
+        {loaded ? children : null}
+      </StoreContext.Provider>
+    );
   }
 };
 
