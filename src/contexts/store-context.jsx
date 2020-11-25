@@ -247,7 +247,7 @@ const withStore = function(WrappedFunction) {
     render() {
       return (
         <StoreContext.Consumer>
-          {context => <WrappedFunction store={context} {...props} />}
+          {context => <WrappedFunction store={context} {...this.props} />}
         </StoreContext.Consumer>
       )
     }
