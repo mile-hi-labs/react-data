@@ -1,6 +1,7 @@
 import React from 'react';
 import Pluralize from 'pluralize';
 import Axios from 'services/axios-service';
+import { isEmpty } from 'utils/helpers';
 
 class BaseAdapter {
 	static apiDomain = '';
@@ -38,6 +39,14 @@ class BaseAdapter {
 		return this.baseURL() + `/${Pluralize(modelName)}`;
 	}
 
+	static filteredParams(params = {}) {
+		let formattedParams = {};
+		Object.keys(params).forEach(p => {
+			if (!isEmpty(params[p])) { formattedParams[p] = params[p]; }
+		});
+		return formattedParams;
+	}
+
 
 	// URLs
 	static urlForFindAll(modelName) {
@@ -73,7 +82,8 @@ class BaseAdapter {
 	static async findAll(modelName, params) {
 		try {
 			let url = this.urlForFindAll(modelName);
-			let response = await this.axios.get(url, { params });
+			let formattedParams = this.filteredParams(params);
+			let response = await this.axios.get(url, { params: formattedParams });
 			return response.data;
 		} catch(e) {
 			throw e;
@@ -83,7 +93,8 @@ class BaseAdapter {
 	static async findRecord(modelName, recordID, params = {}) {
 		try {
 			let url = this.urlForFindRecord(modelName, recordID);
-			let response = await this.axios.get(url, { params });
+			let formattedParams = this.filteredParams(params);
+			let response = await this.axios.get(url, { params: formattedParams });
       return response.data;
 		} catch(e) {
 			throw e;
@@ -93,7 +104,8 @@ class BaseAdapter {
 	static async query(modelName, params) {
 		try {
 			let url = this.urlForQuery(modelName);
-			let response = await this.axios.get(url, { params });
+			let formattedParams = this.filteredParams(params);
+			let response = await this.axios.get(url, { params: formattedParams });
 			return response.data;
 		} catch(e) {
 			throw e;
@@ -103,7 +115,8 @@ class BaseAdapter {
 	static async queryRecord(modelName, id = null, params = {}) {
 		try {
 			let url = this.urlForQueryRecord(modelName, id);
-			let response = await this.axios.get(url, { params });
+			let formattedParams = this.filteredParams(params);
+			let response = await this.axios.get(url, { params: formattedParams });
 			return response.data;
 		} catch(e) {
 			throw e;
