@@ -243,12 +243,16 @@ class StoreProvider extends Component {
 };
 
 const withStore = function(WrappedFunction) {
-  return (props) => (
-    <StoreContext.Consumer>
-      {context => <WrappedFunction store={context} {...props} />}
-    </StoreContext.Consumer>
-  )
-};
+  return class extends Component {
+    render() {
+      return (
+        <StoreContext.Consumer>
+          {context => <WrappedFunction store={context} {...props} />}
+        </StoreContext.Consumer>
+      )
+    }
+  }
+}
 
 export { StoreContext, StoreProvider, withStore };
 
