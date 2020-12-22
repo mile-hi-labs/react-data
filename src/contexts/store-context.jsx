@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import { importAdapters, adapterFor } from 'helpers/adapters';
-import { importSerializers, serializerFor } from 'helpers/serializers';
-import { importModels, modelFor } from 'helpers/models';
+import { adapterFor } from 'helpers/adapters';
+import { serializerFor } from 'helpers/serializers';
+import { modelFor } from 'helpers/models';
 import JsonApiErrors from 'utils/json-api-errors';
 import { addObject, removeObject, timeElapsed, logger, isEmpty } from 'utils/helpers';
 
@@ -11,9 +11,9 @@ class StoreProvider extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      adapters: [],
-      models: [],
-      serializers: [],
+      adapters: this.props.adapters || {},
+      models: this.props.models || {},
+      serializers: this.props.serializers || {},
       apiDomain: this.props.apiDomain || '',
       adapterFor: this.adapterFor.bind(this),
       modelFor: this.modelFor.bind(this),
@@ -48,15 +48,6 @@ class StoreProvider extends Component {
   async init() {
     let start = Date.now();
     logger('store initialized...');
-
-    let adapters = await importAdapters();
-    this.setState({ adapters: adapters });
-
-    let models = await importModels();
-    this.setState({ models: models });
-
-    let serializers = await importSerializers();
-    this.setState({ 'serializers': serializers });
 
     this.adapterFor('').set('apiDomain', this.state.apiDomain);
     this.setState({ loaded: true });

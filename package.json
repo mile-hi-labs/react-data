@@ -35,9 +35,6 @@
     "build": "webpack --env.development",
     "build:prod": "webpack --env.production"
   },
-  "peerDependencies": {
-    "react": "^16.0.0"
-  },
   "devDependencies": {
     "babel-core": "^6.21.0",
     "babel-loader": "^7.1.4",
