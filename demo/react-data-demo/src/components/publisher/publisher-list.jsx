@@ -5,7 +5,7 @@ import { Row, Col } from 'components/basics/grids';
 import { ListSkeleton, SearchSkeleton } from 'components/vendors/loading-skeleton-wrapper';
 
 const PublisherList = (props) => {
-	const { publishers = [], selectedID, selectedIDs, loading, onClick } = props;
+	const { publishers = [], loading, onClick } = props;
 
 	if (loading) {
 		return <ListSkeleton count={3} />
@@ -25,7 +25,7 @@ const PublisherList = (props) => {
 		<SectionEmpty
 			icon='publishers'
 			title='Publishers'
-			msg="Sorry, looks like there aren't any authors yet."
+			msg="Sorry, looks like there aren't any publishers yet."
 		/>
 	)
 }

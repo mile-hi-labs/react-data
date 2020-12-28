@@ -8,7 +8,7 @@ import { BasicTooltip } from 'components/basics/tooltips';
 import { capitalize } from 'utils/transforms';
 import { logger } from 'utils/helpers';
 
-const AdminBreadcrumbsWrapper = (props) => {
+const BreadcrumbsWrapper = (props) => {
   const { history, location, className } = props;
   const [ breadcrumbs, setBreadcrumbs ] = useState([]);
 
@@ -42,8 +42,8 @@ const AdminBreadcrumbsWrapper = (props) => {
             key={index}
             active={active}
             linkAs={Link}
-            linkProps={{to: index == 0 ? '/dashboard' : `/${breadcrumb}`}}>
-            {capitalize(index == 0 ? 'admin' : breadcrumb)}
+            linkProps={{to: index == 0 ? '/' : `/${breadcrumb}`}}>
+            {capitalize(index == 0 ? 'index' : breadcrumb)}
           </Breadcrumb.Item>
         )
       })}
@@ -51,6 +51,6 @@ const AdminBreadcrumbsWrapper = (props) => {
   )
 }
 
-const AdminBreadcrumbs = withRouter(AdminBreadcrumbsWrapper);
+const MktBreadcrumbs = withRouter(BreadcrumbsWrapper);
 
-export { AdminBreadcrumbs }
+export { MktBreadcrumbs }

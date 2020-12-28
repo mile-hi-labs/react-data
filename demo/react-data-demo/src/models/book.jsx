@@ -15,7 +15,7 @@ class Book extends AppModel {
 
 		// Relationships
 		this.authors = this.hasMany('author', props.authors);
-		this.categories = this.belongsTo('category', props.categories);
+		this.categories = this.hasMany('category', props.categories);
 		this.publishers = this.hasMany('publisher', props.publishers);
 	}
 

@@ -6,7 +6,7 @@ class Category extends AppModel {
 
 		// Attrs
 		this.photo = props.photo;
-		this.name = props.name;
+		this.title = props.title;
 
 
 		// Relationships

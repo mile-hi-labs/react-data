@@ -46,6 +46,13 @@ const BooksDetailRoute = (props) => {
 
 					<Col xs={12} md={4}>
 						<BookDetailCard book={book} loading={loading} />
+
+						<SectionBlock>
+							<SectionHeader title='Categories' />
+							<SectionBody className='xs'>
+								<CategoryList categories={book.categories} loading={loading} />
+							</SectionBody>
+						</SectionBlock>
 					</Col>
 
 					<Col xs={12} md={8}>
@@ -58,22 +65,15 @@ const BooksDetailRoute = (props) => {
 
 						<SectionBlock>
 							<SectionHeader title='Authors' />
-							<SectionBody>
+							<SectionBody className='xs'>
 								<AuthorList authors={book.authors} loading={loading} />
 							</SectionBody>
 						</SectionBlock>
 
 						<SectionBlock>
 							<SectionHeader title='Publishers' />
-							<SectionBody>
+							<SectionBody className='xs'>
 								<PublisherList publishers={book.publishers} loading={loading} />
-							</SectionBody>
-						</SectionBlock>
-
-						<SectionBlock>
-							<SectionHeader title='Categories' />
-							<SectionBody>
-								<CategoryList categories={book.categories} loading={loading} />
 							</SectionBody>
 						</SectionBlock>
 					</Col>

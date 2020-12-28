@@ -10,7 +10,7 @@ const CategoryDetailCard = (props) => {
 		<DetailCard
 			icon='category'
 			photo={category.photo}
-			title={category.name}
+			title={category.title}
 			timestamp={category.displayUpdatedAt}
 			loading={loading}
 		/>
@@ -24,7 +24,7 @@ const CategoryListCard = (props) => {
 		<ListCard
 			icon='category'
 			photo={category.photo}
-			title={category.name}
+			title={category.title}
 			loading={loading}
 			link={`/categories/${category.id}`}
 		/>
