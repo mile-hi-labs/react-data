@@ -1,0 +1,78 @@
+// Misc
+.title {
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  font-weight: $bold;
+}
+
+.subtitle {
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  font-weight: $reg;
+  color: $secondary-color;
+}
+
+.sub-text {
+  font-style: italic;
+  font-weight: $reg;
+  color: $gray;
+}
+
+.stat {
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  font-weight: $light;
+  font-family: $secondary-font;
+  color: inherit;
+}
+
+
+// Fonts
+.primary-font {
+	font-family: $primary-font;
+}
+
+.secondary-font {
+	font-family: $secondary-font;
+}
+
+.accent-font {
+  font-family: $accent-font;
+}
+
+.sub-font {
+  font-family: $sub-font;
+}
+
+
+// Weights
+.bold {
+	font-weight: $bold !important;
+}
+
+.mbold {
+	font-weight: $m-bold !important;
+}
+
+.reg {
+	font-weight: $reg !important;
+}
+
+.light {
+	font-weight: $light !important;
+}
+
+
+// Styles
+.italic {
+	font-style: italic !important;
+}
+
+// Transforms
+.uppercase {
+	text-transform: uppercase;
+}
+
+.capitalize {
+	text-transform: capitalize;
+}

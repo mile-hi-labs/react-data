@@ -1,24 +1,60 @@
 import React, { useEffect, useState } from 'react';
+import { MktRoute } from 'components/basics/routes';
+import { BtnLink } from 'components/basics/links';
+import { Container, Row, Col } from 'components/basics/grids';
+import { SectionBlock, SectionHeader, SectionBody, SectionFooter } from 'components/basics/sections';
 
 const IndexRoute = (props) => {
-	const { store, history } = props;
+	const { store = {}, toast, history } = props;
 
 
 	// Hooks
 	useEffect(() => {
-		console.log('Store: ', store);
-		console.log('History: ', history);
+		fetchData();
 	}, [])
 
 
 	// Methods
+	const fetchData = async () => {
+		try {
+			setLoading(true);
+			let model = await store.query('book', params())
+			setBooks(model);
+		} catch (e) {
+			console.log('Error: ', e);
+		} finally {
+			setLoading(false);
+		}
+	}
+
+	const params = () => {
+		let params = {};
+		if (pageSize) params.pageSize = pageSize;
+		if (sortProp) params.sortProp = sortProp;
+		if (sortValue) params.sortValue = sortValue;
+		params.page = page;
+		params.include = 'authors,categories,publishers';
+		return params;
+	}
 
 
 	// Render
 	return (
-		<div className='route'>
-			<h1>Hello, Eric</h1>
-		</div>
+		<MktRoute title='Library - Welcome'>
+			<Container className='pt-3 pb-3'>
+
+				<SectionBlock>
+					<SectionHeader title='Welcome' />
+					<SectionBody className='xs'>
+						<div className='flex-between'>
+							<BtnLink to='/books' title='Get Started' className='btn-primary btn-block btn-lg w-50 mr-15'/>
+							<BtnLink to='/books' title='Github' className='btn-gray btn-block btn-lg w-50'/>
+						</div>
+					</SectionBody>
+				</SectionBlock>
+
+			</Container>
+		</MktRoute>
 	);
 }
 

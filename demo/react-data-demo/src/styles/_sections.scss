@@ -1,0 +1,53 @@
+.section-block {
+	width: 100%;
+	margin-bottom: 15px;
+	border-radius: 4px;
+	box-shadow: $dark-shadow-05;
+	border: 1px solid $dark-bg-1;
+	background: $white;
+	position: relative;
+}
+
+.section-header {
+	padding: 15px 0;
+	margin: 0 15px;
+	border-bottom: 1px solid $dark-bg-1;
+}
+
+.section-body {
+	position: relative;
+	padding: 15px 0;
+	margin: 0 15px;
+	@include ease(all);
+	&.xl {
+		min-height: 720px;
+	}
+	&.lg {
+		min-height: 540px;
+	}
+	&.md {
+		min-height: 360px;
+	}
+	&.sm {
+		min-height: 270px;
+	}
+	&.xs {
+		min-height: 120px;
+	}
+}
+
+.section-divider {}
+
+.section-item {
+	padding: 15px;
+}
+
+.section-text {
+	padding: 15px;
+}
+
+.section-footer {
+	padding: 15px 0;
+	margin: 0 15px;
+	@extend .border-top;
+}

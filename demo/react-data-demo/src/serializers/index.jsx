@@ -1,5 +1,5 @@
-import AppSerializer from './app-serializer';
+import App from 'serializers/app-serializer';
 
 export {
-	AppSerializer
+	App
 }

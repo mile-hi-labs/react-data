@@ -1,0 +1,106 @@
+// Ease
+@mixin fastEase($property) {
+  @include transition($property, 100ms, ease-out, 0ms);
+}
+
+@mixin ease($property) {
+  @include transition($property, 200ms, ease-out, 0ms);
+}
+
+// Transitions
+@mixin transition($property, $duration, $timing, $delay) {
+  -webkit-transition: $property $duration $timing $delay;
+  -moz-transition: $property $duration $timing $delay;
+  -o-transition: $property $duration $timing $delay;
+  -ms-transition: $property $duration $timing $delay;
+  transition: $property $duration $timing $delay;
+}
+
+// Transforms
+@mixin transform($params) {
+	-webkit-transform: $params;
+	-moz-transform: $params;
+	-ms-transform: $params;
+  -o-transform: $params;
+  transform: $params;
+}
+
+// Keyframes
+@mixin keyframes($animation-name) {
+  @-webkit-keyframes #{$animation-name} {
+    @content;
+  }
+  @-moz-keyframes #{$animation-name} {
+    @content;
+  }
+  @-ms-keyframes #{$animation-name} {
+    @content;
+  }
+  @-o-keyframes #{$animation-name} {
+    @content;
+  }
+  @keyframes #{$animation-name} {
+    @content;
+  }
+}
+
+// Animations
+@mixin animation($values) {
+  -webkit-animation: #{$values};
+  -moz-animation: #{$values};
+  -ms-animation: #{$values};
+  -o-animation: #{$values};
+  animation: #{$values};
+}
+
+
+// Blur
+@mixin blur($value) {
+  -webkit-filter: blur($value);
+  -moz-filter: blur($value);
+  -o-filter: blur($value);
+  -ms-filter: blur($value);
+  filter: blur($value);
+}
+
+// Aspect Ratio
+@mixin aspectRatio($width, $height) {
+  position: relative;
+  &:after {
+    display: block;
+    content: " ";
+    width: 100%;
+    padding-top: ($height / $width) * 100%;
+  }
+  > .content {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+  }
+}
+
+
+// Placeholders
+@mixin placeholder($color) {
+  &::placeholder {
+    color: $color;
+    opacity: 1;
+  }
+  &::-webkit-input-placeholder {
+    color: $color;
+  }
+
+  &:-moz-placeholder {
+    color: $color;
+  }
+
+  &::-moz-placeholder {
+    color: $color;
+  }
+
+  &:-ms-input-placeholder {
+    color: $color;
+  }
+}

@@ -1,0 +1,54 @@
+.toast-wrapper {
+	position: fixed;
+	bottom: 15px;
+	right: 15px;
+	z-index: 10000;
+}
+
+.toast {
+	position: relative;
+	margin: 15px;
+	padding: 15px;
+	min-width: 320px;
+	border: none;
+	box-shadow: $dark-shadow-1;
+	&.animated {
+  	animation-duration: 400ms;
+	}
+}
+
+.toast.success {
+	background: $success;
+	color: $white;
+}
+
+
+.toast.info {
+	background: $dark-gray;
+	color: $white;
+}
+
+
+.toast.error {
+	background: $danger;
+	color: $white;
+}
+
+.toast-header {
+	padding: 10px;
+	font-weight: $reg;
+	width: 100%;
+	color: inherit;
+	border: none;
+	background: transparent;
+	svg {
+		font-size: 18px;
+	}
+}
+
+.toast-body {
+	color: inherit;
+	width: 100%;
+	min-height: 20px;
+	font-weight: $reg;
+}

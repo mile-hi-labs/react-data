@@ -1,10 +1,11 @@
 import React, { useEffect } from 'react';
 import { StoreProvider, StoreContext } from '@mile-hi-labs/react-data';
+import { ToastProvider } from 'contexts/toast-context';
 
-import * as Adapters from './adapters/index';
-import * as Serializers from './serializers/index';
-import * as Models from './models/index';
-import Router from './router';
+import * as Adapters from 'adapters';
+import * as Serializers from 'serializers';
+import * as Models from 'models';
+import Router from 'router';
 
 
 const App = (props) => {
@@ -16,10 +17,13 @@ const App = (props) => {
     console.log('Server Domain: ', serverDomain);
   }, [])
 
+
   // Render
   return (
     <StoreProvider adapters={Adapters} serializers={Serializers} models={Models} apiDomain={serverDomain}>
-      <Router />
+      <ToastProvider>
+        <Router />
+      </ToastProvider>
     </StoreProvider>
   );
 }

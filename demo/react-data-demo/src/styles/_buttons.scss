@@ -1,0 +1,217 @@
+// Basic
+.btn {
+  font-size: inherit;
+  font-weight: $m-bold;
+  letter-spacing: 1px;
+  border: none;
+  line-height: 1.5rem;
+  vertical-align: baseline;
+  font-family: $secondary-font;
+  white-space: nowrap;
+  @include ease(all);
+  &:disabled {
+    opacity: 0.5;
+  }
+  &:hover {
+    outline: none !important;
+  }
+  &:active, &:focus  {
+    box-shadow: none !important;
+    outline: none !important;
+  }
+}
+
+// Wrapper
+.btn-wrapper {
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  text-align: inherit;
+}
+
+// Bootstrap Btns
+.btn-primary {
+  @include bootstrap-btn($white, $primary-color);
+}
+
+.btn-secondary {
+  @include bootstrap-btn($white, $secondary-color);
+}
+
+.btn-danger {
+  @include bootstrap-btn($white, $danger);
+}
+
+.btn-facebook {
+  @include bootstrap-btn($white, $facebook);
+}
+
+.btn-twitter {
+  @include bootstrap-btn($white, $twitter);
+}
+
+.btn-google {
+  @include bootstrap-btn($white, $google);
+}
+
+.btn-linkedin {
+  @include bootstrap-btn($white, $linkedin);
+}
+
+.btn-gray {
+  @include bootstrap-btn($white, $gray);
+}
+
+.btn-light-gray {
+  @include bootstrap-btn($dark-gray, $light-gray);
+}
+
+.btn-lighter-gray {
+  @include bootstrap-btn($dark-gray, $lighter-gray);
+}
+
+.btn-white {
+  @include bootstrap-btn($dark-gray, $white);
+}
+
+// Bootstrap Outline Btn
+.btn-outline-primary {
+  @include bootstrap-outline-btn($gray, $primary-color);
+}
+
+.btn-outline-secondary {
+  @include bootstrap-outline-btn($gray, $secondary-color);
+}
+
+.btn-outline-danger {
+  @include bootstrap-outline-btn($gray, $danger);
+}
+
+.btn-outline-darker-gray {
+  @include bootstrap-outline-btn($darker-gray, $darker-gray);
+}
+
+.btn-outline-dark-gray {
+  @include bootstrap-outline-btn($dark-gray, $dark-gray);
+}
+
+.btn-outline-gray {
+  @include bootstrap-outline-btn($gray, $gray);
+}
+
+.btn-outline-light-gray {
+  @include bootstrap-outline-btn($light-gray, $dark-gray);
+}
+
+.btn-outline-lighter-gray {
+  @include bootstrap-outline-btn($lighter-gray, $light-gray);
+}
+
+.btn-outline-white {
+  @include bootstrap-outline-btn($white, $light-gray);
+}
+
+
+// Text Btns
+.btn-text-primary {
+  @include bootstrap-text-btn($primary-color, transparent);
+}
+
+.btn-text-secondary {
+  @include bootstrap-text-btn($secondary-color, transparent);
+}
+
+.btn-text-blue {
+  @include bootstrap-text-btn($blue, transparent);
+}
+
+.btn-text-danger {
+  @include bootstrap-text-btn($danger, transparent);
+}
+
+.btn-text-gray {
+  @include bootstrap-text-btn($gray, transparent);
+}
+
+.btn-text-light-gray {
+  @include bootstrap-text-btn($light-gray, transparent);
+}
+
+.btn-text-lighter-gray {
+  @include bootstrap-text-btn($lighter-gray, transparent);
+}
+
+.btn-text-white {
+  @include bootstrap-text-btn($white, transparent);
+}
+
+
+
+// Styles
+.btn-pill {
+  border-radius: 24px;
+}
+
+.btn-block {
+  margin-top: 0 !important;
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+}
+
+
+// Sizes
+.btn-xl {
+  min-width: 140px;
+  padding: 1rem 1.5rem;
+  font-size: 0.9em;
+  @media all and (max-width: $medium) {
+    min-width: 80px;
+    padding: 0.8rem 1.2rem;
+  }
+}
+
+.btn-lg {
+  min-width: 120px;
+  padding: 0.8rem 1.2rem;
+  font-size: 0.9em;
+  @media all and (max-width: $medium) {
+    min-width: 80px;
+    padding: 0.6rem 1rem;
+  }
+}
+
+.btn-md {
+  min-width: 100px;
+  padding: 0.6rem 1rem;
+  font-size: 0.9em;
+  @media all and (max-width: $medium) {
+    min-width: 60px;
+    padding: 0.4rem 0.8rem;
+  }
+}
+
+.btn-sm {
+  min-width: 60px;
+  padding: 0.4rem 0.8rem;
+  font-size: 0.9em;
+}
+
+.btn-xs {
+  min-width: 0px;
+  padding: 0.2rem 0.4rem;
+  font-size: 0.9em;
+}
+
+.btn-xxs {
+  min-width: 0px;
+  padding: 0.2rem;
+  font-size: 0.8em;
+  line-height: 0;
+}
+
+.btn-none {
+  min-width: 0;
+  padding: 0;
+  font-size: 0;
+  line-height: 0;
+}

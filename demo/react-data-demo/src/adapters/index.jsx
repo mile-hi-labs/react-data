@@ -1,5 +1,5 @@
-import AppAdapter from './app-adapter';
+import App from 'adapters/app-adapter';
 
 export {
-	AppAdapter
+	App
 }

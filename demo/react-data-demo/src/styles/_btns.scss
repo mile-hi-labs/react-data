@@ -1,0 +1,65 @@
+// Main
+@mixin bootstrap-btn($color, $bg) {
+  color: $color;
+  background-color: $bg !important;
+  border-color: $bg !important;
+  &:hover {
+    background: lighten($bg, 5%);
+    border-color: lighten($bg, 5%);
+    color: $color;
+  }
+  &:active, &.active {
+    background-color: darken($bg, 10%) !important;
+    border-color: darken($bg, 10%) !important;
+    color: $color;
+  }
+  &:focus {
+    background: $bg;
+  }
+  &.disabled {
+    background: $bg;
+  }
+}
+
+// Outline
+@mixin bootstrap-outline-btn($color, $activeColor) {
+  color: $color;
+  background: transparent;
+  border: 1px solid $color;
+  &:hover {
+    background: $color;
+    border-color: darken($color, 5%);
+    color: $white;
+  }
+  &:active, &.active {
+    background: $activeColor;
+    color: $white;
+    border-color: $activeColor;
+  }
+  &.disabled {
+    background: transparent;
+  }
+}
+
+
+// Text
+@mixin bootstrap-text-btn($color, $bg) {
+  color: $color;
+  background: $bg;
+  padding-left: 0;
+  padding-right: 0;
+  svg {
+    color: inherit;
+  }
+  &:hover {
+    background: $bg;
+    color: lighten($color, 10%);
+  }
+  &:active, &.active {
+    background: $bg;
+    color: darken($color, 10%);
+  }
+  &.disabled {
+    background: transparent;
+  }
+}

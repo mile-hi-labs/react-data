@@ -1,25 +1,12 @@
-## Overview
-This is a React application that demonstrates the capabilities and performance of React Data.
+# Overview
+This demo uses `react-data` as a state management library to showcase it's capabilities.
 
 
-## Prerequisites
-- Node
-- NPM
+# Getting Started
+- Download the example or clone the project
+- Run `npm install`
+- Start `npm start`
 
 
-## Setup
-- npm install
-- add .env file
-
-
-## Development
-- Run npm link from parent project
-- Run npm run links from example app
-
-
-## Author
-Eric Hubbell
-
-
-## Misc
-
+# Development
+- This project currently uses `npm link` to connect to the react-data lib.

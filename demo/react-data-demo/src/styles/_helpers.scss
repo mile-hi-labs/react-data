@@ -1,0 +1,234 @@
+// Displays
+.block {
+	display: block;
+}
+
+.inline-block {
+	display: inline-block;
+}
+
+.inline {
+	display: inline;
+}
+
+// Margins
+.no-margin, .no-m {
+	margin: 0 !important;
+}
+
+.m-15 {
+	margin: 1rem !important;
+}
+
+.mt-15 {
+	margin-top: 1rem !important;
+}
+
+.ml-15 {
+	margin-left: 1rem !important;
+}
+
+.mr-15 {
+	margin-right: 1rem !important;
+}
+
+.mb-15 {
+	margin-bottom: 1rem !important;
+}
+
+
+// Padding
+.no-pad, .no-p {
+	padding: 0 !important;
+}
+
+.p-15 {
+	padding: 1rem !important;
+}
+
+.pt-15 {
+	padding-top: 1rem !important;
+}
+
+.pl-15 {
+	padding-left: 1rem !important;
+}
+
+.pr-15 {
+	padding-right: 1rem !important;
+}
+
+.pb-15 {
+	padding-bottom: 1rem !important;
+}
+
+
+// Positions
+.text-left {
+	text-align: left;
+}
+
+.text-right {
+	text-align: right;
+}
+
+.text-center {
+	text-align: center;
+}
+
+
+// Line Heights
+.lh-0 {
+	line-height: 0em;
+}
+
+.lh-1 {
+	line-height: 1em;
+}
+
+.lh-15 {
+	line-height: 1.5em;
+}
+
+.lh-2 {
+	line-height: 2em;
+}
+
+
+// Flex
+.flex {
+	display: flex;
+	align-items: center;
+}
+
+.flex-row {
+	flex-direction: row
+}
+
+.flex-top {
+	display: flex;
+	align-items: normal;
+}
+
+.flex-between {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+}
+
+.flex-start {
+	display: flex;
+	align-items: center;
+	justify-content: flex-start;
+}
+
+.flex-start-top {
+	display: flex;
+	align-items: normal;
+	justify-content: flex-start;
+}
+
+.flex-start-bottom {
+	display: flex;
+	align-items: baseline;
+	justify-content: flex-start;
+}
+
+.flex-center {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.flex-end {
+	display: flex;
+	align-items: center;
+	justify-content: flex-end;
+}
+
+.flex-column {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+}
+
+.flex-column-div {
+	flex: 1;
+}
+
+
+// Borders
+.no-border, .no-b {
+	border: none !important;
+}
+.border, .b {
+ 	border: 1px solid $dark-bg-1 !important;
+}
+.border-top, .bt {
+	border-top: 1px solid $dark-bg-1 !important;;
+}
+.border-left, .bl {
+	border-left: 1px solid $dark-bg-1 !important;;
+}
+.border-bottom, .bb {
+	border-bottom: 1px solid $dark-bg-1 !important;;
+}
+.border-right, .br {
+	border-right: 1px solid $dark-bg-1 !important;;
+}
+
+// Shadows
+.no-shadow {
+	box-shadow: none !important;
+}
+.light-shadow {
+	box-shadow: $dark-shadow-05;
+}
+.mid-shadow {
+	box-shadow: $dark-shadow-1;
+}
+.dark-shadow {
+	box-shadow: $dark-shadow-2;
+}
+
+
+
+
+// Corners
+.round {
+	border-radius: 4px;
+}
+
+.circle {
+	border-radius: 50%;
+}
+
+
+// Zoom
+.zoom {
+	@include transform(scale(1.05));
+}
+
+
+// Blur
+.blur {
+	@include blur(5px);
+}
+
+
+// Text
+.uppercase, .uc {
+	text-transform: uppercase;
+}
+
+.capitalize, .c {
+	text-transform: capitalize;
+}
+
+.lowercase, .lc {
+	text-transform: lowercase;
+}
+
+.underline {
+	text-decoration: underline;
+}

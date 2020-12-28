@@ -1,12 +1,10 @@
 import React, { useEffect } from 'react';
 import { Switch, Route, Redirect, useHistory, useParams, useRouteMatch } from 'react-router-dom';
-
-// Contexts
 import { withStore } from '@mile-hi-labs/react-data';
+import { withToast } from 'contexts/toast-context';
 
 // Routes
 import IndexRoute from './routes/index';
-
 import BooksRoute from './routes/books/index';
 import BooksNewRoute from './routes/books/new';
 import BooksDetailRoute from './routes/books/detail';
@@ -17,23 +15,18 @@ import ErrorBoundary from './utils/error-boundary';
 
 
 const Router = (props) => {
-  const { store } = props;
-
-  // Hooks
-  useEffect(() => {
-    console.log('Store: ', store);
-  }, [])
-
+  const { store, toast } = props;
+  const passedProps = { store: store, toast: toast }
 
   // Render
   return (
   	<ErrorBoundary>
 	    <Switch>
-	      <Route exact path='/' component={IndexRoute} store={store}/>
-        <Route exact path='/books' component={BooksRoute}/>
+	      <Route exact path='/' render={routeProps => <IndexRoute {...passedProps} {...routeProps}/>} />
+        <Route exact path='/books' render={routeProps => <BooksRoute {...passedProps} {...routeProps}/>} />
         <Route exact path='/books/new' component={BooksNewRoute}/>
         <Route path='/books/:bookId'>
-          <BooksDetail />
+          <BooksDetail {...passedProps} />
         </Route>
 
         <Route path='/*'>
@@ -45,20 +38,25 @@ const Router = (props) => {
 }
 
 const BooksDetail = (props) => {
-  const history = useHistory();
   const { path } = useRouteMatch();
   const { bookId } = useParams();
 
   return (
     <Switch>
-      <Route exact path={path}>
-        <BooksDetailRoute bookId={bookId} store={store} history={history} />
-      </Route>
-      <Route exact path={path + '/edit'}>
-        <BooksEditRoute bookId={bookId} store={store} history={history} />
-      </Route>
+      <Route exact
+        path={path}
+        render={routeProps => (
+          <BooksDetailRoute bookId={bookId} {...props} {...routeProps} />
+        )}
+      />
+      <Route exact
+        path={path + '/edit'}
+        render={routeProps => (
+          <BooksEditRoute bookId={bookId} {...props} {...routeProps} />
+        )}
+      />
     </Switch>
   )
 }
 
-export default withStore(Router);
+export default withStore(withToast(Router));
