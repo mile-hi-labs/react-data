@@ -8,36 +8,6 @@ const IndexRoute = (props) => {
 	const { store = {}, toast, history } = props;
 
 
-	// Hooks
-	useEffect(() => {
-		fetchData();
-	}, [])
-
-
-	// Methods
-	const fetchData = async () => {
-		try {
-			setLoading(true);
-			let model = await store.query('book', params())
-			setBooks(model);
-		} catch (e) {
-			console.log('Error: ', e);
-		} finally {
-			setLoading(false);
-		}
-	}
-
-	const params = () => {
-		let params = {};
-		if (pageSize) params.pageSize = pageSize;
-		if (sortProp) params.sortProp = sortProp;
-		if (sortValue) params.sortValue = sortValue;
-		params.page = page;
-		params.include = 'authors,categories,publishers';
-		return params;
-	}
-
-
 	// Render
 	return (
 		<MktRoute title='Library - Welcome'>

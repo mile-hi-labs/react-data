@@ -26,7 +26,6 @@ const BooksRoute = (props) => {
 		try {
 			setLoading(true);
 			let model = await store.query('book', params())
-			toast.showSuccess('Books fetched!');
 			setBooks(model);
 		} catch (e) {
 			toast.showError(e)
