@@ -1,5 +1,5 @@
 src/*
-demo/*
+demos/*
 releases/*
 .babelrc
 .gitattributes
