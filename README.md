@@ -1,5 +1,5 @@
 ## Overview
-React Data is a state management library for React and React Native applications. The library is lightweight and configurable so you can quickly connect to your API and get back to writing code.
+React Data is a state management library for React and React Native applications. The library is lightweight and configurable so you can quickly connect React Data to your API and then grow with it over time.
 
 
 ## How it Works
