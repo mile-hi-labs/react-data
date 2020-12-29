@@ -31,7 +31,7 @@
     "react serializers",
     "react native serializers",
     "react json api",
-    "react native json api",
+    "react native json api"
   ],
   "scripts": {
     "build": "webpack --env development",
