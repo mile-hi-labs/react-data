@@ -18,11 +18,11 @@ class BaseAdapter {
 	}
 
 
-	static buildURL(modelName, id) {
+	static buildURL(resource, id) {
 		if (id) {
-			return this.baseURL() + `/${modelName}/${id}`;
+			return this.baseURL() + `/${resource}/${id}`;
 		}
-		return this.baseURL() + `/${modelName}`;
+		return this.baseURL() + `/${resource}`;
 	}
 
 	static formattedParams(params = {}) {
@@ -36,28 +36,28 @@ class BaseAdapter {
 
 	// URLs
 	static urlForQuery(modelName) {
-		let resourceName = Pluralize(modelName);
-		return this.buildURL(resourceName);
+		let resource = Pluralize(modelName);
+		return this.buildURL(resource);
 	}
 
 	static urlForQueryRecord(modelName, id = '') {
-		let resourceName = Pluralize(modelName);
-		return this.buildURL(resourceName, id.toString());
+		let resource = Pluralize(modelName);
+		return this.buildURL(resource, id.toString());
 	}
 
 	static urlForCreateRecord(modelName) {
-		let resourceName = Pluralize(modelName);
-		return this.buildURL(resourceName);
+		let resource = Pluralize(modelName);
+		return this.buildURL(resource);
 	}
 
 	static urlForUpdateRecord(modelName, id = '') {
-		let resourceName = Pluralize(modelName);
-		return this.buildURL(resourceName, id.toString());
+		let resource = Pluralize(modelName);
+		return this.buildURL(resource, id.toString());
 	}
 
 	static urlForDestroyRecord(modelName, id = '') {
-		let resourceName = Pluralize(modelName);
-		return this.buildURL(resourceName, id.toString());
+		let resource = Pluralize(modelName);
+		return this.buildURL(resource, id.toString());
 	}
 
 

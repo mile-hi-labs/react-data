@@ -19,22 +19,21 @@
   },
   "keywords": [
     "react",
-    "context",
-    "store",
+    "react-data",
     "react data",
+    "react-store",
     "react store",
-    "data store",
-    "state management",
-    "jsonapi",
-    "json-api",
+    "react adapters",
+    "react-adapters",
+    "react models",
     "react-models",
-    "react-serializers",
-    "react-adapters"
+    "react serializers",
+    "react-serializers"
   ],
   "scripts": {
     "build": "webpack --env development",
     "build:prod": "webpack --env production",
-    "deploy": "npm run build && npm build:prod && npm publish",
+    "deploy": "npm run build && npm run build:prod && npm publish"
   },
   "devDependencies": {
     "babel-core": "^6.21.0",
