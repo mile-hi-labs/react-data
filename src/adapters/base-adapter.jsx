@@ -76,7 +76,7 @@ class BaseAdapter {
 	static async queryRecord(modelName, recordId = null, params = {}) {
 		try {
 			let url = this.urlForQueryRecord(modelName, recordId);
-			let formattedParams = this.filteredParams(params);
+			let formattedParams = this.formattedParams(params);
 			let response = await this.axios.get(url, { params: formattedParams });
 			return response.data;
 		} catch(e) {

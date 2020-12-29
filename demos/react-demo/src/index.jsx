@@ -1,10 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter } from 'react-router-dom';
-import App from './app';
-
+import App from 'app';
 import FarIcons from 'utils/font-awesome/far-icons';
-
 import 'styles/app.scss';
 
 ReactDOM.render(
