@@ -23,7 +23,7 @@ const BookList = (props) => {
 	}
 	return (
 		<SectionEmpty
-			icon='book'
+			icon='info'
 			title='Books'
 			msg="Sorry, looks like there aren't any books yet."
 		/>

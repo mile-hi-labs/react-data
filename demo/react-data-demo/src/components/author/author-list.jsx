@@ -23,7 +23,7 @@ const AuthorList = (props) => {
 	}
 	return (
 		<SectionEmpty
-			icon='author'
+			icon='info'
 			title='Authors'
 			msg="Sorry, looks like there aren't any authors yet."
 		/>

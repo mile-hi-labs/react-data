@@ -3,11 +3,11 @@ import RbPagination from 'react-bootstrap/Pagination'
 import { logger } from 'utils/helpers';
 
 const Pagination = (props) => {
-  const { meta = {}, className = '', onClick, children } = props;
-  const page = meta.page + 1;
+  const { meta = {}, setPage, className = '', children } = props;
+  const page = meta.page;
   const pageSize = meta.pageSize;
   const totalRecords = meta.totalRecords;
-  const totalPages = Math.ceil(totalRecords / pageSize);
+  const totalPages = Math.floor(totalRecords / pageSize);
 
   const pages = () => {
     let pages = [];
@@ -19,33 +19,33 @@ const Pagination = (props) => {
 
   return (
     <RbPagination className={className}>
-      <PaginationFirst 
-        item={1} 
-        disabled={!totalPages > 1} 
-        onClick={() => onClick(0)}
+      <PaginationFirst
+        item={1}
+        disabled={(page == 0) || !totalPages > 1}
+        onClick={() => setPage(0)}
       />
-      <PaginationPrev 
-        item={page - 1} 
-        disabled={!page > 1} 
-        onClick={() => onClick(page >= 2 ? page - 2 : 0)}
+      <PaginationPrev
+        item={page - 1}
+        disabled={page == 0}
+        onClick={() => setPage(page - 1)}
       />
       {pages().map(p => (
-        <PaginationItem 
-          key={p} 
-          item={p} 
-          active={p == page} 
-          onClick={() => onClick(p - 1)}
+        <PaginationItem
+          key={p}
+          item={p}
+          active={p == page + 1}
+          onClick={() => setPage(p - 1)}
         />
       ))}
-      <PaginationNext 
-        item={page + 1} 
-        disabled={page == totalPages} 
-        onClick={() => onClick(page)}
+      <PaginationNext
+        item={page + 1}
+        disabled={page == totalPages}
+        onClick={() => setPage(page + 1)}
       />
-      <PaginationLast 
-        item={pages} 
-        disabled={!totalPages > 1} 
-        onClick={() => onClick(pages.length)}
+      <PaginationLast
+        item={pages}
+        disabled={(page == totalPages) || (!totalPages > 1)}
+        onClick={() => setPage(totalPages)}
       />
     </RbPagination>
   )
@@ -54,13 +54,13 @@ const Pagination = (props) => {
 const PaginationFirst = (props) => {
   const { item, disabled, className = '', onClick } = props;
 
-  return <RbPagination.First className={className} onClick={() => !disabled && onClick(item)} />
+  return <RbPagination.First className={className} disabled={disabled} onClick={onClick} />
 }
 
 const PaginationPrev = (props) => {
   const { item, disabled, className = '', onClick } = props;
 
-  return <RbPagination.Prev className={className} onClick={() => !disabled && onClick(item)} />
+  return <RbPagination.Prev className={className} disabled={disabled} onClick={onClick} />
 }
 
 
@@ -77,13 +77,13 @@ const PaginationItem = (props) => {
 const PaginationNext = (props) => {
   const { item, disabled, className = '', onClick } = props;
 
-  return <RbPagination.Next className={className} onClick={() => !disabled && onClick(item)}/>
+  return <RbPagination.Next className={className} disabled={disabled} onClick={onClick}/>
 }
 
 const PaginationLast = (props) => {
   const { item, disabled, className = '', onClick } = props;
 
-  return <RbPagination.Last className={className} onClick={() => !disabled && onClick(item)} disabled={disabled}/>
+  return <RbPagination.Last className={className} disabled={disabled} onClick={onClick}/>
 }
 
 

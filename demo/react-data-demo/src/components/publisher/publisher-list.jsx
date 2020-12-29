@@ -23,7 +23,7 @@ const PublisherList = (props) => {
 	}
 	return (
 		<SectionEmpty
-			icon='publishers'
+			icon='info'
 			title='Publishers'
 			msg="Sorry, looks like there aren't any publishers yet."
 		/>

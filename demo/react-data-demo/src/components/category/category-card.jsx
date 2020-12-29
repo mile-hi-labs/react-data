@@ -8,7 +8,7 @@ const CategoryDetailCard = (props) => {
 
 	return (
 		<DetailCard
-			icon='category'
+			icon={category.icon}
 			photo={category.photo}
 			title={category.title}
 			timestamp={category.displayUpdatedAt}
@@ -22,7 +22,7 @@ const CategoryListCard = (props) => {
 
 	return (
 		<ListCard
-			icon='category'
+			icon={category.icon}
 			photo={category.photo}
 			title={category.title}
 			loading={loading}

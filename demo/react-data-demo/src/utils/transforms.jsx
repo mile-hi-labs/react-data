@@ -26,6 +26,14 @@ export const phoneToString = (data) => {
 	return data.replace(/\D+/g, '');
 }
 
+export const stringToUnderscore = (key) => {
+  return key.split(' ').join('_').toLowerCase();
+}
+
+export const underscoreToString = (key) => {
+  return key.split('_').join(' ');
+}
+
 export const truncate = (data = '', count, ellipsis = false) => {
 	return (ellipsis && data.length >= count) ? (data.slice(0, count) + '...') : data.slice(0, count);
 }

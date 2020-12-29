@@ -23,7 +23,7 @@ const CategoryList = (props) => {
 	}
 	return (
 		<SectionEmpty
-			icon='category'
+			icon='info'
 			title='Categories'
 			msg="Sorry, looks like there aren't any authors yet."
 		/>

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import { adapterFor } from 'helpers/adapters';
-import { serializerFor } from 'helpers/serializers';
-import { modelFor } from 'helpers/models';
+import { fetchAdapter } from 'helpers/adapters';
+import { fetchModel } from 'helpers/models';
+import { fetchSerializer } from 'helpers/serializers';
 import JsonApiErrors from 'utils/json-api-errors';
 import { addObject, removeObject, timeElapsed, logger, isEmpty } from 'utils/helpers';
 
@@ -11,172 +11,128 @@ class StoreProvider extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      apiDomain: this.props.apiDomain || '',
       adapters: this.props.adapters || {},
       models: this.props.models || {},
       serializers: this.props.serializers || {},
-      apiDomain: this.props.apiDomain || '',
       adapterFor: this.adapterFor.bind(this),
       modelFor: this.modelFor.bind(this),
       serializerFor: this.serializerFor.bind(this),
       createRecord: this.createRecord.bind(this),
+      updateAll: this.updateAll.bind(this),
+      updateRecord: this.updateRecord.bind(this),
       pushAll: this.pushAll.bind(this),
       pushRecord: this.pushRecord.bind(this),
       peekAll: this.peekAll.bind(this),
       peekRecord: this.peekRecord.bind(this),
       peekOrCreateRecord: this.peekOrCreateRecord.bind(this),
-      updateRecord: this.updateRecord.bind(this),
-      updateStore: this.updateStore.bind(this),
+      removeAll: this.removeAll.bind(this),
+      removeRecord: this.removeRecord.bind(this),
       findAll: this.findAll.bind(this),
       findRecord: this.findRecord.bind(this),
       query: this.query.bind(this),
       queryRecord: this.queryRecord.bind(this),
-      apiRequest: this.apiRequest.bind(this),
-      removeAll: this.removeAll.bind(this),
-      removeRecord: this.removeRecord.bind(this),
-      loaded: false,
     };
   };
 
 
   // Hooks
   componentDidMount() {
-    this.init();
-  }
-
-
-  // Setup
-  async init() {
-    let start = Date.now();
-    logger('store initialized...');
-
-    this.adapterFor('').set('apiDomain', this.state.apiDomain);
-    this.setState({ loaded: true });
-
-    timeElapsed('store ready: ', start);
+    logger('React Data ready...');
+    this.adapterFor('').apiDomain = this.state.apiDomain;
   }
 
 
   // Helpers
   adapterFor(modelName) {
-    return adapterFor(this.state.adapters, modelName, this.state);
+    return fetchAdapter(this.state.adapters, modelName, this.state);
   }
 
   modelFor(modelName, data) {
-    return modelFor(this.state.models, modelName, this.state, data);
+    return fetchModel(this.state.models, modelName, this.state, data);
   }
 
   serializerFor(modelName, data) {
-    return serializerFor(this.state.serializers, modelName, this.state, data);
+    return fetchSerializer(this.state.serializers, modelName, this.state, data);
   }
 
 
-  // Records
-  createRecord(modelName, data) {
-    let record = this.modelFor(modelName, data);
-    return this.pushRecord(modelName, record);
+  // Store Records
+  createRecord(modelName, data, isNew = true) {
+    let storeRecords = this.peekAll(modelName);
+    let storeRecord = this.modelFor(modelName, data);
+    storeRecords.push(storeRecord);
+    this.setState({ [modelName]:  storeRecords }, () => {
+      if (isNew) { logger('Store: ', this.state) }
+    });
+    return storeRecord;
+  }
+
+  updateAll(modelName) {
+    let storeRecords = this.peekAll(modelName);
+    this.setState({ [modelName]:  storeRecords });
+    logger('Store: ', this.state);
   }
 
   updateRecord(modelName, storeRecord, record) {
-    const state = this.state;
     this.removeRecord(modelName, storeRecord);
-    let newRecord = this.createRecord(modelName, record);
-    return newRecord;
+    return this.createRecord(modelName, record, false);
   }
 
-  updateStore(modelName) {
-    const state = this.state;
-    let models = this.state[modelName] || [];
-    this.setState({ [modelName]:  models });
-    logger('Store: ', this.state);
-    return true;
-  }
+  pushAll(modelName, records) {
+    let storeRecords = this.peekAll(modelName);
+    return records.map(record => this.pushRecord(modelName, record));
+  };
 
+  pushRecord(modelName, record) {
+    let storeRecord = this.peekRecord(modelName, record.id);
+    return storeRecord ? this.updateRecord(modelName, storeRecord, record) : this.createRecord(modelName, record, false);
+  };
 
-  // Peeks
   peekAll(modelName) {
-    let models = this.state[modelName] || [];
-    return models;
+    return this.state[modelName] || [];
   }
 
-  peekRecord(modelName, recordID) {
-    let models = this.state[modelName] || [];
-    let storeRecord = models.find(model => model.id == recordID);
+  peekRecord(modelName, recordId) {
+    let storeRecords = this.peekAll(modelName);
+    let storeRecord = storeRecords.find(model => model.id == recordId);
     return storeRecord ? storeRecord : null;
   }
 
   peekOrCreateRecord(modelName, record) {
-    let models = this.state[modelName] || [];
     let storeRecord = this.peekRecord(modelName, record.id);
-    return storeRecord ? this.updateRecord(modelName, storeRecord, record) : this.createRecord(modelName, record);
+    return storeRecord ? storeRecord : this.createRecord(modelName, record);
   }
 
-  // Misc
-  async pushAll(modelName, records) {
-    const state = this.state;
-    let models = this.state[modelName] || [];
-    let newRecords = records.map(async record => {
-      let storeRecord = this.peekRecord(modelName, record.id);
-      if (storeRecord) {
-        return this.updateRecord(modelName, storeRecord, record)
-      }
-      return this.createRecord(modelName, record);
-    });
-    return await Promise.all(newRecords);
-  };
-
-  pushRecord(modelName, record) {
-    const state = this.state;
-    let models = this.state[modelName] || [];
-    models.push(record);
-    this.setState({ [modelName]:  models });
-    logger('Store: ', this.state);
-    return record;
+  removeRecord(modelName, record = {}) {
+    let storeRecords = this.state[modelName] || [];
+    let storeRecord = record.id ? this.peekRecord(modelName, record.id) : storeRecords.find(model => isEmpty(model.id));
+    storeRecords = removeObject(storeRecords, storeRecord);
+    this.setState({ [modelName]:  storeRecords }, () => logger('Store: ', this.state));
+    return null;
   };
 
   removeAll(modelName, records) {
-    const state = this.state;
-    state[modelName] = [];
-    this.setState(state);
-    logger('Store: ', state);
+    this.state[modelName] = [];
+    this.setState(this.state, () => logger('Store: ', this.state));
     return null;
   };
 
-  removeRecord(modelName, record) {
-    const state = this.state;
-    let models = state[modelName] || [];
-    let model = models.find(model => model.id == record.id);
-    models = model ? removeObject(models, model) : removeObject(models, record);
-    this.setState(state);
-    logger('Store: ', this.state);
-    return null;
-  };
 
+  // Network calls
   async findAll(modelName, params) {
     try {
-      let storeRecords = this.state[modelName] || [];
-      if (!isEmpty(storeRecords)) { return storeRecords }
-      // Fetch All
-      let response = await this.adapterFor(modelName).findAll(modelName, params);
-      let records = this.serializerFor(modelName).normalizeArray(response.data, response.included, response.meta);
-      let models = await this.pushAll(modelName, records.records);
-      models.meta = records.meta;
-      logger('Store: ', this.state);
-      return models;
+      if (!isEmpty(storeRecords)) { return this.peekAll(modelName) }
+      return await this.query(modelName, params);
     } catch(e) {
       throw JsonApiErrors.formatErrors(e);
     }
   };
 
-  async findRecord(modelName, recordID, params) {
+  async findRecord(modelName, recordId, params) {
     try {
-      let storeRecord = this.peekRecord(modelName, recordID);
-      if (!isEmpty(storeRecord)) { return storeRecord }
-      // Fetch Record
-      let response = await this.adapterFor(modelName).findRecord(modelName, recordID, params);
-      let record = this.serializerFor(modelName).normalize(response.data, response.included);
-      let model = this.createRecord(modelName, record);
-      logger('Store: ', this.state);
-      return model;
+      if (!isEmpty(storeRecord)) { return this.peekRecord(modelName, recordId) }
+      return await this.queryRecord(modelName, recordId, params);
     } catch(e) {
       throw JsonApiErrors.formatErrors(e);
     }
@@ -184,38 +140,23 @@ class StoreProvider extends Component {
 
   async query(modelName, params) {
     try {
-      let start = Date.now();
       let response = await this.adapterFor(modelName).query(modelName, params);
-      let records = this.serializerFor(modelName).normalizeArray(response.data, response.included, response.meta);
-      let models = await this.pushAll(modelName, records.records);
-      models.meta = records.meta;
-      return models;
+      let records = this.serializerFor(modelName).normalizeArray(response.data, response.included);
+      let storeRecords = this.pushAll(modelName, records);
+      storeRecords.meta = this.serializerFor(modelName).normalizeMeta(response.meta);
+      return storeRecords;
     } catch(e) {
       throw JsonApiErrors.formatErrors(e);
     }
   }
 
-  async queryRecord(modelName, recordID, params) {
+  async queryRecord(modelName, recordId, params) {
     try {
-      let response = await this.adapterFor(modelName).queryRecord(modelName, recordID, params);
+      let response = await this.adapterFor(modelName).queryRecord(modelName, recordId, params);
       let record = this.serializerFor(modelName).normalize(response.data, response.included);
-      let storeRecord = this.peekRecord(modelName, record.id);
-      let model = storeRecord ? this.updateRecord(modelName, storeRecord, record) : this.createRecord(modelName, record);
-      logger('Store: ', this.state);
-      return model;
+      return this.pushRecord(modelName, record);
     } catch(e) {
       throw JsonApiErrors.formatErrors(e);
-    }
-  }
-
-  async apiRequest(modelName, recordID, params) {
-    try {
-      let response = await this.adapterFor(modelName).queryRecord(modelName, recordID, params);
-      let record = this.serializerFor(modelName).normalize(response.data, response.included);
-      logger('Server Response: ', record);
-      return record;
-    } catch(e) {
-      throw e;
     }
   }
 
@@ -227,7 +168,7 @@ class StoreProvider extends Component {
 
     return (
       <StoreContext.Provider value={this.state}>
-        {loaded ? children : null}
+        {children}
       </StoreContext.Provider>
     );
   }

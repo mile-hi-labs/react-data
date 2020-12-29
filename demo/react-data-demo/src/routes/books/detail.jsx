@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import AuthorList from 'components/author/author-list';
+import BookActions from 'components/book/book-actions';
 import CategoryList from 'components/category/category-list';
 import PublisherList from 'components/publisher/publisher-list';
 import { BookDetailCard }from 'components/book/book-card';
@@ -24,7 +25,9 @@ const BooksDetailRoute = (props) => {
 	const fetchData = async () => {
 		try {
 			setLoading(true);
-			let model = await store.queryRecord('book', bookId, { include: 'authors,categories,publishers' })
+			let model = await store.queryRecord('book', bookId, {
+				include: 'authors,categories,publishers'
+			})
 			toast.showSuccess('Book received!');
 			setBook(model);
 		} catch (e) {
@@ -39,7 +42,9 @@ const BooksDetailRoute = (props) => {
 			<Container className='pt-3 pb-3'>
 
 				<SectionBlock>
-					<SectionHeader title='Book Detail' />
+					<SectionHeader title={`Book #${bookId}`} className='flex-between'>
+						<BookActions book={book} />
+					</SectionHeader>
 				</SectionBlock>
 
 				<Row>

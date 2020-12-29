@@ -36,6 +36,7 @@
 // Header
 .card-header {
 	position: relative;
+	display: flex;
 	border: none;
 	border-radius: 0 !important;
 	background: $primary-color;
@@ -59,10 +60,8 @@
 }
 
 .card-icon {
-	display: flex;
 	margin: auto;
 	color: $white;
-	@include transform(translateY(-50%));
 }
 
 

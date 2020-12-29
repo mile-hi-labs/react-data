@@ -12,6 +12,11 @@ class Book extends AppModel {
 		this.printType = props.printType;
 		this.language = props.language;
 
+		// Nested
+		this.urls = {
+			webUrl: props.webUrl,
+		}
+
 
 		// Relationships
 		this.authors = this.hasMany('author', props.authors);
@@ -19,8 +24,20 @@ class Book extends AppModel {
 		this.publishers = this.hasMany('publisher', props.publishers);
 	}
 
+	get printTypeOptions() {
+		return ['Paper', 'HardBack', 'Digital'];
+	}
+
+	get languageOptions() {
+		return ['Dutch', 'English', 'French', 'German', 'Italian'];
+	}
+
 	get previewDescription() {
 		return this.description ? truncate(this.description, 60, true) : '--'
+	}
+
+	get url() {
+		return `/book/${this.id}`
 	}
 }
 

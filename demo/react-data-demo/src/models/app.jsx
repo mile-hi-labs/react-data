@@ -6,6 +6,7 @@ class AppModel extends BaseModel {
 		super(type, store, props);
 
 		// Attrs
+		this.icon = 'info';
 		this.createdAt = props.createdAt;
 		this.updatedAt = props.updatedAt;
 	}

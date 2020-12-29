@@ -19,6 +19,7 @@ const BtnLink = (props) => {
 		<RRDLink to={to} className={'btn ' + className}>
 			{title && <span>{title}</span>}
 			{icon && <FarIcon icon={icon} className='ml-3'/>}
+			{children}
 		</RRDLink>
 	)
 }

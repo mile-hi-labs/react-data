@@ -1,8 +1,7 @@
 import React from 'react';
 import Pluralize from 'pluralize';
-
 import { camelToDash, dashToCamel } from 'utils/transforms';
-import { isBlank, isEmpty, logger } from 'utils/helpers';
+import { isEmpty, logger } from 'utils/helpers';
 
 class BaseSerializer {
 	constructor(store, props = {}) {
@@ -12,10 +11,7 @@ class BaseSerializer {
 	get attrs() {
 		return {
 			type: { serialize: false },
-			className: { serialize: false },
-			parent: { serialize: false },
 			store: { serialize: false },
-			log: { serialize: false },
 			updatedAt: { serialize: false },
 			createdAt: { serialize: false },
 		}
@@ -24,6 +20,7 @@ class BaseSerializer {
 	get relationships() {
 		return {}
 	}
+
 
 	// Methods
 	checkAttrs(key) {
@@ -53,9 +50,9 @@ class BaseSerializer {
 	}
 
 	serializeAttr(data, key) {
-		if (isBlank(data[key])) { return }
-		if (this.checkAttrs(key).serialize == false) { 
-			return; 
+		if (isEmpty(data[key])) { return }
+		if (this.checkAttrs(key).serialize == false) {
+			return;
 		}
 		if (key == 'id') {
 			return parseInt(data[key])
@@ -97,19 +94,28 @@ class BaseSerializer {
 		}
 	}
 
-	
+
 	// Normalize
-	normalizeArray(data = [], included = [], meta = {}) {
+	normalizeArray(data = [], included = []) {
 		let normalizedData = [];
-		data.map(record => normalizedData.push(this.normalize(record, included)));
+		data.forEach(record => normalizedData.push(this.normalizeAttrs(record, included)));
 		logger('normalizedData: ', normalizedData);
-		return { records: normalizedData, meta: this.normalizeAttrs(meta) };
+		return normalizedData;
 	}
 
-	normalize(data, included = [], meta) {
+	normalize(data, included = []) {
 		let normalizedData = this.normalizeAttrs(data, included);
 		logger('normalizedData: ', normalizedData);
 		return normalizedData;
+	}
+
+	normalizeMeta(meta) {
+		let normalizedMeta = {};
+		Object.keys(meta).forEach(key => {
+			normalizedMeta[dashToCamel(key)] = parseInt(meta[key]);
+		})
+		logger('normalizedMeta: ', normalizedMeta);
+		return normalizedMeta;
 	}
 
 	normalizeAttrs(data, included = []) {

@@ -1,13 +1,11 @@
 import LodashArray from 'lodash/array';
 
 export const addObject = (array, record) => {
-	let newArray = !array.includes(record) ? array.push(record) : array;
-	return array;
+	return !array.includes(record) ? array.push(record) : array;
 }
 
 export const removeObject = (array, record) => {
-	let newArray = LodashArray.pull(array, record);
-	return newArray;
+	return LodashArray.pull(array, record);
 }
 
 export const timeElapsed = (msg, start) => {
@@ -22,12 +20,8 @@ export const logger = (...data) => {
 	}
 }
 
-export const isBlank = (data) => {
-	return (data == null || data == undefined || data.length == 0) ? true : false;
-}
-
 export const isEmpty = (data) => {
-	if (data == null || data == undefined || data == 'undefined') {
+	if (data == null || data == undefined) {
 		return true
 	}
 	if (Array.isArray(data)) {

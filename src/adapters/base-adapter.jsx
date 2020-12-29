@@ -13,33 +13,19 @@ class BaseAdapter {
 		return new Axios({ baseURL: this.apiDomain, token: this.token }).instance
 	}
 
-	static get(prop, value) {
-		return this[prop];
-	}
-
-	static set(prop, value) {
-		if(prop.includes('.')) {
-			let names = prop.split('.');
-			this[names[0]][names[1]] = value;
-		} else {
-			this[prop] = value;
-		}
-		return this;
-	}
-
 	static baseURL() {
-		return typeof window == 'undefined' ? '' : this.apiDomain;
+		return this.apiDomain;
 	}
 
 
 	static buildURL(modelName, id) {
 		if (id) {
-			return this.baseURL() + `/${Pluralize(modelName)}/${String(id)}`;
+			return this.baseURL() + `/${modelName}/${id}`;
 		}
-		return this.baseURL() + `/${Pluralize(modelName)}`;
+		return this.baseURL() + `/${modelName}`;
 	}
 
-	static filteredParams(params = {}) {
+	static formattedParams(params = {}) {
 		let formattedParams = {};
 		Object.keys(params).forEach(p => {
 			if (!isEmpty(params[p])) { formattedParams[p] = params[p]; }
@@ -49,62 +35,37 @@ class BaseAdapter {
 
 
 	// URLs
-	static urlForFindAll(modelName) {
-		return this.buildURL(modelName);
-	}
-
-	static urlForFindRecord(modelName, id) {
-		return this.buildURL(modelName, id);
-	}
-
 	static urlForQuery(modelName) {
-		return this.buildURL(modelName);
+		let resourceName = Pluralize(modelName);
+		return this.buildURL(resourceName);
 	}
 
-	static urlForQueryRecord(modelName, id) {
-		return this.buildURL(modelName, id);
+	static urlForQueryRecord(modelName, id = '') {
+		let resourceName = Pluralize(modelName);
+		return this.buildURL(resourceName, id.toString());
 	}
 
 	static urlForCreateRecord(modelName) {
-		return this.buildURL(modelName);
+		let resourceName = Pluralize(modelName);
+		return this.buildURL(resourceName);
 	}
 
-	static urlForUpdateRecord(modelName, id) {
-		return this.buildURL(modelName, id);
+	static urlForUpdateRecord(modelName, id = '') {
+		let resourceName = Pluralize(modelName);
+		return this.buildURL(resourceName, id.toString());
 	}
 
-	static urlForDestroyRecord(modelName, id) {
-		return this.buildURL(modelName, id);
+	static urlForDestroyRecord(modelName, id = '') {
+		let resourceName = Pluralize(modelName);
+		return this.buildURL(resourceName, id.toString());
 	}
 
 
 	// Network calls
-	static async findAll(modelName, params) {
-		try {
-			let url = this.urlForFindAll(modelName);
-			let formattedParams = this.filteredParams(params);
-			let response = await this.axios.get(url, { params: formattedParams });
-			return response.data;
-		} catch(e) {
-			throw e;
-		}
-	}
-
-	static async findRecord(modelName, recordID, params = {}) {
-		try {
-			let url = this.urlForFindRecord(modelName, recordID);
-			let formattedParams = this.filteredParams(params);
-			let response = await this.axios.get(url, { params: formattedParams });
-      return response.data;
-		} catch(e) {
-			throw e;
-		}
-	}
-
 	static async query(modelName, params) {
 		try {
 			let url = this.urlForQuery(modelName);
-			let formattedParams = this.filteredParams(params);
+			let formattedParams = this.formattedParams(params);
 			let response = await this.axios.get(url, { params: formattedParams });
 			return response.data;
 		} catch(e) {
@@ -112,9 +73,9 @@ class BaseAdapter {
 		}
 	}
 
-	static async queryRecord(modelName, id = null, params = {}) {
+	static async queryRecord(modelName, recordId = null, params = {}) {
 		try {
-			let url = this.urlForQueryRecord(modelName, id);
+			let url = this.urlForQueryRecord(modelName, recordId);
 			let formattedParams = this.filteredParams(params);
 			let response = await this.axios.get(url, { params: formattedParams });
 			return response.data;

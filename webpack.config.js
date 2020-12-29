@@ -2,9 +2,9 @@ const path = require('path');
 const webpack = require('webpack');
 const CompressionPlugin = require('compression-webpack-plugin');
 
-function sharedConfig(production = false) {
+function sharedConfig(mode) {
   return {
-    mode: 'production',
+    mode: mode,
     entry: './src/index.jsx',
     output: {
       path: __dirname + '/lib',
@@ -26,7 +26,7 @@ function sharedConfig(production = false) {
       ]
     },
     externals: {
-      'react': 'commonjs react' 
+      'react': 'commonjs react'
     },
     resolve: {
       modules: [path.resolve(__dirname, 'src'), 'node_modules'],
@@ -40,21 +40,22 @@ function sharedConfig(production = false) {
   }
 }
 
-module.exports = env => {
-  console.log('Production: ', env.production ? true : false);
-  let config = sharedConfig(env.production);
+module.exports = environment => {
+  let env = environment.production ? 'production' : 'development';
+  console.log('Env: ', env);
+  let config = sharedConfig(env);
+
   if (env.production) {
     config.plugins = [
       new CompressionPlugin()
     ]
     return config;
+  } else {
+    config.devtool = "source-map";
   }
-  config.plugins = [
-    new webpack.SourceMapDevToolPlugin({}),
-    new webpack.DefinePlugin({ "process.env.NODE_ENV": JSON.stringify("development") }),
-  ];
   return config
 }
 
 // Webpack devtools
 // https://webpack.js.org/configuration/devtool/
+// https://webpack.js.org/plugins/eval-source-map-dev-tool-plugin/

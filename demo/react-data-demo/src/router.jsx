@@ -24,7 +24,7 @@ const Router = (props) => {
 	    <Switch>
 	      <Route exact path='/' render={routeProps => <IndexRoute {...passedProps} {...routeProps}/>} />
         <Route exact path='/books' render={routeProps => <BooksRoute {...passedProps} {...routeProps}/>} />
-        <Route exact path='/books/new' component={BooksNewRoute}/>
+        <Route exact path='/books/new' render={routeProps => <BooksNewRoute {...passedProps} {...routeProps}/>} />
         <Route path='/books/:bookId'>
           <BooksDetail {...passedProps} />
         </Route>

@@ -3,18 +3,16 @@ import Pluralize from 'pluralize';
 import Axios from 'services/axios-service';
 import JsonApiErrors from 'utils/json-api-errors';
 import { camelToDash } from 'utils/transforms';
-import { addObject, removeObject, logger, isEmpty } from 'utils/helpers';
+import { addObject, removeObject, isEmpty, logger } from 'utils/helpers';
 
 class BaseModel {
 	constructor(type, store, props = {}) {
 		this.id = props.id || '';
 		this.type = camelToDash(type).toLowerCase();
+		this.store = store || {};
 
 		this.updatedAt = props.updatedAt || '';
 		this.createdAt = props.createdAt || '';
-
-		this.store = store || {};
-		this.log = [];
 	}
 
 
@@ -22,56 +20,66 @@ class BaseModel {
 	attr(type, prop = '') {
 		switch (type) {
 			case 'decimal':
-				return parseFloat(prop) || 0;
+			return parseFloat(prop) || 0;
 
 			case 'integer':
-				return parseInt(prop) || 0;
+			return parseInt(prop) || 0;
 
 			case 'string':
-				return String(prop) || '';
+			return prop.toString() || '';
 
 			default:
-				return prop;
+			return prop;
 		}
 	}
 
 
 	// Methods
-	get(prop, value) {
-		return this[prop];
-	}
-
-	set(prop, value) {
+	set(prop = '', value) {
+		let model = this;
+		let formattedProp = prop;
 		if (prop.includes('.')) {
-			let names = prop.split('.');
-			let nestedObject = this;
-			names.forEach((name, index) => {
-				if (names.length - 2 == index) {
-					nestedObject = nestedObject[name];
+			prop.split('.').map((p, index) => {
+				prop = p;
+				if (index < prop.split('.').length) {
+					model = model[p]
 				}
 			});
-			nestedObject[names[names.length - 1]] = value;
-		} else {
-			this[prop] = value;
 		}
-		this.store.updateStore(this.type);
-		return this;
+		model[prop] = value;
+		this.store.updateAll(this.type);
+	}
+
+	setProps(props = {}) {
+		return Object.keys(props).map(key => this.set(key, props[key]) );
+	}
+
+	toggleProp(prop = '', value) {
+		return this.set(prop, !value);
+	}
+
+	pushProp(prop, value) {
+		addObject(this[prop], value);
+		logger('Store: ', this.store);
+	}
+
+	removeProp(prop, value) {
+		removeObject(this[prop], value);
+		logger('Store: ', this.store);
 	}
 
 	setRelation(relation, value) {
-		if(!isEmpty(this[relation])) {
-			return this.set([relation], value);
-		}
-		return this.set([relation], this.store.createRecord(relation, value));
+		return !isEmpty(this[relation]) ? this.set(relation, value) : this.set(relation, this.store.createRecord(relation, value));
 	}
 
-	setProps(props) {
-		Object.keys(props).forEach(key => {
-			if (key == 'type') { return };
-			if (Array.isArray(this[key]) && !isEmpty(this[key][0]) && this[key][0].id) { return };
-			if (!isEmpty(this[key]) && typeof this[key] == 'object' && this[key].id) { return };
-			this[key] = props[key];
-		});
+	pushRelation(relation, value) {
+		addObject(this[relation], value);
+		logger('Store: ', this.store);
+	}
+
+	removeRelation(relation, value) {
+		removeObject(this[relation], value);
+		logger('Store: ', this.store);
 	}
 
 	belongsTo(modelName, data = {}) {

@@ -6,7 +6,7 @@ import { TagsContainer } from 'components/basics/tags';
 import Spinner from 'react-bootstrap/Spinner';
 import { FarIcon } from 'components/vendors/fa-wrapper';
 import { capitalize, stringToUnderscore, underscoreToString } from 'utils/transforms';
-import { isEmpty, logger, randomString } from 'utils/helpers';
+import { isEmpty, logger } from 'utils/helpers';
 
 const Form = (props) => {
   const { className = '', onSubmit, children } = props;
@@ -95,7 +95,6 @@ const FormControl = (props) => {
       type={type}
       name={name}
       autoFocus={autoFocus}
-      autoComplete={randomString()}
       placeholder={placeholder}
       defaultValue={value} // controlled vs uncontrolled: https://fb.me/react-controlled-components
       onChange={onChange}
@@ -125,7 +124,7 @@ const FormSelect = (props) => {
   return (
     <RbForm.Control as='select' value={value} onChange={onChange} custom>
       <option disabled value={-1}>{placeholder}</option>
-      {!isEmpty(options) && options.map(option => (
+      {options.map(option => (
         <option key={option} value={option}>{typeof option == 'string' ? capitalize(underscoreToString(option)) : option}</option>
       ))}
     </RbForm.Control>

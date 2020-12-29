@@ -8,7 +8,7 @@ const AuthorDetailCard = (props) => {
 
 	return (
 		<DetailCard
-			icon='author'
+			icon={author.icon}
 			photo={author.photo}
 			title={author.name}
 			timestamp={author.displayUpdatedAt}
@@ -22,7 +22,7 @@ const AuthorListCard = (props) => {
 
 	return (
 		<ListCard
-			icon='author'
+			icon={author.icon}
 			photo={author.photo}
 			title={author.name}
 			loading={loading}

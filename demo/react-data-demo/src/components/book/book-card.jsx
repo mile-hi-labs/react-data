@@ -8,7 +8,7 @@ const BookDetailCard = (props) => {
 
 	return (
 		<DetailCard
-			icon='book'
+			icon={book.icon}
 			photo={book.photo}
 			title={book.title}
 			subtitle={book.authors && book.authors.map(author => author.name)}
@@ -24,7 +24,7 @@ const BookListCard = (props) => {
 
 	return (
 		<ListCard
-			icon='book'
+			icon={book.icon}
 			photo={book.photo}
 			title={book.title}
 			subtitle={book.authors && book.authors.map(author => author.name)}

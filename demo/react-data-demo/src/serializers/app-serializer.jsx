@@ -8,6 +8,7 @@ class AppSerializer extends BaseSerializer {
 	get attrs() {
 		return {
 			...super.attrs,
+			icon: { serialize: false },
 			createdAt: { serialize: false },
 			updatedAt: { serialize: false },
 		}
