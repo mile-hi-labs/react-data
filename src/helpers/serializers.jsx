@@ -1,5 +1,4 @@
 import BaseSerializer from 'serializers/base-serializer';
-import { logger } from 'utils/helpers';
 import { dashToCapital } from 'utils/transforms';
 
 function fetchSerializer(serializers, modelName, store, data = {}) {

@@ -42,7 +42,7 @@ const BookFields = (props) => {
         <FormTextArea
           placeholder='tell us about it...'
           value={book.description}
-          onChange={value => book.set('description', e.target.value)}
+          onChange={e => book.set('description', e.target.value)}
         />
       </FormGroup>
 

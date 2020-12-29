@@ -1,5 +1,4 @@
 import BaseModel from 'models/base-model';
-import { logger } from 'utils/helpers';
 import { dashToCapital } from 'utils/transforms';
 
 function fetchModel(models, modelName, store, data = {}) {

@@ -1,10 +1,10 @@
 {
   "name": "@mile-hi-labs/react-data",
-  "version": "1.1.6",
+  "version": "2.0.0",
   "description": "A state management library for React applications.",
   "homepage": "https://github.com/mile-hi-labs/react-data#readme",
   "license": "MIT",
-  "main": "./lib/index.js",
+  "main": "./lib/react-data.js",
   "author": {
     "name": "Eric Hubbell",
     "email": "eric@erichubbell.com",
@@ -32,8 +32,8 @@
     "react-adapters"
   ],
   "scripts": {
-    "build": "webpack --env.development",
-    "build:prod": "webpack --env.production"
+    "build": "webpack --env development",
+    "build:prod": "webpack --env production"
   },
   "devDependencies": {
     "babel-core": "^6.21.0",

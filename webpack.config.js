@@ -1,60 +1,68 @@
-const path = require('path');
-const webpack = require('webpack');
+const Path = require('path');
 const CompressionPlugin = require('compression-webpack-plugin');
+const Package = require('./package.json');
 
-function sharedConfig(mode) {
-  return {
-    mode: mode,
-    entry: './src/index.jsx',
-    output: {
-      path: __dirname + '/lib',
-      filename: 'index.js',
-      libraryTarget: 'commonjs2'
-    },
-    module: {
-      rules: [
-        {
-          test: /\.jsx?$/,
-          exclude: path.resolve(__dirname, 'node_modules'),
-          use: 'babel-loader'
-        },
-        {
-          test: /\.jsx?$/,
-          exclude: path.resolve(__dirname, 'demos'),
-          use: 'babel-loader'
-        }
-      ]
-    },
-    externals: {
-      'react': 'commonjs react'
-    },
-    resolve: {
-      modules: [path.resolve(__dirname, 'src'), 'node_modules'],
-      extensions: [
-        '.js',
-        '.jsx',
-        '.ts',
-        '.tsx',
-      ]
-    }
-  }
+module.exports = env => {
+  let config = {};
+  config = generalConfig(config, env);
+  config = prodConfig(config, env)
+  config = devConfig(config, env);
+  return config;
 }
 
-module.exports = environment => {
-  let env = environment.production ? 'production' : 'development';
-  console.log('Env: ', env);
-  let config = sharedConfig(env);
-
-  if (env.production) {
-    config.plugins = [
-      new CompressionPlugin()
+function generalConfig(config, env) {
+  config.mode = env;
+  config.entry = './src/index.jsx';
+  config.output = {
+    path: Path.join(__dirname, 'lib'),
+    filename: 'react-data.js',
+    libraryTarget: 'commonjs2'
+  };
+  config.module = {
+    rules: [
+      {
+        test: /\.jsx?$/,
+        exclude: Path.join(__dirname, 'node_modules'),
+        use: 'babel-loader'
+      },
     ]
-    return config;
-  } else {
-    config.devtool = "source-map";
+  };
+  config.externals = {
+    'react': 'commonjs react'
+  };
+  config.resolve = {
+    modules: [Path.join(__dirname, 'src'), 'node_modules'],
+    extensions: [
+      '.js',
+      '.jsx',
+      '.ts',
+      '.tsx',
+    ]
   }
-  return config
+  return config;
 }
+
+
+function prodConfig(config, env) {
+  if (env != 'production') { return config }
+  config.output = {
+    path: Path.join(__dirname, 'releases'),
+    filename: 'react-data@' + Package['version'] + '.js',
+    libraryTarget: 'commonjs2'
+  };
+  config.plugins = [
+    new CompressionPlugin(),
+  ]
+  return config;
+}
+
+
+function devConfig(config, env) {
+  if (env != 'development') { return config }
+  config.devtool = "source-map";
+  return config;
+}
+
 
 // Webpack devtools
 // https://webpack.js.org/configuration/devtool/

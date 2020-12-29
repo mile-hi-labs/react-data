@@ -1,10 +1,9 @@
 ## Overview
-React Data is a state management solution for React applications. The library is lightweight, configurable so you can get up and running quickly.
+React Data is a state management library for React and React Native applications. The library is lightweight and configurable so you can quickly connect to your API and get back to writing code.
 
 
 ## How it Works
-React Data uses the [Context Hooks](https://reactjs.org/docs/context.html) to construct a global data store that interconnects adapters, serializers, and models to communicate with your API, retrieve your data, and then store that data locally so it's ready to use.
-React Data currently assumes your using a [JSON API](https://jsonapi.org/) with REST patterns. To learn more about React Data, visit the [API Documentation](https://app.gitbook.com/@mile-hi-labs/s/react-data/). 
+React Data uses the [Context Hooks](https://reactjs.org/docs/context.html) to construct a global data store that interconnects adapters, serializers, and models to communicate with your API, retrieve data, and store that data in a local store that's available in any component. React Data works best with a [JSON-API](https://jsonapi.org/) and REST patterns. To learn more about React Data or for more advanced usage, please visit the [API Documentation](https://app.gitbook.com/@mile-hi-labs/s/react-data/).
 
 
 ## Quick Start
@@ -17,14 +16,17 @@ Add the following to your `app.jsx` file or near the top of your application.
 
 import React from 'react';
 import Routes from 'router';
-import { storeContext } from 'react-data';
+import { StoreProvider } from 'react-data';
+ipmort * as Adapters from 'adapters';
+ipmort * as Models from 'models';
+ipmort * as Serializers from 'serializers';
 
 
 const App = (props) => {
-  
+
   return (
     <div id='application' className='application'>
-      <StoreContext apiDomain='http://api.yourdomain.com'>
+      <StoreProvider apiDomain='http://api.yourdomain.com' adapters={Adapters} serialiers={Serializers} models={Models}>
       	<Routes />
     	</StoreContext>
   	</div>
@@ -58,8 +60,8 @@ const MktIndex = (props) => {
 	async fetchData = () => {
 		try {
 			setLoading(true);
-			let users = this.props.store.query('user', {});
-			this.setState({ users: users });
+			let storeUsers = store.query('user', {});
+			setUsers(storeUsers);
 		} catch(e) {
 			console.log(e);
 		} finally {
@@ -67,7 +69,7 @@ const MktIndex = (props) => {
 		}
 	}
 
-	// Render	
+	// Render
 	return (
 		<div className='container'>
 			{loading ? (
@@ -85,26 +87,25 @@ export default withStore(MktIndex);
 
 
 ## Advanced Usaged
-While React Data is designed to work right out-the-box with minimal configuration it's also highly configurable so you can extend any adapter, serializer, or model to match your needs. 
+While React Data is designed to work with minimal configuration, you're going to end up writing your own adapters, serializers, and models to match your needs. So, it's important to understand the various parts of this library, how they interconnect, and how to configure them.
 
 
 ### The Store
-In React Data, the store acts as the central hub connecting your adapters, serializers, and models together to communciate with your API and store that data locally. 
-The store uses the React Context API to make itself available from any component using the `withStore` wrapper. Then, you can access the store via the props on the component. 
+The Store acts as the central hub connecting your adapters, serializers, and models together to communiciate with your API, retrieve and store data locally. So, while you'll need to author those components elsewhere (hopefully in their respective directories) you'll access them from any component through the `store` prop as shown in the Quickstart guide.
 
 
 ### Adapters
-In React Data, adapters handle URL configuration when communicating with your API. This way, we're able to construct the base URL, endpoint, and any parameters you're looking to 
-pass into the server seamlessly. To declare an adapter, simply do the following:
+Adapters handle URL configuration when communicating with your API. This way, we're able to construct the base URL, endpoint, and any parameters you're looking to
+pass into the server seamlessly. When authoring a adapter, you should inherit from the `BaseAdapter` provided by React Data like so:
 
 ```
 # adapters/user.jsx
 
-import { AppAdapter } from 'react-data';
+import { BaseAdapter } from '@mile-hi-labs/react-data';
 
 
-class BlogAdapter extends AppAdapter {
-	
+class BlogAdapter extends BaseAdapter {
+
 	// Overrides
 	static apiDomain = 'https://api.blogdomain.com';
 
@@ -119,16 +120,15 @@ export default BlogAdapter;
 
 
 ### Models
-In React Data, models declare the data going to and from the server for every model and then how those models are interconnected making it easy to access, manipulate, and display that information from anywhere in your application. 
-To declare a model, simply do the following:
+Models declare the data you expect to send to / receive from the server and then how it should get stored and interconnected in your local data store. We recommend keping your models fairly lightweight and then remove them when they're done being used. This way, you maintain a performant store and application. When authoring a model, you should inherit from the `BaseModel` provided by React Data like so:
 
 ```
 # models/user.jsx
 
-import { AppModel } from 'react-data';
+import { BaseModel } from '@mile-hi-labs/react-data';
 
 
-class UserModel extends AppModel {
+class UserModel extends BaseModel {
 	constructor(type, store, props = {}) {
 		super(type, store, props);
 	}
@@ -149,17 +149,17 @@ export default UserModel;
 
 
 ### Serializers
-In React Data, serializers handle data serialization and normalization when passing data to and from your server. 
-This way, we're able to format your requests appropriately while giving you the opportunity to customize your data as it comes in (or goes out) as you see fit. 
+In React Data, serializers handle data serialization and normalization when passing data to and from your server.
+This way, we're able to format your requests appropriately while giving you the opportunity to customize your data as it comes in (or goes out) as you see fit.
 To declare a serializer, simply do the following:
 
 ```
 # serializers/user.jsx
 
-import { AppSerializer } from 'react-data';
+import { BaseSerializer } from '@mile-hi-labs/react-data';
 
 
-class UserSerializer extends AppSerializer {
+class UserSerializer extends BaseSerializer {
 	constructor(type, store, props = {}) {
 		super(type, store, props);
 	}
@@ -170,7 +170,7 @@ class UserSerializer extends AppSerializer {
 		fullName: false
 	}
 
-	
+
 	get serializeRelationships() {
 		location: { id: true },
 		cards: true,
@@ -182,59 +182,24 @@ export default UserSerializer;
 ```
 
 
-## FAQ
+## Best Practices
+- We recomend authoring an `AppAdapter`, `AppModel`, and `AppSerializer` in your project that inherit from the base components offered by React Data. That way, you have a global app component for configuration and inheritance moving forward.
 
-#### Why React Data?
-State management libraries are often complex and require a lot of configuration. Then, you're constantly dealing with scalability. 
-React Data makes it incredible easy to get started and then scale efficiently. 
-
-
-#### What inspired React Data? 
-React Data is heavily inspired by the core elements of [Ember-Data](https://emberjs.com).
-
-
-#### How big is React Data?
-At 84KB (22.5KB gzipped), React Data is tiny compared to it's utility as a data layer playing a pivotal role in your application development. 
-
-
-#### Tell me more about performance?
-React Data uses dynamic imports to lazyload and cache the Adapters, Serializers, or Models that you've added to your project. 
-That way, React Data maintains a small footprint during the initial page load and then loads more when it's requested. 
-
-
-#### Tell me more about configuration?
-React Data uses on a base adapter, serializer, and model to provide the foundation for those  functionality that'll become second-nature as you get going.
-
-
-#### Why should I use React Data
-React Data takes a conventional approach to app development while still allowing plenty of configuration for advanced developers. 
-
-
-#### Are there any best-practices I should be aware of?
-You shouldn't overload the store with data that isn't being used or is no longer needed. We suggest keeping an eye on the data being loaded into the store and clearing any unused data
-regularly to keep performance at it's best.
-
-
-#### Development vs Production Mode
-React Data comes pre-bundled for production however it does read your `NODE_ENV` variable to provide some logging and time stamps for performance.
-
-
-#### Who's using React Data?
-React Data is currently being being used by [Blush](https://blushednow.com).
-If you're using React Data in your application, send us a note!
-
-### Does React Data support SSR?
-React Data will not block SSR however since it does rely on [Axios](https://github.com/axios/axios) you cannot fetch data serverside. This will change in an upcoming release. 
 
 
 ## Development
 - Clone this repository
 - Run `npm link` from this library
-- Open up a project where you'd like to use this library
-- Run `npm link react-data` from your project
+- Open up the demo proejct (or another proejcton your local machine) where you'd like to use this library
+- Run `npm link @mile-hi-labs/react-data` from your project
 - You can now develop both projects simultaneously
 - Run `npm run build` to push code from the library to your project
+- Run `npm run build:prod` push compressed code from the library to your project
 
+
+## Publish
+- npm publish
+- npm publish --dry-run
 
 ## Links
 - [Github](https://github.com/MileHiLabs/react-data)
