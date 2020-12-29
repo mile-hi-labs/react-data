@@ -1,6 +1,6 @@
 {
   "name": "@mile-hi-labs/react-data",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "description": "A state management library for React applications.",
   "homepage": "https://github.com/mile-hi-labs/react-data#readme",
   "license": "MIT",
@@ -19,16 +19,19 @@
   },
   "keywords": [
     "react",
-    "react-data",
+    "react native",
     "react data",
-    "react-store",
+    "react native data",
     "react store",
+    "react native store",
     "react adapters",
-    "react-adapters",
+    "react native adapters",
     "react models",
-    "react-models",
+    "react native models",
     "react serializers",
-    "react-serializers"
+    "react native serializers",
+    "react json api",
+    "react native json api",
   ],
   "scripts": {
     "build": "webpack --env development",
