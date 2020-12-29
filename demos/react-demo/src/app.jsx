@@ -8,13 +8,7 @@ import Router from 'router';
 
 
 const App = (props) => {
-  const apiDomain = 'http://localhost:8080'
-
-
-  // Hooks
-  useEffect(() => {
-    console.log('API Domain: ', apiDomain);
-  }, [])
+  const apiDomain = 'http://localhost:8080';
 
 
   // Render

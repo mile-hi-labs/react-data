@@ -8,12 +8,7 @@ import * as Serializers from 'serializers';
 import Navigator from 'navigator';
 
 const App = (props) => {
-	const apiDomain = 'http://127.0.0.1:8080'
-
-  // Hooks
-  useEffect(() => {
-    console.log('API Domain: ', apiDomain);
-  }, [])
+	const apiDomain = 'http://127.0.0.1:8080';
 
 
   // Render

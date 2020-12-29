@@ -38,8 +38,8 @@ class StoreProvider extends Component {
 
   // Hooks
   componentDidMount() {
-    logger('React Data ready...');
     this.adapterFor('').apiDomain = this.state.apiDomain;
+    logger('React Data connected to:', this.state.apiDomain);
   }
 
 
