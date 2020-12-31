@@ -6,7 +6,7 @@ class JsonApiError {
   static format(e) {
     if (e.request) {
       logger('Request error: ', e.request);
-      return this.miscError(500, 'Request Error', e);
+      return this.formatError(500, 'Request Error', e);
     }
     if (e.response) {
       logger('Server error: ', e.response.data.errors);
