@@ -17,9 +17,9 @@ Add the following to your `app.jsx` file or near the top of your application.
 import React from 'react';
 import Routes from 'router';
 import { StoreProvider } from 'react-data';
-ipmort * as Adapters from 'adapters';
-ipmort * as Models from 'models';
-ipmort * as Serializers from 'serializers';
+import * as Adapters from 'adapters';
+import * as Models from 'models';
+import * as Serializers from 'serializers';
 
 
 const App = (props) => {

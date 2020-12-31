@@ -6,7 +6,7 @@
     "@fortawesome/free-regular-svg-icons": "^5.15.1",
     "@fortawesome/free-solid-svg-icons": "^5.15.1",
     "@fortawesome/react-fontawesome": "^0.1.14",
-    "@mile-hi-labs/react-data": "file:../..",
+    "@mile-hi-labs/react-data": "latest",
     "bootstrap": "^4.5.3",
     "moment": "^2.29.1",
     "node-sass": "^4.14.1",
