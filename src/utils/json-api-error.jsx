@@ -4,16 +4,20 @@ import { logger } from 'utils/helpers';
 class JsonApiError {
 
   static format(e) {
-    if (e.response) {
-      logger('Server error: ', e.response.data.errors);
-      return e.response.data.errors ? this.formatErrors(e.response.data.errors) : this.formatError(e.response.status, e.response.statusText, 'Sorry, there was a server error.');
+    try {
+      if (e.response) {
+        logger('Server error: ', e.response.data.errors);
+        return this.formatErrors(e.response.data.errors);
+      }
+      if (e.request) {
+        logger('Request error: ', e.request);
+        return [this.formatError(500, 'Request Error', e)];
+      }
+      logger('App error: ', e);
+      return [this.formatError(500, 'App Error', e.message)];
+    } catch (e) {
+      return [this.formatError(500, 'Error', 'Please format your error(s) correctly.')];
     }
-    if (e.request) {
-      logger('Request error: ', e.request);
-      return this.formatError(500, 'Request Error', e);
-    }
-    logger('App error: ', e);
-    return this.formatError(500, 'App Error', e.message);
   }
 
   static formatErrors(errors) {
@@ -21,7 +25,7 @@ class JsonApiError {
   }
 
   static formatError(code, title, detail) {
-    return [{ status: code, title: title, detail: detail }];
+    return { status: code, title: title, detail: detail };
   }
 }
 
