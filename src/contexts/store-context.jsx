@@ -122,7 +122,8 @@ class StoreProvider extends Component {
   // Network calls
   async findAll(modelName, params) {
     try {
-      if (!isEmpty(storeRecords)) { return this.peekAll(modelName) }
+      let storeRecords = this.peekAll(modelName);
+      if (!isEmpty(storeRecords)) { return storeRecords }
       return await this.query(modelName, params);
     } catch(e) {
       throw JsonApiError.format(e);
@@ -131,7 +132,8 @@ class StoreProvider extends Component {
 
   async findRecord(modelName, recordId, params) {
     try {
-      if (!isEmpty(storeRecord)) { return this.peekRecord(modelName, recordId) }
+      let storeRecord = this.peekRecord(modelName, recordId);
+      if (!isEmpty(storeRecord)) { return storeRecord }
       return await this.queryRecord(modelName, recordId, params);
     } catch(e) {
       throw JsonApiError.format(e);
