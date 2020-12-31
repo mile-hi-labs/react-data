@@ -25,4 +25,4 @@ class JsonApiError {
   }
 }
 
-export default JsonApiErrors;
+export default JsonApiError;
