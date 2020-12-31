@@ -1,7 +1,7 @@
 import React from 'react';
 import Pluralize from 'pluralize';
 import Axios from 'services/axios-service';
-import JsonApiErrors from 'utils/json-api-errors';
+import JsonApiError from 'utils/json-api-error';
 import { camelToDash } from 'utils/transforms';
 import { addObject, removeObject, isEmpty, logger } from 'utils/helpers';
 
@@ -100,7 +100,7 @@ class BaseModel {
 			this.setProps(formattedResponse);
 			return formattedResponse;
 		} catch(e) {
-			throw JsonApiErrors.formatErrors(e);
+			throw JsonApiError.format(e);
 		}
 	}
 
@@ -131,7 +131,7 @@ class BaseModel {
 			}
 			return this.store.removeRecord(this.type, this);
 		} catch(e) {
-			throw JsonApiErrors.formatErrors(e);
+			throw JsonApiError.format(e);
 		}
 	}
 

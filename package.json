@@ -1,6 +1,6 @@
 {
   "name": "@mile-hi-labs/react-data",
-  "version": "2.0.3",
+  "version": "2.0.4",
   "description": "A state management library for React and React Native applications.",
   "homepage": "https://github.com/mile-hi-labs/react-data#readme",
   "license": "MIT",
@@ -12,7 +12,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/mile-hi-labs/react-data.git"
+    "url": "https://github.com/mile-hi-labs/react-data"
   },
   "bugs": {
     "url": "https://github.com//mile-hi-labs/react-data/issues"
@@ -31,12 +31,15 @@
     "react serializers",
     "react native serializers",
     "react json api",
-    "react native json api"
+    "react native json api",
+    "react component"
   ],
   "scripts": {
+    "clean": "rimraf ./lib",
     "build": "webpack --env development",
     "build:prod": "webpack --env production",
-    "deploy": "npm run build && npm run build:prod && npm publish"
+    "deploy": "npm run clean && npm run build && npm run build:prod && npm publish",
+    "deploy:test": "npm run clean && npm run build && npm run build:prod && npm publish --dry-run"
   },
   "devDependencies": {
     "babel-core": "^6.21.0",
@@ -46,6 +49,7 @@
     "babel-preset-stage-0": "^6.24.1",
     "compression-webpack-plugin": "^5.0.0",
     "react": "^16.13.1",
+    "rimraf": "^3.0.2",
     "webpack": "^4.44.1",
     "webpack-cli": "^3.2.1"
   },

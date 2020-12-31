@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { fetchAdapter } from 'helpers/adapters';
 import { fetchModel } from 'helpers/models';
 import { fetchSerializer } from 'helpers/serializers';
-import JsonApiErrors from 'utils/json-api-errors';
+import JsonApiError from 'utils/json-api-error';
 import { addObject, removeObject, timeElapsed, logger, isEmpty } from 'utils/helpers';
 
 const StoreContext = React.createContext();
@@ -125,7 +125,7 @@ class StoreProvider extends Component {
       if (!isEmpty(storeRecords)) { return this.peekAll(modelName) }
       return await this.query(modelName, params);
     } catch(e) {
-      throw JsonApiErrors.formatErrors(e);
+      throw JsonApiError.format(e);
     }
   };
 
@@ -134,7 +134,7 @@ class StoreProvider extends Component {
       if (!isEmpty(storeRecord)) { return this.peekRecord(modelName, recordId) }
       return await this.queryRecord(modelName, recordId, params);
     } catch(e) {
-      throw JsonApiErrors.formatErrors(e);
+      throw JsonApiError.format(e);
     }
   };
 
@@ -146,7 +146,7 @@ class StoreProvider extends Component {
       storeRecords.meta = this.serializerFor(modelName).normalizeMeta(response.meta);
       return storeRecords;
     } catch(e) {
-      throw JsonApiErrors.formatErrors(e);
+      throw JsonApiError.format(e);
     }
   }
 
@@ -156,7 +156,7 @@ class StoreProvider extends Component {
       let record = this.serializerFor(modelName).normalize(response.data, response.included);
       return this.pushRecord(modelName, record);
     } catch(e) {
-      throw JsonApiErrors.formatErrors(e);
+      throw JsonApiError.format(e);
     }
   }
 
