@@ -121,23 +121,15 @@ class StoreProvider extends Component {
 
   // Network calls
   async findAll(modelName, params) {
-    try {
-      let storeRecords = this.peekAll(modelName);
-      if (!isEmpty(storeRecords)) { return storeRecords }
-      return await this.query(modelName, params);
-    } catch(e) {
-      throw JsonApiError.format(e);
-    }
+    let storeRecords = this.peekAll(modelName);
+    if (!isEmpty(storeRecords)) { return storeRecords }
+    return await this.query(modelName, params);
   };
 
   async findRecord(modelName, recordId, params) {
-    try {
-      let storeRecord = this.peekRecord(modelName, recordId);
-      if (!isEmpty(storeRecord)) { return storeRecord }
-      return await this.queryRecord(modelName, recordId, params);
-    } catch(e) {
-      throw JsonApiError.format(e);
-    }
+    let storeRecord = this.peekRecord(modelName, recordId);
+    if (!isEmpty(storeRecord)) { return storeRecord }
+    return await this.queryRecord(modelName, recordId, params);
   };
 
   async query(modelName, params) {
