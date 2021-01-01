@@ -20,8 +20,6 @@ class Book extends AppModel {
 
 		// Relationships
 		this.authors = this.hasMany('author', props.authors);
-		this.categories = this.hasMany('category', props.categories);
-		this.publishers = this.hasMany('publisher', props.publishers);
 	}
 
 	get printTypeOptions() {

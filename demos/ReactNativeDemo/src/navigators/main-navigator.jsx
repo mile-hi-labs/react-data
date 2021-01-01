@@ -4,8 +4,6 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 // Scenes
 import BooksScene from 'scenes/main/books';
 import AuthorsScene from 'scenes/main/authors';
-import CategoriesScene from 'scenes/main/categories';
-import PublishersScene from 'scenes/main/publishers';
 
 const Tab = createBottomTabNavigator();
 
@@ -29,22 +27,6 @@ const MainNav = (props) => {
         component={AuthorsScene}
         options={{
           title: 'Authors',
-        }}
-      />
-
-      <Tab.Screen
-        name='MainCategories'
-        component={CategoriesScene}
-        options={{
-          title: 'Categories',
-        }}
-      />
-
-      <Tab.Screen
-        name='MainPublishers'
-        component={PublishersScene}
-        options={{
-          title: 'Publishers',
         }}
       />
 
