@@ -37,7 +37,7 @@ class BaseSerializer {
 	// Serialize
 	serialize(data) {
 		let formattedData = this.serializeAttrs(data);
-		logger('formattedData: ', formattedData);
+		logger('serializedData: ', formattedData);
 		return { data: { attributes: formattedData }};
 	}
 

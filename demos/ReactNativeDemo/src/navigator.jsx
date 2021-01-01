@@ -1,40 +1,41 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { createStackNavigator } from '@react-navigation/stack';
+import { withStore } from '@mile-hi-labs/react-data';
+
+// Navs
+import MainNavigator from 'navigators/main-navigator';
 
 // Scenes
-import TabOne from 'scenes/tab-one';
-import TabTwo from 'scenes/tab-two';
+import WelcomeScene from 'scenes/welcome';
 
-const Tab = createBottomTabNavigator();
+const Stack = createStackNavigator();
 
 const Navigator = (props) => {
-  const {} = props;
+  const { store } = props;
+
 
   // Render
   return (
   	<NavigationContainer>
-	    <Tab.Navigator initialRouteName='TabOne'>
+	    <Stack.Navigator mode='modal' initialRouteName='Welcome'>
 
-	      <Tab.Screen
-	        name='TabOne'
-	        component={TabOne}
+	      <Stack.Screen
+	        name='Welcome'
+	        component={WelcomeScene}
 	        options={{
-	          title: 'TabOne',
+	          title: 'Welcome',
 	        }}
 	      />
 
-	      <Tab.Screen
-	        name='TabTwo'
-	        component={TabTwo}
-	        options={{
-	          title: 'TabTwo',
-	        }}
+	      <Stack.Screen
+	        name='Main'
+	        component={MainNavigator}
 	      />
 
-	    </Tab.Navigator>
+	    </Stack.Navigator>
     </NavigationContainer>
   );
 };
 
-export default Navigator
+export default withStore(Navigator);

@@ -1,25 +1,30 @@
 import React, { Fragment, useCallback, useEffect, useState } from 'react';
 import { RefreshControl, SafeAreaView, ScrollView, View, Text, Button, StatusBar } from 'react-native';
-import { useFocusEffect } from '@react-navigation/native';
 import { withStore } from '@mile-hi-labs/react-data';
+import { useFocusEffect } from '@react-navigation/native';
+import { BasicScene } from 'components/basics/scenes';
 
-const TabOne = (props) => {
+const PublishersScene = (props) => {
 	const { navigation, route, store } = props;
-  const [ books, setBooks ] = useState([]);
+  const [ publishers, setPublishers ] = useState([]);
   const [ loading, setLoading ] = useState(false);
   const [ refreshing, setRefreshing ] = useState(false);
 
 
   // Hooks
-  useFocusEffect(useCallback(() => { fetchData();}, []) );
+  useFocusEffect(
+    useCallback(() => {
+      fetchData();
+    }, [])
+  )
 
 
   // Methods
   const fetchData = async () => {
     try {
       setLoading(true);
-      let model = await store.query('book', {});
-      setBooks(model);
+      let model = await store.query('publisher', {});
+      setPublishers(model);
     } catch (e) {
       console.log('error: ', e);
     } finally {
@@ -36,31 +41,22 @@ const TabOne = (props) => {
 
   // Render
   return (
-    <SafeAreaView style={{flex: 1, width: '100%'}}>
-      <ScrollView
-        contentInsetAdjustmentBehavior='automatic'
-        refreshControl={<RefreshControl refreshing={refreshing} onRefresh={refreshData} />}>
+    <BasicScene>
+      <ScrollView contentInsetAdjustmentBehavior='automatic'>
         <View style={{flex: 1, alignItems: 'center', justifyContent: 'center', width: '100%', minHeight: '100%'}}>
           {loading ? <Text>Loading...</Text> : (
             <Fragment>
-              {books.length > 0 ? (
-                <Fragment>
-                  {books.map(book => (
-                    <View key={book.id}>
-                      <Text>{book.title}</Text>
-                      <Text>{book.printType}</Text>
-                    </View>
-                  ))}
-                </Fragment>
-              ) : (
-                <Text>Sorry, we don't have any books...</Text>
-              )}
+              {publishers.length > 0 && publishers.map(publisher => (
+                <View key={publisher.id} style={{padding: 15, marginBottom: 15, width: '100%'}}>
+                  <Text>{publisher.name}</Text>
+                </View>
+              ))}
             </Fragment>
           )}
         </View>
       </ScrollView>
-    </SafeAreaView>
+    </BasicScene>
   );
 };
 
-export default withStore(TabOne);
+export default withStore(PublishersScene);
