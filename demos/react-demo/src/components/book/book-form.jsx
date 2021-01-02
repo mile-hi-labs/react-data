@@ -15,6 +15,13 @@ const BookForm = (props) => {
   const [ taskRunning, setTaskRunning ] = useState(false);
 
 
+  // Hooks
+  useEffect(() => {
+    return () => setTaskRunning(false);
+  }, [])
+
+
+
   // Methods
   const saveBook = async () => {
     try {

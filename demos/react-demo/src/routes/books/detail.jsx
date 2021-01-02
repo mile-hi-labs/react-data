@@ -23,9 +23,7 @@ const BooksDetailRoute = (props) => {
 	const fetchData = async () => {
 		try {
 			setLoading(true);
-			let model = await store.queryRecord('book', bookId, {
-				include: 'authors,categories,publishers'
-			})
+			let model = await store.queryRecord('book', bookId, { include: 'authors' })
 			toast.showSuccess('Book received!');
 			setBook(model);
 		} catch (e) {
@@ -40,7 +38,7 @@ const BooksDetailRoute = (props) => {
 			<Container className='pt-3 pb-3'>
 
 				<SectionBlock>
-					<SectionHeader title={`Book #${bookId}`} className='flex-between'>
+					<SectionHeader title={`Book #${bookId}`} className='flex-between no-b'>
 						<BookActions book={book} />
 					</SectionHeader>
 				</SectionBlock>

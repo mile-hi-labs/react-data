@@ -31,7 +31,7 @@ class Book extends AppModel {
 	}
 
 	get url() {
-		return `/book/${this.id}`
+		return `/books/${this.id}`
 	}
 }
 

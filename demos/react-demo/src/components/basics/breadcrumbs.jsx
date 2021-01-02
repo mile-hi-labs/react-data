@@ -43,7 +43,7 @@ const BreadcrumbsWrapper = (props) => {
             active={active}
             linkAs={Link}
             linkProps={{to: index == 0 ? '/' : `/${breadcrumb}`}}>
-            {capitalize(index == 0 ? 'index' : breadcrumb)}
+            {capitalize(index == 0 ? 'Home' : breadcrumb)}
           </Breadcrumb.Item>
         )
       })}

@@ -12,6 +12,12 @@ const BookActions = (props) => {
 	const [ taskRunning, setTaskRunning ] = useState(false);
 
 
+  // Hooks
+  useEffect(() => {
+    return () => setTaskRunning(false);
+  }, [])
+
+
 	// Methods
 	const archiveBook = async () => {
 		try {
