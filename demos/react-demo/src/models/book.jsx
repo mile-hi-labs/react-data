@@ -11,21 +11,15 @@ class Book extends AppModel {
 		this.description = props.description;
 		this.printType = props.printType;
 		this.language = props.language;
-
-		// Nested
-		this.urls = {
-			webUrl: props.webUrl,
-		}
+		this.infoLink = props.infoLink;
 
 
 		// Relationships
 		this.authors = this.hasMany('author', props.authors);
-		this.categories = this.hasMany('category', props.categories);
-		this.publishers = this.hasMany('publisher', props.publishers);
 	}
 
 	get printTypeOptions() {
-		return ['Paper', 'HardBack', 'Digital'];
+		return ['BOOK', 'DIGITAL'];
 	}
 
 	get languageOptions() {

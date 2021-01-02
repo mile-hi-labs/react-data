@@ -7,7 +7,7 @@ import { Container, Row, Col } from 'components/basics/grids';
 import { SectionBlock, SectionHeader, SectionBody, SectionFooter } from 'components/basics/sections';
 import { timeout } from 'utils/helpers';
 
-const BooksDetailRoute = (props) => {
+const AuthorsDetailRoute = (props) => {
 	const { bookId, store, toast, history } = props;
 	const [ book, setBook ] = useState({});
 	const [ loading, setLoading ] = useState(false);
@@ -75,4 +75,4 @@ const BooksDetailRoute = (props) => {
 	);
 }
 
-export default BooksDetailRoute;
+export default AuthorsDetailRoute;

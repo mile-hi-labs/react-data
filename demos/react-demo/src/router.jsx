@@ -4,11 +4,17 @@ import { withStore } from '@mile-hi-labs/react-data';
 import { withToast } from 'contexts/toast-context';
 
 // Routes
-import IndexRoute from './routes/index';
+import WelcomeRoute from './routes/welcome';
+
 import BooksRoute from './routes/books/index';
 import BooksNewRoute from './routes/books/new';
 import BooksDetailRoute from './routes/books/detail';
 import BooksEditRoute from './routes/books/edit';
+
+import AuthorsRoute from './routes/authors/index';
+import AuthorsNewRoute from './routes/authors/new';
+import AuthorsDetailRoute from './routes/authors/detail';
+import AuthorsEditRoute from './routes/authors/edit';
 
 // Utils
 import ErrorBoundary from './utils/error-boundary';
@@ -22,7 +28,14 @@ const Router = (props) => {
   return (
   	<ErrorBoundary>
 	    <Switch>
-	      <Route exact path='/' render={routeProps => <IndexRoute {...passedProps} {...routeProps}/>} />
+	      <Route exact path='/' render={routeProps => <WelcomeRoute {...passedProps} {...routeProps}/>} />
+
+        <Route exact path='/authors' render={routeProps => <AuthorsRoute {...passedProps} {...routeProps}/>} />
+        <Route exact path='/authors/new' render={routeProps => <AuthorsNewRoute {...passedProps} {...routeProps}/>} />
+        <Route path='/authors/:authorId'>
+          <AuthorsDetail {...passedProps} />
+        </Route>
+
         <Route exact path='/books' render={routeProps => <BooksRoute {...passedProps} {...routeProps}/>} />
         <Route exact path='/books/new' render={routeProps => <BooksNewRoute {...passedProps} {...routeProps}/>} />
         <Route path='/books/:bookId'>
@@ -35,6 +48,28 @@ const Router = (props) => {
 	    </Switch>
     </ErrorBoundary>
   );
+}
+
+const AuthorsDetail = (props) => {
+  const { path } = useRouteMatch();
+  const { authorId } = useParams();
+
+  return (
+    <Switch>
+      <Route exact
+        path={path}
+        render={routeProps => (
+          <AuthorsDetailRoute authorId={authorId} {...props} {...routeProps} />
+        )}
+      />
+      <Route exact
+        path={path + '/edit'}
+        render={routeProps => (
+          <AuthorsEditRoute authorId={authorId} {...props} {...routeProps} />
+        )}
+      />
+    </Switch>
+  )
 }
 
 const BooksDetail = (props) => {

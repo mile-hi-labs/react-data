@@ -4,7 +4,7 @@ import { camelToDash, dashToCamel } from 'utils/transforms';
 import { isEmpty, logger } from 'utils/helpers';
 
 class BaseSerializer {
-	constructor(store, props = {}) {
+	constructor(store) {
 		this.store = store || {};
 	}
 
@@ -36,24 +36,25 @@ class BaseSerializer {
 
 	// Serialize
 	serialize(data) {
-		let formattedData = this.serializeAttrs(data);
-		logger('serializedData: ', formattedData);
-		return { data: { attributes: formattedData }};
+		let serializedData = this.serializeAttrs(data);
+		logger('serializedData: ', serializedData);
+		return { data: { attributes: serializedData }};
 	}
 
 	serializeAttrs(data) {
-		let formattedData = {};
+		let serializedAttrs = {};
 		Object.keys(data).forEach(key => {
-			formattedData[camelToDash(key)] = this.serializeAttr(data, key);
+			let attr = this.serializeAttr(data, key);
+			if (attr) {
+				serializedAttrs[camelToDash(key)] = attr;
+			}
 		});
-		return formattedData;
+		return serializedAttrs;
 	}
 
 	serializeAttr(data, key) {
 		if (isEmpty(data[key])) { return }
-		if (this.checkAttrs(key).serialize == false) {
-			return;
-		}
+		if (this.checkAttrs(key).serialize == false) { return }
 		if (key == 'id') {
 			return parseInt(data[key])
 		}

@@ -16,7 +16,7 @@ const WelcomeScene = (props) => {
         <Text style={{fontSize: 16, marginBottom: 16}}>
           This is a demo application for React data.
           The app connects to a remote API service and then showcases how you might use the store in a typical fashion.
-          Take a peek at the adapters, serializers, and models as well to see how they all interconnect.
+          Take a peek at the adapters, serializers, and models to see how they interconnect.
         </Text>
         <Button onPress={() => navigation.navigate('Main')}>Get Started</Button>
       </View>

@@ -7,7 +7,7 @@ import { SectionBlock, SectionHeader, SectionBody, SectionFooter } from 'compone
 import { Pagination } from 'components/basics/pagination';
 import { timeout } from 'utils/helpers';
 
-const BooksRoute = (props) => {
+const AuthorsIndexRoute = (props) => {
 	const { store = {}, toast, history } = props;
 	const [ books, setBooks ] = useState([]);
 	const [ page, setPage ] = useState(0);
@@ -70,4 +70,4 @@ const BooksRoute = (props) => {
 	);
 }
 
-export default BooksRoute;
+export default AuthorsIndexRoute;

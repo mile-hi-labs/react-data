@@ -6,7 +6,7 @@ import { Container, Row, Col } from 'components/basics/grids';
 import { SectionBlock, SectionHeader, SectionBody, SectionFooter } from 'components/basics/sections';
 import { timeout } from 'utils/helpers';
 
-const BooksNewRoute = (props) => {
+const AuthorsNewRoute = (props) => {
 	const { store = {}, toast, history } = props;
 	const [ book, setBook ] = useState({});
 	const [ loading, setLoading ] = useState(false);
@@ -16,15 +16,23 @@ const BooksNewRoute = (props) => {
 	useEffect(() => {
 		createBook();
 		return () => {
-			store.removeRecord('book', book);
+			removeBook()
 		};
 	}, [])
 
 
 	// Methods
+  const viewBook = () => {
+    history.push(`/books/${book.id}`)
+  }
+
   const createBook = () => {
   	let book = store.createRecord('book');
   	setBook(book);
+  }
+
+  const removeBook = () => {
+  	store.removeRecord('book', book);
   }
 
 
@@ -36,7 +44,7 @@ const BooksNewRoute = (props) => {
 					<BookForm
 						title='New Book'
 						book={book}
-						nextAction={() => history.push(`/books/${book.id}`)}
+						nextAction={() => viewBook()}
 					/>
 				</SectionBlock>
 
@@ -45,4 +53,4 @@ const BooksNewRoute = (props) => {
 	);
 }
 
-export default BooksNewRoute;
+export default AuthorsNewRoute;

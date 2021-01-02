@@ -19,6 +19,9 @@
     box-shadow: none !important;
     outline: none !important;
   }
+  &:after {
+    display: none;
+  }
 }
 
 // Wrapper

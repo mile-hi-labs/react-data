@@ -12,20 +12,18 @@ const Link = (props) => {
 	)
 }
 
-const BtnLink = (props) => {
-	const { to, title, icon, className = '', children } = props;
+const LinkBtn = (props) => {
+	const { to, className = '', children } = props;
 
 	return (
 		<RRDLink to={to} className={'btn ' + className}>
-			{title && <span>{title}</span>}
-			{icon && <FarIcon icon={icon} className='ml-3'/>}
 			{children}
 		</RRDLink>
 	)
 }
 
 
-const EmailLink = (props) => {
+const LinkEmail = (props) => {
 	const { to, className = '', children } = props;
 
 	return (
@@ -35,7 +33,7 @@ const EmailLink = (props) => {
 	)
 }
 
-const ExternalLink = (props) => {
+const LinkExternal = (props) => {
 	const { to, className = '', children } = props;
 
 	return (
@@ -45,9 +43,4 @@ const ExternalLink = (props) => {
 	)
 }
 
-export {
-	Link,
-	BtnLink,
-	EmailLink,
-	ExternalLink,
-}
+export { Link, LinkBtn, LinkEmail, LinkExternal }

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import { fetchAdapter } from 'helpers/adapters';
-import { fetchModel } from 'helpers/models';
-import { fetchSerializer } from 'helpers/serializers';
+import { adapterFor } from 'helpers/adapters';
+import { modelFor } from 'helpers/models';
+import { serializerFor } from 'helpers/serializers';
 import JsonApiError from 'utils/json-api-error';
 import { addObject, removeObject, timeElapsed, logger, isEmpty } from 'utils/helpers';
 
@@ -46,15 +46,15 @@ class StoreProvider extends Component {
 
   // Helpers
   adapterFor(modelName) {
-    return fetchAdapter(this.state.adapters, modelName, this.state);
+    return adapterFor(this.state.adapters, modelName);
   }
 
   modelFor(modelName, data) {
-    return fetchModel(this.state.models, modelName, this.state, data);
+    return modelFor(this.state.models, modelName, this.state, data);
   }
 
   serializerFor(modelName, data) {
-    return fetchSerializer(this.state.serializers, modelName, this.state, data);
+    return serializerFor(this.state.serializers, modelName, this.state);
   }
 
 

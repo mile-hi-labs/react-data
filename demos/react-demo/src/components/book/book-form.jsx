@@ -13,7 +13,6 @@ import { isEmpty, logger } from 'utils/helpers';
 const BookForm = (props) => {
   const { book = {}, title, store, toast, toggleModal, nextAction } = props;
   const [ taskRunning, setTaskRunning ] = useState(false);
-  const [ deleteRunning, setDeleteRunning ] = useState(false);
 
 
   // Methods
@@ -27,19 +26,6 @@ const BookForm = (props) => {
       toast.showError(e);
     } finally {
       setTaskRunning(false);
-    }
-  }
-
-  const destroyBook = async () => {
-    try {
-      setDeleteRunning(true);
-      await book.destroy();
-      toast.showSuccess('Book destroyed!');
-      nextAction();
-    } catch(e) {
-      toast.showError(e);
-    } finally {
-      setDeleteRunning(false);
     }
   }
 

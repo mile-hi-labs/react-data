@@ -11,10 +11,10 @@ const BookFields = (props) => {
   return (
     <Fragment>
 
-      <FormGroup label='Name'>
+      <FormGroup label='Title'>
         <FormControl
           type='text'
-          placeholder='Robert Redford'
+          placeholder='Star Wars'
           value={book.title}
           onChange={e => book.set('title', e.target.value)}
         />
@@ -25,7 +25,7 @@ const BookFields = (props) => {
           placeholder='Please select one...'
           value={book.printType}
           options={book.printTypeOptions}
-          onChange={value => book.set('printType', value)}
+          onChange={e => book.set('printType', e.target.value)}
         />
       </FormGroup>
 
@@ -34,7 +34,7 @@ const BookFields = (props) => {
           placeholder='Please select one...'
           value={book.language}
           options={book.languageOptions}
-          onChange={value => book.set('language', value)}
+          onChange={e => book.set('language', e.target.value)}
         />
       </FormGroup>
 
@@ -50,8 +50,8 @@ const BookFields = (props) => {
         <FormControlPrepend icon='info'>
           <FormControl
             placeholder='www.example.com'
-            value={book.urls && book.urls.webUrl}
-            onChange={e => book.set('urls.webUrl', e.target.value)}
+            value={book.infoLink}
+            onChange={e => book.set('infoLink', e.target.value)}
           />
         </FormControlPrepend>
       </FormGroup>

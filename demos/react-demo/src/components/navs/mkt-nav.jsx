@@ -9,10 +9,10 @@ const MktNav = (props) => {
 
 	// Render
 	return (
-		<Navbar className='mkt'>
+		<Navbar className='mkt flex-between'>
 			<NavbarBrand to='/' img={<img src={LibLogo}/>} className='mr-15' />
 			<Nav className='flex-end'>
-				<Button onClick={() => console.log('test')}>Test!</Button>
+				{/*<Button onClick={() => console.log('test')}>Generate Data</Button>*/}
 			</Nav>
 		</Navbar>
 	)

@@ -29,7 +29,7 @@ const DropdownMenu = (props) => {
 
 	return (
 		<RbDropdown.Menu show={open} alignRight={true} popperConfig={popperConfig} onToggle={toggle}>
-			<div className={className + ' dropdown-menu-inner'}>
+			<div className={'dropdown-menu-inner ' + className}>
 				{children}
 			</div>
 		</RbDropdown.Menu>

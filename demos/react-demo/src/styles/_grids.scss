@@ -1,0 +1,23 @@
+.container {
+	margin: 0 auto;
+	&.xl {
+		max-width: 100%;
+		width: 1140px;
+	}
+	&.lg {
+		max-width: 100%;
+		width: 1140px;
+	}
+	&.md {
+		max-width: 100%;
+		width: 980px;
+	}
+	&.sm {
+		max-width: 100%;
+		width: 740px;
+	}
+	&.xs {
+		max-width: 100%;
+		width: 580px;
+	}
+}
