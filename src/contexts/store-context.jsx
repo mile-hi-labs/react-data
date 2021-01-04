@@ -63,13 +63,11 @@ class StoreProvider extends Component {
     let storeRecords = this.peekAll(modelName);
     let storeRecord = this.modelFor(modelName, data);
     storeRecords.push(storeRecord);
-    this.setState({ [modelName]:  storeRecords }, () => {
-      if (isNew) { logger('Store: ', this.state) }
-    });
+    this.setState({[modelName]: storeRecords}, () => isNew && logger('Store: ', this.state))
     return storeRecord;
   }
 
-  updateAll(modelName) {
+  updateAll(modelName) { // We can do better here
     let storeRecords = this.peekAll(modelName);
     this.setState({ [modelName]:  storeRecords });
     logger('Store: ', this.state);
@@ -109,7 +107,7 @@ class StoreProvider extends Component {
     let storeRecords = this.state[modelName] || [];
     let storeRecord = record.id ? this.peekRecord(modelName, record.id) : storeRecords.find(model => isEmpty(model.id));
     storeRecords = removeObject(storeRecords, storeRecord);
-    this.setState({ [modelName]:  storeRecords }, () => logger('Store: ', this.state));
+    this.setState({[modelName]: storeRecords}, () => logger('Store: ', this.state));
     return null;
   };
 
