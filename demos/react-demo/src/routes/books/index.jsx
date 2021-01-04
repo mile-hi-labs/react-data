@@ -5,13 +5,13 @@ import { MktRoute } from 'components/basics/routes';
 import { Container, Row, Col } from 'components/basics/grids';
 import { SectionBlock, SectionHeader, SectionBody, SectionFooter } from 'components/basics/sections';
 import { Pagination } from 'components/basics/pagination';
-import { timeout } from 'utils/helpers';
+import { logger, timeout, timer } from 'utils/helpers';
 
 const BooksRoute = (props) => {
 	const { store = {}, toast, history } = props;
 	const [ books, setBooks ] = useState([]);
 	const [ page, setPage ] = useState(0);
-	const [ pageSize, setPageSize ] = useState(5);
+	const [ pageSize, setPageSize ] = useState(100);
 	const [ sortProp, setSortProp ] = useState('id');
 	const [ sortValue, setSortValue ] = useState('asc');
 	const [ loading, setLoading ] = useState(false);
@@ -27,6 +27,7 @@ const BooksRoute = (props) => {
 	const fetchData = async () => {
 		try {
 			setLoading(true);
+			let start = new Date();
 			let model = await store.query('book', {
         page: page,
         pageSize: pageSize,
@@ -34,6 +35,7 @@ const BooksRoute = (props) => {
         sortValue: sortValue,
         include: 'authors,categories,publishers'
 			})
+			logger('Time elapsed: ', timer(start));
 			setBooks(model);
 		} catch (e) {
 			toast.showError(e)

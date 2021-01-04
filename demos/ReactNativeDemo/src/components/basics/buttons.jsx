@@ -35,7 +35,7 @@ const ButtonText = (props) => {
 
 	// Render
 	return (
-		<TouchableOpacity onPress={onPress} style={{}}>
+		<TouchableOpacity onPress={onPress} style={style}>
 			<View style={{display: 'flex', flexDirection: 'row', justifyContent: 'flex-start'}}>
 				{taskRunning ? <LoadingBtnIndicator /> : <Text style={{fontSize: 16, color: '#1C314F'}}>{children}</Text>}
 			</View>
@@ -43,7 +43,18 @@ const ButtonText = (props) => {
 	)
 }
 
-export { Button, ButtonBlock, ButtonText }
+const ButtonWrapper = (props) => {
+	const { onPress, taskRunning, style, children } = props;
+
+	// Render
+	return (
+		<TouchableOpacity onPress={onPress} style={style}>
+			{taskRunning ? taskRunning : children }
+	  </TouchableOpacity>
+	)
+}
+
+export { Button, ButtonBlock, ButtonText, ButtonWrapper }
 
 // Docs
 //

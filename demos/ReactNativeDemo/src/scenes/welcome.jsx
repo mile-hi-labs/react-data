@@ -14,7 +14,7 @@ const WelcomeScene = (props) => {
       <View style={{flex: 1, justifyContent: 'center', width: '100%', height: '100%', padding: 15}}>
         <Text style={{fontSize: 24, marginBottom: 10}}>React Data Demo</Text>
         <Text style={{fontSize: 16, marginBottom: 16}}>
-          This is a demo application for React data.
+          This is a demo application for React Data.
           The app connects to a remote API service and then showcases how you might use the store in a typical fashion.
           Take a peek at the adapters, serializers, and models to see how they interconnect.
         </Text>

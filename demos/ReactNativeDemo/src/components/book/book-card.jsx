@@ -1,24 +1,17 @@
 import React, { Fragment } from 'react';
-import { TouchableOpacity, TouchableHighlight, View, Image, Text, Button } from 'react-native';
+import { View, Image, Text, Button } from 'react-native';
+import { ButtonText, ButtonWrapper } from 'components/basics/buttons';
 
 const BookListCard = (props) => {
 	const { book = {}, loading, onPress } = props;
 
 	// Render
 	return (
-  	<TouchableHighlight activeOpacity={1} underlayColor={Colors.lighterGrayColor} onPress={onPress} style={{}}>
-			<View style={{}}>
-				<View style={{}}>
-					<Image style={{}} source={{ uri: book.photo }}/>
-					<View style={{}}>
-						<Text style={{}}>{title}</Text>
-						<Text style={{}}>{subtitle}</Text>
-						<Text style={{}}>{line1}</Text>
-						<Text style={{}}>{timestamp}</Text>
-					</View>
-				</View>
-			</View>
-		</TouchableHighlight>
+    <ButtonWrapper onPress={() => onPress(book)} style={{padding: 15, marginBottom: 15, width: '100%'}}>
+        <Text>{book.printType}</Text>
+        <Text style={{fontSize: 16, fontWeight: '500'}}>{book.title}</Text>
+        <Text>{book.previewDescription}</Text>
+    </ButtonWrapper>
 	)
 }
 

@@ -31,6 +31,9 @@ const Navigator = (props) => {
 	      <Stack.Screen
 	        name='Main'
 	        component={MainNavigator}
+        	options={{
+            headerShown: false,
+          }}
 	      />
 
 	    </Stack.Navigator>
