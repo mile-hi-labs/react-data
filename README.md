@@ -186,9 +186,12 @@ class UserSerializer extends BaseSerializer {
 export default UserSerializer;
 ```
 
+## Demo
+This project comes with a built-in React and React Native demo.
 
 
 ## Development
+This projects uses Webpack to build the project. Please see `package.json` for available scripts.
 - Clone this repository
 - Run `npm link` from this library
 - Open up the demo proejct (or another proejcton your local machine) where you'd like to use this library
@@ -204,7 +207,7 @@ export default UserSerializer;
 
 
 ## Links
-- [Github](https://github.com/MileHiLabs/react-data)
+- [Github](https://github.com/mile-hi-labs/react-data)
 - [API Documentation](https://app.gitbook.com/@mile-hi-labs/s/react-data/)
 - [Mile Hi Labs](https://milehilabs.io)
 
