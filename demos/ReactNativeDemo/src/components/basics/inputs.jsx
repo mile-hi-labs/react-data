@@ -21,7 +21,7 @@ const TextAreaWrapper = (props) => {
     	onKeyPress={v => v.nativeEvent.key == 'Enter' && Keyboard.dismiss()}
 	    onChangeText={v => onChangeText(v) }
 	    autoCorrect={false}
-	    style={{}}
+	    style={{padding: 15, fontSize: 16, borderWidth: 1, borderColor: bgColor}}
 	  />
   )
 }

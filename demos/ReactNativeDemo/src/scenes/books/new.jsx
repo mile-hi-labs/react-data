@@ -25,6 +25,18 @@ const BooksNewScene = (props) => {
   );
 
   // Methods
+  const saveForm = async () => {
+    try {
+      setTaskRunning(true);
+      await book.save();
+      navigation.goBack();
+    } catch(e) {
+      console.log('error: ', e);
+    } finally {
+      setTaskRunning(false);
+    }
+  }
+
   const createBook = () => {
     let book = store.createRecord('book', {});
     setBook(book);
@@ -35,7 +47,27 @@ const BooksNewScene = (props) => {
   return (
     <BasicScene>
       <View style={{flex: 1, padding: 15, width: '100%', minHeight: '100%'}}>
+        <Form>
+          <FormGroup label='Title'>
+            <TextInputWrapper
+              value={book.title}
+              placeholder='Book Title'
+              onChangeText={value => book.set('title', value)}
+            />
+          </FormGroup>
 
+          <FormGroup label='Description'>
+            <TextAreaWrapper
+              value={book.description}
+              placeholder='Tell us about the book...'
+              onChangeText={value => book.set('description', value)}
+            />
+          </FormGroup>
+
+          <FormGroup style={{paddingTop: 15}}>
+            <ButtonBlock taskRunning={taskRunning} onPress={() => saveForm()}>Save</ButtonBlock>
+          </FormGroup>
+        </Form>
       </View>
     </BasicScene>
   );

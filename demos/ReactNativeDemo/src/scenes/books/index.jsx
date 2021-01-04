@@ -59,7 +59,7 @@ const BooksIndexScene = (props) => {
         {loading ? <Text>Loading...</Text> : (
           <FlatList
             data={books}
-            keyExtractor={book => book.id}
+            keyExtractor={book => book.id.toString()}
             renderItem={({ item }) => (
               <BookListCard
                 book={item}
