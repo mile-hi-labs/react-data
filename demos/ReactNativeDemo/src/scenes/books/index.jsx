@@ -41,6 +41,8 @@ const BooksIndexScene = (props) => {
       let model = await store.query('book', {
         page: page,
         pageSize: pageSize,
+        sortProp: 'id',
+        sortValue: 'desc',
         include: 'authors'
       });
       setBooks(model);

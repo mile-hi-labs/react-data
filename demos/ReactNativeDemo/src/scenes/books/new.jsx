@@ -3,16 +3,16 @@ import { SafeAreaView, ScrollView, FlatList, View, Text } from 'react-native';
 import { withStore } from '@mile-hi-labs/react-data';
 import { useFocusEffect } from '@react-navigation/native';
 import { BasicScene } from 'components/basics/scenes';
-import { ButtonText } from 'components/basics/buttons';
+import { ButtonBlock } from 'components/basics/buttons';
+import { Form, FormGroup, FormLabel } from 'components/basics/forms';
+import { TextAreaWrapper, TextInputWrapper } from 'components/basics/inputs';
 import { hideTabBar } from 'utils/interface';
 
 const BooksNewScene = (props) => {
 	const { navigation, route, store } = props;
   const [ book, setBook ] = useState({});
-  const [ page, setPage ] = useState(0);
-  const [ pageSize, setPageSize ] = useState(10);
   const [ loading, setLoading ] = useState(false);
-  const [ refreshing, setRefreshing ] = useState(false);
+  const [ taskRunning, setTaskRunning ] = useState(false);
 
 
   // Hooks
@@ -60,6 +60,7 @@ const BooksNewScene = (props) => {
             <TextAreaWrapper
               value={book.description}
               placeholder='Tell us about the book...'
+              lines={10}
               onChangeText={value => book.set('description', value)}
             />
           </FormGroup>

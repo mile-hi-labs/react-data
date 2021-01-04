@@ -19,11 +19,6 @@ const MainNav = (props) => {
         component={BooksNav}
       />
 
-      <Tab.Screen
-        name='MainAuthors'
-        component={AuthorsScene}
-      />
-
     </Tab.Navigator>
   );
 };

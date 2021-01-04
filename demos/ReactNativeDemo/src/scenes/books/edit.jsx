@@ -8,7 +8,6 @@ import { Form, FormGroup, FormLabel } from 'components/basics/forms';
 import { TextAreaWrapper, TextInputWrapper } from 'components/basics/inputs';
 import { hideTabBar } from 'utils/interface';
 
-
 const BooksEditScene = (props) => {
   const { bookId, navigation, route, store } = props;
   const [ book, setBook ] = useState({});
