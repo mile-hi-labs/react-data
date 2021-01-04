@@ -7,19 +7,23 @@ React Data uses the [Context Hooks](https://reactjs.org/docs/context.html) to co
 
 
 ## Quick Start
+
+### Install
 `npm install @mile-hi-labs/react-data`
 
+
+### Store Provider
 Add the following to your `app.jsx` file or near the top of your application.
 
 ```
 # app.jsx
 
 import React from 'react';
-import Router from 'router';
-import { StoreProvider } from 'react-data';
+import { StoreProvider } from '@mile-hi-labs/react-data';
 import * as Adapters from 'adapters';
 import * as Models from 'models';
 import * as Serializers from 'serializers';
+import Router from 'router';
 
 
 const App = (props) => {
@@ -36,13 +40,14 @@ const App = (props) => {
 export default App;
 ```
 
+### Store Consumer
 Then, you can access the store from any route or component like so:
 
 ```
 # routes/mkt/index.jsx
 
 import React, { useEffect } from 'react';
-import { withStore } from 'react-data';
+import { withStore } from '@mile-hi-labs/react-data';
 import UserList from 'components/user/user-list';
 
 const MktIndex = (props) => {
