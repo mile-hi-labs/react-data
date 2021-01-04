@@ -29,10 +29,12 @@ const BooksIndexScene = (props) => {
     })
   });
 
-  useEffect(() => {
-    fetchData();
-    showTabBar(navigation);
-  }, [])
+  useFocusEffect(
+    useCallback(() => {
+      fetchData();
+      showTabBar(navigation);
+    }, [])
+  );
 
   // Methods
   const fetchData = async () => {

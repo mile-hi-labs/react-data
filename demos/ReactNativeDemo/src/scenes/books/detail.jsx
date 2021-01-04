@@ -10,7 +10,7 @@ const BooksDetailScene = (props) => {
 	const { bookId, navigation, route, store } = props;
   const [ book, setBook ] = useState({});
   const [ loading, setLoading ] = useState(false);
-  const [ refreshing, setRefreshing ] = useState(false);
+  const [ taskRunning, setTaskRunning ] = useState(false);
 
 
   // Hooks
@@ -46,6 +46,18 @@ const BooksDetailScene = (props) => {
     }
   }
 
+  const destroyBook = async () => {
+    try {
+      setTaskRunning(true);
+      await book.destroy();
+      navigation.goBack();
+    } catch(e) {
+      console.log('error: ', e);
+    } finally {
+      setTaskRunning(false);
+    }
+  }
+
 
   // Render
   return (
@@ -56,6 +68,13 @@ const BooksDetailScene = (props) => {
             <Text>{book.printType}</Text>
             <Text style={{fontSize: 16, fontWeight: '500'}}>{book.title}</Text>
             <Text>{book.previewDescription}</Text>
+            <View style={{paddingTop: 15, paddingBottom: 15}}>
+              <ButtonText
+                taskRunning={taskRunning}
+                onPress={() => destroyBook()}>
+                Delete Book
+              </ButtonText>
+            </View>
           </View>
         )}
       </View>

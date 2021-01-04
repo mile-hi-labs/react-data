@@ -17,6 +17,9 @@ const MainNav = (props) => {
       <Tab.Screen
         name='MainBooks'
         component={BooksNav}
+        options={{
+          title: 'Books'
+        }}
       />
 
     </Tab.Navigator>
