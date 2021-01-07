@@ -61,8 +61,8 @@ const MktIndex = (props) => {
 	}, []);
 
 
-	// Async
-	async fetchData = () => {
+	// Methods
+	const fetchData = async () => {
 		try {
 			setLoading(true);
 			let storeRecords = store.findAll('user', {} );
