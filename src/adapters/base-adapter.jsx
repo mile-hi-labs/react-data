@@ -17,6 +17,24 @@ class BaseAdapter {
 		return this.apiDomain;
 	}
 
+	static get(prop) {
+		return this[prop];
+	}
+
+	static set(prop, value) {
+		let adapter = this;
+		let formattedProp = prop;
+		if (prop.includes('.')) {
+			prop.split('.').map((p, index) => {
+				prop = p;
+				if (index < prop.split('.').length) {
+					adapter = adapter[p]
+				}
+			});
+		}
+		adapter[prop] = value;
+		return adapter[prop]
+	}
 
 	static buildURL(resource, id) {
 		if (id) {
