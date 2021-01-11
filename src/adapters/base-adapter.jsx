@@ -60,7 +60,8 @@ class BaseAdapter {
 
 	static urlForQueryRecord(modelName, id = '') {
 		let resource = Pluralize(modelName);
-		return this.buildURL(resource, id.toString());
+		let resourceID = id ? id.toString() : null;
+		return this.buildURL(resource, resourceID);
 	}
 
 	static urlForCreateRecord(modelName) {
