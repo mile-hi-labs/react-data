@@ -8,7 +8,7 @@ import Router from 'router';
 
 
 const App = (props) => {
-  const apiDomain = 'http://localhost:8080';
+  const apiDomain = 'http://library-api.milehilabs.dev';
 
 
   // Render
