@@ -4,22 +4,19 @@ import RbImage from 'react-bootstrap/Image'
 
 const Image = (props) => {
 	const { src, className } = props;
-	
-	if (src == null) { return null };
+
 	return <RbImage src={src} rounded={true} fluid={true} className={className} />
 }
 
 const CircleImage = (props) => {
 	const { src, className } = props;
-	
-	if (src == null) { return null };
+
 	return <RbImage src={src} roundedCircle={true} className={className} />
 }
 
 const FluidImage = (props) => {
 	const { src, className } = props;
-	
-	if (src == null) { return null };
+
 	return <RbImage src={src} fluid={true} className={className} />
 }
 

@@ -1,10 +1,6 @@
 import { BaseSerializer } from '@mile-hi-labs/react-data';
 
 class AppSerializer extends BaseSerializer {
-	constructor(store) {
-		super(store);
-	}
-
 	get attrs() {
 		return {
 			...super.attrs,

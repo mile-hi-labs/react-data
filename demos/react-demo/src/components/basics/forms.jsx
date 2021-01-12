@@ -125,7 +125,7 @@ const FormSelect = (props) => {
     <RbForm.Control as='select' value={value} onChange={onChange} custom>
       <option disabled value={-1}>{placeholder}</option>
       {options.map(option => (
-        <option key={option} value={option}>{typeof option == 'string' ? capitalize(underscoreToString(option)) : option}</option>
+        <option key={option} value={option}>{typeof option === 'string' ? capitalize(underscoreToString(option)) : option}</option>
       ))}
     </RbForm.Control>
   )

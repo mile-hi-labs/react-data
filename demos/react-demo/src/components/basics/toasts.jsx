@@ -17,9 +17,9 @@ const Toast = (props) => {
   return (
     <Fade show={show} onEnter={() => setAnimation('fade-in-right')} onExit={() => setAnimation('fade-out-right')}>
       <Fragment>
-        {toast.type == 'success' && <ToastSuccess toast={toast} animation={animation} removeToast={removeToast} />}
-        {toast.type == 'info' && <ToastInfo toast={toast} animation={animation} removeToast={removeToast} />}
-        {toast.type == 'error' && <ToastError toast={toast} animation={animation} removeToast={removeToast} />}
+        {toast.type === 'success' && <ToastSuccess toast={toast} animation={animation} removeToast={removeToast} />}
+        {toast.type === 'info' && <ToastInfo toast={toast} animation={animation} removeToast={removeToast} />}
+        {toast.type === 'error' && <ToastError toast={toast} animation={animation} removeToast={removeToast} />}
       </Fragment>
     </Fade>
   )

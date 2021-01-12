@@ -2,30 +2,14 @@
   "name": "react-data-demo",
   "version": "0.1.0",
   "private": true,
-  "dependencies": {
-    "@fortawesome/free-regular-svg-icons": "^5.15.1",
-    "@fortawesome/free-solid-svg-icons": "^5.15.1",
-    "@fortawesome/react-fontawesome": "^0.1.14",
-    "@mile-hi-labs/react-data": "^2.1.1",
-    "bootstrap": "^4.5.3",
-    "moment": "^2.29.1",
-    "node-sass": "^4.14.1",
-    "react": "^17.0.1",
-    "react-app-rewired": "^2.1.8",
-    "react-bootstrap": "^1.4.0",
-    "react-dom": "^17.0.1",
-    "react-helmet": "^6.1.0",
-    "react-loading-skeleton": "^2.1.1",
-    "react-router-dom": "^5.2.0",
-    "react-scripts": "4.0.1",
-    "react-transition-group": "^4.4.1"
-  },
   "scripts": {
-    "start": "PORT=4200 react-app-rewired start",
-    "build": "react-app-rewired build",
-    "test": "react-app-rewired test",
+    "start": "PORT=4200 react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
     "link": "npm link @mile-hi-labs/react-data",
-    "unlink": "npm unlink @mile-hi-labs/react-data"
+    "unlink": "npm unlink @mile-hi-labs/react-data",
+    "format": "prettier --write 'src/**/*.{js,jsx,ts,tsx,json,css,scss,md}'",
+    "lint": "eslint src/**/*.js[x]"
   },
   "browserslist": {
     "production": [
@@ -38,5 +22,37 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*": "format"
+  },
+  "dependencies": {
+    "@fortawesome/free-regular-svg-icons": "^5.15.1",
+    "@fortawesome/free-solid-svg-icons": "^5.15.1",
+    "@fortawesome/react-fontawesome": "^0.1.14",
+    "@mile-hi-labs/react-data": "^2.1.1",
+    "bootstrap": "^4.5.3",
+    "moment": "^2.29.1",
+    "node-sass": "^4.14.1",
+    "react": "^17.0.1",
+    "react-bootstrap": "^1.4.0",
+    "react-dom": "^17.0.1",
+    "react-helmet": "^6.1.0",
+    "react-loading-skeleton": "^2.1.1",
+    "react-router-dom": "^5.2.0",
+    "react-scripts": "4.0.1",
+    "react-transition-group": "^4.4.1"
+  },
+  "devDependencies": {
+    "eslint": "^7.17.0",
+    "eslint-plugin-react": "^7.22.0",
+    "husky": "^4.3.7",
+    "lint-staged": "^10.5.3",
+    "prettier": "^2.2.1"
   }
 }

@@ -24,7 +24,7 @@ const BreadcrumbsWrapper = (props) => {
     <Breadcrumb>
       {breadcrumbs.map((breadcrumb, index) => {
         const detailBreadcrumb = index > 0 && Pluralize.singular(breadcrumbs[index - 1]);
-        const active = breadcrumbs.length == index + 1;
+        const active = breadcrumbs.length === index + 1;
 
         if (breadcrumb.match(/[0-9]/g)) {
           return (
@@ -42,8 +42,8 @@ const BreadcrumbsWrapper = (props) => {
             key={index}
             active={active}
             linkAs={Link}
-            linkProps={{to: index == 0 ? '/' : `/${breadcrumb}`}}>
-            {capitalize(index == 0 ? 'Home' : breadcrumb)}
+            linkProps={{to: index === 0 ? '/' : `/${breadcrumb}`}}>
+            {capitalize(index === 0 ? 'Home' : breadcrumb)}
           </Breadcrumb.Item>
         )
       })}

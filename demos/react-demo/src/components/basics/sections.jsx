@@ -29,7 +29,7 @@ const SectionBody = (props) => {
 
   return (
     <div className={
-      'section-body' + 
+      'section-body' +
       (size ? ` ${size}` : '') +
       (className ? ` ${className}` : '')}>
       {title && <h4 className='title'>{title}</h4>}
@@ -53,7 +53,7 @@ const SectionItem = (props) => {
       {children ? children : (
         <div className='flex-between'>
           {title && <h6 className='subtitle'>{title}</h6>}
-          {value && <h6>{typeof value == 'string' ? capitalize(value) : value}</h6>}
+          {value && <h6>{typeof value === 'string' ? capitalize(value) : value}</h6>}
         </div>
       )}
     </div>
@@ -70,7 +70,7 @@ const SectionText = (props) => {
           {title && <h6 className='subtitle'>{title}</h6>}
           {value && (
             <div className='mt-2'>
-              <h6>{typeof value == 'string' ? capitalize(value) : value}</h6>
+              <h6>{typeof value === 'string' ? capitalize(value) : value}</h6>
             </div>
           )}
         </Fragment>

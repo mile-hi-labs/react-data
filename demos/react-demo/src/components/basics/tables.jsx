@@ -48,14 +48,14 @@ const TableHead = (props) => {
 
 const TableHeadSort = (props) => {
   const { title, value, sortProp, sortValue, sortData, className = '', children } = props;
-  const direction = (value == sortProp && sortValue == 'asc') ? 'desc' : 'asc';
+  const direction = (value === sortProp && sortValue === 'asc') ? 'desc' : 'asc';
 
   return (
     <th className={className}>
-      <ButtonWrapper className={value == sortProp && 'active'} onClick={() => sortData(value, direction)}>
+      <ButtonWrapper className={value === sortProp && 'active'} onClick={() => sortData(value, direction)}>
         {capitalize(title)}
-        {(value == sortProp && sortValue == 'asc') && <FarIcon icon='sort-up' className='ml-2'/>}
-        {(value == sortProp && sortValue == 'desc') && <FarIcon icon='sort-down' className='ml-2'/>}
+        {(value === sortProp && sortValue === 'asc') && <FarIcon icon='sort-up' className='ml-2'/>}
+        {(value === sortProp && sortValue === 'desc') && <FarIcon icon='sort-down' className='ml-2'/>}
         {(value != sortProp) && <FarIcon icon='sort' className='ml-2'/>}
       </ButtonWrapper>
     </th>

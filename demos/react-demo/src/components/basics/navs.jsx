@@ -30,7 +30,7 @@ const NavbarToggle = (props) => {
 
 	return (
 		<RBNavbar.Toggle as={ButtonText} className={'btn hamburger hamburger--squeeze ' + className} onClick={onClick}>
-			{children ? chldren : <span className='hamburger-box'><span className='hamburger-inner'></span></span>}
+			{children ? children : <span className='hamburger-box'><span className='hamburger-inner'></span></span>}
 		</RBNavbar.Toggle>
 	)
 }

@@ -21,30 +21,30 @@ const Pagination = (props) => {
     <RbPagination className={className}>
       <PaginationFirst
         item={1}
-        disabled={(page == 0) || !totalPages > 1}
+        disabled={(page === 0) || !totalPages > 1}
         onClick={() => setPage(0)}
       />
       <PaginationPrev
         item={page - 1}
-        disabled={page == 0}
+        disabled={page === 0}
         onClick={() => setPage(page - 1)}
       />
       {pages().map(p => (
         <PaginationItem
           key={p}
           item={p}
-          active={p == page + 1}
+          active={p === page + 1}
           onClick={() => setPage(p - 1)}
         />
       ))}
       <PaginationNext
         item={page + 1}
-        disabled={page == totalPages}
+        disabled={page === totalPages}
         onClick={() => setPage(page + 1)}
       />
       <PaginationLast
         item={pages}
-        disabled={(page == totalPages) || (!totalPages > 1)}
+        disabled={(page === totalPages) || (!totalPages > 1)}
         onClick={() => setPage(totalPages)}
       />
     </RbPagination>
