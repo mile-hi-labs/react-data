@@ -40,7 +40,7 @@ class StoreProvider extends Component {
   // Hooks
   componentDidMount() {
     this.adapterFor('').set('apiDomain', this.state.apiDomain);
-    logger('React Data initiated: ', this.state);
+    logger('React Data: ', this.state);
     this.setState({ loaded: true });
   }
 
@@ -64,14 +64,13 @@ class StoreProvider extends Component {
     let storeRecords = this.peekAll(modelName);
     let storeRecord = this.modelFor(modelName, data);
     storeRecords.push(storeRecord);
-    this.setState({[modelName]: storeRecords}, () => isNew && logger('Store: ', this.state))
+    this.setState({[modelName]: storeRecords}, () => isNew && logger('React Data: ', this.state))
     return storeRecord;
   }
 
   updateAll(modelName) { // We can do better here
     let storeRecords = this.peekAll(modelName);
-    this.setState({ [modelName]:  storeRecords });
-    logger('Store: ', this.state);
+    this.setState({ [modelName]:  storeRecords }, () => logger('React Data: ', this.state));
   }
 
   updateRecord(modelName, storeRecord, record) {
@@ -108,13 +107,13 @@ class StoreProvider extends Component {
     let storeRecords = this.state[modelName] || [];
     let storeRecord = record.id ? this.peekRecord(modelName, record.id) : storeRecords.find(model => isEmpty(model.id));
     storeRecords = removeObject(storeRecords, storeRecord);
-    this.setState({[modelName]: storeRecords}, () => logger('Store: ', this.state));
+    this.setState({[modelName]: storeRecords}, () => logger('React Data: ', this.state));
     return null;
   };
 
   removeAll(modelName, records) {
     this.state[modelName] = [];
-    this.setState(this.state, () => logger('Store: ', this.state));
+    this.setState(this.state, () => logger('React Data: ', this.state));
     return null;
   };
 
