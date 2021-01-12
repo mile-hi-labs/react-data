@@ -96,7 +96,7 @@ class BaseModel {
 		try {
 			let data = this.store.serializerFor(this.type).serialize(this);
 			let response = this.id ? await this.update(data) : await this.create(data);
-			let formattedResponse = this.store.serializerFor(this.type).normalize(response.data, response.included, response.meta);
+			let formattedResponse = this.store.serializerFor(this.type).normalize(response.data, response.included);
 			this.setProps(formattedResponse);
 			return formattedResponse;
 		} catch(e) {
@@ -127,7 +127,7 @@ class BaseModel {
 				let axios = new Axios({ baseURL: adapter.apiDomain, token: adapter.token }).instance;
 				let url = adapter.urlForDestroyRecord(this.type, this.id);
 				let response = await axios.delete(url);
-				let formattedResponse = this.store.serializerFor(this.type).normalize(response.data, response.included, response.meta);
+				let formattedResponse = this.store.serializerFor(this.type).normalize(response.data, response.included);
 			}
 			return this.store.removeRecord(this.type, this);
 		} catch(e) {

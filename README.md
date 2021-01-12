@@ -192,14 +192,20 @@ This project comes with a built-in React and React Native demo.
 
 ## Development
 This projects uses Webpack to build the project. Please see `package.json` for available scripts.
+
+### Web
 - Clone this repository
 - Run `npm link` from this library
-- Open up the demo proejct (or another proejcton your local machine) where you'd like to use this library
-- Run `npm link @mile-hi-labs/react-data` from your project
-- You can now develop both projects simultaneously
+- Open up the consuming project / demo project and run `npm link @mile-hi-labs/react-data`
 - Run `npm run build` to push code from the library to your project
-- Run `npm run build:prod` push compressed code from the library to your project
 
+### Native
+React Native's metro bundler doesn't accept the steps below. Please contact the project author for an alternative path.
+- Clone this repository
+- Run `npm install` from this library
+- Run `npm run build` from this library
+- Open up the consuming project / demo project and run `npm install path/to/this/project`
+- Repeat the steps above to consume the latest code
 
 ## Publish
 - npm publish
