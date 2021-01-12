@@ -33,12 +33,12 @@ class BaseAdapter {
 			});
 		}
 		adapter[prop] = value;
-		return adapter[prop]
 	}
 
 	static buildURL(resource, id) {
 		if (id) {
-			return this.baseURL() + `/${resource}/${id}`;
+			let formattedId = id.toString();
+			return this.baseURL() + `/${resource}/${formattedId}`;
 		}
 		return this.baseURL() + `/${resource}`;
 	}
@@ -58,10 +58,9 @@ class BaseAdapter {
 		return this.buildURL(resource);
 	}
 
-	static urlForQueryRecord(modelName, id = '') {
+	static urlForQueryRecord(modelName, id) {
 		let resource = Pluralize(modelName);
-		let resourceID = id ? id.toString() : null;
-		return this.buildURL(resource, resourceID);
+		return this.buildURL(resource, id);
 	}
 
 	static urlForCreateRecord(modelName) {
@@ -69,14 +68,14 @@ class BaseAdapter {
 		return this.buildURL(resource);
 	}
 
-	static urlForUpdateRecord(modelName, id = '') {
+	static urlForUpdateRecord(modelName, id) {
 		let resource = Pluralize(modelName);
-		return this.buildURL(resource, id.toString());
+		return this.buildURL(resource, id);
 	}
 
-	static urlForDestroyRecord(modelName, id = '') {
+	static urlForDestroyRecord(modelName, id) {
 		let resource = Pluralize(modelName);
-		return this.buildURL(resource, id.toString());
+		return this.buildURL(resource, id);
 	}
 
 
