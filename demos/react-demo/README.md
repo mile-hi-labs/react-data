@@ -5,8 +5,5 @@ This demo uses `react-data` as a state management library to showcase it's capab
 # Getting Started
 - Download the example or clone the project
 - Run `npm install`
+- Run `npm run link` after adding react-data to `npm link`
 - Start `npm start`
-
-
-# Development
-- This project currently uses `npm link` to connect to the react-data lib.

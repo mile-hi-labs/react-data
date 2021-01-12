@@ -970,7 +970,7 @@
     "@types/yargs" "^15.0.0"
     "chalk" "^3.0.0"
 
-"@mile-hi-labs/react-data@^2.0.11":
+"@mile-hi-labs/react-data@latest":
   "integrity" "sha512-9QsuUQn2qugw5lCvlSAQzgARb46ezfdZSgQpIY92dl3x2LX96LVzVdy4CAHeq3q40dWGYxCAaM9mk5pEk2v4AQ=="
   "resolved" "https://registry.npmjs.org/@mile-hi-labs/react-data/-/react-data-2.0.11.tgz"
   "version" "2.0.11"
