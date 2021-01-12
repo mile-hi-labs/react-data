@@ -2,7 +2,6 @@ import { isEmpty } from 'utils/helpers';
 import { logger } from 'utils/helpers';
 
 class JsonApiError {
-
   static format(e) {
     try {
       if (e.response) {

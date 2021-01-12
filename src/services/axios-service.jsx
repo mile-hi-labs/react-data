@@ -7,7 +7,6 @@ class AxiosService {
     this.token = props.token;
   }
 
-
   // Methods
   get instance() {
     let instance = Axios.create({ baseURL: this.baseURL });
@@ -16,7 +15,6 @@ class AxiosService {
     }
     return instance;
   }
-
 }
 
 export default AxiosService;

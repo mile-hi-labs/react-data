@@ -39,7 +39,9 @@
     "build": "webpack --env development",
     "build:prod": "webpack --env production",
     "deploy": "npm run clean && npm run build && npm run build:prod && npm publish",
-    "deploy:test": "npm run clean && npm run build && npm run build:prod && npm publish --dry-run"
+    "deploy:test": "npm run clean && npm run build && npm run build:prod && npm publish --dry-run",
+    "format": "prettier --write src/**/*.{js,jsx}",
+    "lint": "eslint src/**/*.js[x]"
   },
   "devDependencies": {
     "babel-core": "^6.21.0",
@@ -55,6 +57,9 @@
   },
   "dependencies": {
     "axios": "^0.19.2",
-    "pluralize": "^8.0.0"
+    "eslint": "^7.17.0",
+    "eslint-config-react-app": "^6.0.0",
+    "pluralize": "^8.0.0",
+    "prettier": "^2.2.1"
   }
 }

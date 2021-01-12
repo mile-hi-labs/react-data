@@ -35,15 +35,13 @@ class StoreProvider extends Component {
       queryRecord: this.queryRecord.bind(this),
       loaded: false,
     };
-  };
-
+  }
 
   // Hooks
   componentDidMount() {
     logger('React Data: ', this.state);
     this.setState({ loaded: true });
   }
-
 
   // Helpers
   adapterFor(modelName) {
@@ -58,19 +56,19 @@ class StoreProvider extends Component {
     return serializerFor(this.state.serializers, modelName, this.state);
   }
 
-
   // Store Records
   createRecord(modelName, data, isNew = true) {
     let storeRecords = this.peekAll(modelName);
     let storeRecord = this.modelFor(modelName, data);
     storeRecords.push(storeRecord);
-    this.setState({[modelName]: storeRecords}, () => isNew && logger('React Data: ', this.state))
+    this.setState({ [modelName]: storeRecords }, () => isNew && logger('React Data: ', this.state));
     return storeRecord;
   }
 
-  updateAll(modelName) { // We can do better here
+  updateAll(modelName) {
+    // We can do better here
     let storeRecords = this.peekAll(modelName);
-    this.setState({ [modelName]:  storeRecords }, () => logger('React Data: ', this.state));
+    this.setState({ [modelName]: storeRecords }, () => logger('React Data: ', this.state));
   }
 
   updateRecord(modelName, storeRecord, record) {
@@ -81,12 +79,12 @@ class StoreProvider extends Component {
   pushAll(modelName, records) {
     let storeRecords = this.peekAll(modelName);
     return records.map(record => this.pushRecord(modelName, record));
-  };
+  }
 
   pushRecord(modelName, record) {
     let storeRecord = this.peekRecord(modelName, record.id);
     return storeRecord ? this.updateRecord(modelName, storeRecord, record) : this.createRecord(modelName, record, false);
-  };
+  }
 
   peekAll(modelName) {
     return this.state[modelName] || [];
@@ -107,29 +105,32 @@ class StoreProvider extends Component {
     let storeRecords = this.state[modelName] || [];
     let storeRecord = record.id ? this.peekRecord(modelName, record.id) : storeRecords.find(model => isEmpty(model.id));
     storeRecords = removeObject(storeRecords, storeRecord);
-    this.setState({[modelName]: storeRecords}, () => logger('React Data: ', this.state));
+    this.setState({ [modelName]: storeRecords }, () => logger('React Data: ', this.state));
     return null;
-  };
+  }
 
   removeAll(modelName, records) {
     this.state[modelName] = [];
     this.setState(this.state, () => logger('React Data: ', this.state));
     return null;
-  };
-
+  }
 
   // Network calls
   async findAll(modelName, params) {
     let storeRecords = this.peekAll(modelName);
-    if (!isEmpty(storeRecords)) { return storeRecords }
+    if (!isEmpty(storeRecords)) {
+      return storeRecords;
+    }
     return await this.query(modelName, params);
-  };
+  }
 
   async findRecord(modelName, recordId, params) {
     let storeRecord = this.peekRecord(modelName, recordId);
-    if (!isEmpty(storeRecord)) { return storeRecord }
+    if (!isEmpty(storeRecord)) {
+      return storeRecord;
+    }
     return await this.queryRecord(modelName, recordId, params);
-  };
+  }
 
   async query(modelName, params) {
     try {
@@ -138,7 +139,7 @@ class StoreProvider extends Component {
       let storeRecords = this.pushAll(modelName, records);
       storeRecords.meta = this.serializerFor(modelName).normalizeMeta(response.meta);
       return storeRecords;
-    } catch(e) {
+    } catch (e) {
       throw JsonApiError.format(e);
     }
   }
@@ -148,36 +149,26 @@ class StoreProvider extends Component {
       let response = await this.adapterFor(modelName).queryRecord(modelName, recordId, params);
       let record = this.serializerFor(modelName).normalize(response.data, response.included);
       return this.pushRecord(modelName, record);
-    } catch(e) {
+    } catch (e) {
       throw JsonApiError.format(e);
     }
   }
-
 
   // Render
   render() {
     const { loaded } = this.state;
     const { children } = this.props;
 
-    return (
-      <StoreContext.Provider value={this.state}>
-        {children}
-      </StoreContext.Provider>
-    );
-  }
-};
-
-const withStore = function(WrappedFunction) {
-  return class extends Component {
-    render() {
-      return (
-        <StoreContext.Consumer>
-          {context => <WrappedFunction store={context} {...this.props} />}
-        </StoreContext.Consumer>
-      )
-    }
+    return <StoreContext.Provider value={this.state}>{children}</StoreContext.Provider>;
   }
 }
 
-export { StoreContext, StoreProvider, withStore };
+const withStore = function (WrappedFunction) {
+  return class extends Component {
+    render() {
+      return <StoreContext.Consumer>{context => <WrappedFunction store={context} {...this.props} />}</StoreContext.Consumer>;
+    }
+  };
+};
 
+export { StoreContext, StoreProvider, withStore };

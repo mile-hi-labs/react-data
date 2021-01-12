@@ -8,8 +8,8 @@
     "test": "react-scripts test",
     "link": "npm link @mile-hi-labs/react-data",
     "unlink": "npm unlink @mile-hi-labs/react-data",
-    "format": "prettier --write src/**/*.{js[x],scss}",
-    "format:check": "prettier --check src/**/*.{js[x],scss}",
+    "format": "prettier --write src/**/*.{js,jsx,scss}",
+    "format:check": "prettier --check src/**/*.{js,jsx,scss}",
     "lint": "eslint src/**/*.js[x]"
   },
   "browserslist": {
