@@ -1,46 +1,41 @@
 // Primary
-$primary-color: #1C314F; // Blue
-$secondary-color: #8F7848; // Gold
+$primary-color: #1c314f; // Blue
+$secondary-color: #8f7848; // Gold
 
 // Other
-$success: #5CDBBD;
-$warning: #95ADB6;
-$danger: #D4353F;
+$success: #5cdbbd;
+$warning: #95adb6;
+$danger: #d4353f;
 
 // Links
 $blue: #007bff;
 
-
 // Grayscale Colors
 $black: #080708;
-$darker-gray: #1F2333;
-$dark-gray: #2D3142;
-$gray: #9EA7B3;
-$mid-gray: #C5CFD6;
-$light-gray: #F3F5F7;
-$lighter-gray: #F6F8F9;
-$white: #FFFFFF;
-
+$darker-gray: #1f2333;
+$dark-gray: #2d3142;
+$gray: #9ea7b3;
+$mid-gray: #c5cfd6;
+$light-gray: #f3f5f7;
+$lighter-gray: #f6f8f9;
+$white: #ffffff;
 
 // Partner Colors
-$twitter: #2E97E9;
-$facebook: #0974E8;
+$twitter: #2e97e9;
+$facebook: #0974e8;
 $google: #db3236;
-$linkedin: #3B5998;
-
+$linkedin: #3b5998;
 
 // Shadows
 $dark-shadow-05: 0 2px 4px 0 rgba($black, 0.05);
 $dark-shadow-1: 0 4px 8px 0 rgba($black, 0.1);
 $dark-shadow-2: 0 5px 10px 0 rgba($black, 0.2);
 
-
 // Fonts
 $primary-font: 'Open Sans Condensed', 'Helvetica', serif;
 $secondary-font: 'Open Sans', 'Helvetica', sans-serif;
 $accent-font: $secondary-font;
 $sub-font: $secondary-font;
-
 
 // Backgrounds
 $dark-bg-05: rgba($black, 0.05);
@@ -65,13 +60,11 @@ $light-bg-7: rgba($white, 0.7);
 $light-bg-8: rgba($white, 0.8);
 $light-bg-9: rgba($white, 0.9);
 
-
 // Weights
 $light: 300;
 $reg: 400;
 $m-bold: 600;
 $bold: 700;
-
 
 // Breakpoints
 $xlarge: 1440px;

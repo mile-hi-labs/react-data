@@ -1,93 +1,94 @@
 .card {
-	width: 100%;
-	border-radius: 4px;
-	overflow: hidden;
-	margin-bottom: 1.5em;
-	@include ease(all);
+  width: 100%;
+  border-radius: 4px;
+  overflow: hidden;
+  margin-bottom: 1.5em;
+  @include ease(all);
 }
 
-.card.activity {}
+.card.activity {
+}
 
 .card.detail {
-	background: $white;
-	box-shadow: $dark-shadow-05;
-	border: 1px solid $dark-bg-1;
+  background: $white;
+  box-shadow: $dark-shadow-05;
+  border: 1px solid $dark-bg-1;
 }
 
 .card.list {
-	@extend .flex-row;
+  @extend .flex-row;
 }
 
 .card.select {
-	margin: 0;
-	border: none;
-	border-radius: 0;
-	@extend .bb;
-	@extend .flex-row;
+  margin: 0;
+  border: none;
+  border-radius: 0;
+  @extend .bb;
+  @extend .flex-row;
 }
 
 .card.table {
-	padding: 15px 0;
-	border: none;
-	border-bottom: 1px solid $dark-bg-1;
+  padding: 15px 0;
+  border: none;
+  border-bottom: 1px solid $dark-bg-1;
 }
-
 
 // Header
 .card-header {
-	position: relative;
-	display: flex;
-	border: none;
-	border-radius: 0 !important;
-	background: $primary-color;
+  position: relative;
+  display: flex;
+  border: none;
+  border-radius: 0 !important;
+  background: $primary-color;
 }
 
 .card-header.activity {
-	padding: 15px 15px 0px 15px;
-	background: $white;
+  padding: 15px 15px 0px 15px;
+  background: $white;
 }
 
 .card-header.detail {
-	width: 100%;
-	margin: auto;
-	min-height: 160px;
+  width: 100%;
+  margin: auto;
+  min-height: 160px;
 }
 
 .card-header.list {
-	width: 25%;
-	min-width: 80px;
-	max-width: 160px;
+  width: 25%;
+  min-width: 80px;
+  max-width: 160px;
 }
 
 .card-icon {
-	margin: auto;
-	color: $white;
+  margin: auto;
+  color: $white;
 }
-
 
 // Body
 .card-body {
-	padding: 1.2rem 1.25rem;
+  padding: 1.2rem 1.25rem;
 }
 
-.card-body.activity {}
+.card-body.activity {
+}
 
 .card-body.list {
-	width: 80%;
-	@extend .flex-between;
+  width: 80%;
+  @extend .flex-between;
 }
 
 // Footer
 .card-footer {
-	width: 100%;
-	padding: 15px;
-	font-size: 80%;
-	color: $gray;
-	background: $white;
+  width: 100%;
+  padding: 15px;
+  font-size: 80%;
+  color: $gray;
+  background: $white;
 }
 
-.card-footer.activity {}
+.card-footer.activity {
+}
 
 .card-footer.grid {
-	@extend .bt;
+  @extend .bt;
 }

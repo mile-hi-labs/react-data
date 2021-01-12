@@ -8,7 +8,8 @@
     border-color: lighten($bg, 5%);
     color: $color;
   }
-  &:active, &.active {
+  &:active,
+  &.active {
     background-color: darken($bg, 10%) !important;
     border-color: darken($bg, 10%) !important;
     color: $color;
@@ -31,7 +32,8 @@
     border-color: darken($color, 5%);
     color: $white;
   }
-  &:active, &.active {
+  &:active,
+  &.active {
     background: $activeColor;
     color: $white;
     border-color: $activeColor;
@@ -40,7 +42,6 @@
     background: transparent;
   }
 }
-
 
 // Text
 @mixin bootstrap-text-btn($color, $bg) {
@@ -55,7 +56,8 @@
     background: $bg;
     color: lighten($color, 10%);
   }
-  &:active, &.active {
+  &:active,
+  &.active {
     background: $bg;
     color: darken($color, 10%);
   }

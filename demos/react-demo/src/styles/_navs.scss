@@ -1,9 +1,9 @@
 .navbar {
-	height: 100px;
-	display: flex;
-	@extend .border-bottom;
+  height: 100px;
+  display: flex;
+  @extend .border-bottom;
 }
 
 .navbar-brand img {
-	max-width: 200px;
+  max-width: 200px;
 }

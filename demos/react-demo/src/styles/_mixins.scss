@@ -18,9 +18,9 @@
 
 // Transforms
 @mixin transform($params) {
-	-webkit-transform: $params;
-	-moz-transform: $params;
-	-ms-transform: $params;
+  -webkit-transform: $params;
+  -moz-transform: $params;
+  -ms-transform: $params;
   -o-transform: $params;
   transform: $params;
 }
@@ -53,7 +53,6 @@
   animation: #{$values};
 }
 
-
 // Blur
 @mixin blur($value) {
   -webkit-filter: blur($value);
@@ -68,7 +67,7 @@
   position: relative;
   &:after {
     display: block;
-    content: " ";
+    content: ' ';
     width: 100%;
     padding-top: ($height / $width) * 100%;
   }
@@ -80,7 +79,6 @@
     bottom: 0;
   }
 }
-
 
 // Placeholders
 @mixin placeholder($color) {

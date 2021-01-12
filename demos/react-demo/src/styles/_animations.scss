@@ -35,8 +35,6 @@
   animation-delay: 900ms;
 }
 
-
-
 // Animations
 .fade-in {
   @include animation(fadeIn 200ms ease forwards);
@@ -102,7 +100,6 @@
   @include animation(spin135 300ms ease forwards);
 }
 
-
 // Keyframes
 @include keyframes(fadeIn) {
   0% {
@@ -112,7 +109,6 @@
     opacity: 1;
   }
 }
-
 
 // FADE IN
 @include keyframes(fadeInUp) {
@@ -158,9 +154,6 @@
     transform: translateX(0px);
   }
 }
-
-
-
 
 // FADE OUT
 @include keyframes(fadeOut) {
@@ -216,7 +209,6 @@
   }
 }
 
-
 // FADE ZOOM
 @include keyframes(fadeInZoom) {
   0% {
@@ -240,15 +232,12 @@
   }
 }
 
-
-
 // SPIN
 @include keyframes(spin135) {
-  0%   {
+  0% {
     transform: rotate(0);
   }
   100% {
     transform: rotate(-135deg);
   }
 }
-

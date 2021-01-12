@@ -26,14 +26,13 @@
   color: inherit;
 }
 
-
 // Fonts
 .primary-font {
-	font-family: $primary-font;
+  font-family: $primary-font;
 }
 
 .secondary-font {
-	font-family: $secondary-font;
+  font-family: $secondary-font;
 }
 
 .accent-font {
@@ -44,35 +43,33 @@
   font-family: $sub-font;
 }
 
-
 // Weights
 .bold {
-	font-weight: $bold !important;
+  font-weight: $bold !important;
 }
 
 .mbold {
-	font-weight: $m-bold !important;
+  font-weight: $m-bold !important;
 }
 
 .reg {
-	font-weight: $reg !important;
+  font-weight: $reg !important;
 }
 
 .light {
-	font-weight: $light !important;
+  font-weight: $light !important;
 }
-
 
 // Styles
 .italic {
-	font-style: italic !important;
+  font-style: italic !important;
 }
 
 // Transforms
 .uppercase {
-	text-transform: uppercase;
+  text-transform: uppercase;
 }
 
 .capitalize {
-	text-transform: capitalize;
+  text-transform: capitalize;
 }

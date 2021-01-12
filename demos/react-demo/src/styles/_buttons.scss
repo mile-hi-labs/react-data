@@ -15,7 +15,8 @@
   &:hover {
     outline: none !important;
   }
-  &:active, &:focus  {
+  &:active,
+  &:focus {
     box-shadow: none !important;
     outline: none !important;
   }
@@ -114,7 +115,6 @@
   @include bootstrap-outline-btn($white, $light-gray);
 }
 
-
 // Text Btns
 .btn-text-primary {
   @include bootstrap-text-btn($primary-color, transparent);
@@ -148,8 +148,6 @@
   @include bootstrap-text-btn($white, transparent);
 }
 
-
-
 // Styles
 .btn-pill {
   border-radius: 24px;
@@ -160,7 +158,6 @@
   padding-left: 0 !important;
   padding-right: 0 !important;
 }
-
 
 // Sizes
 .btn-xl {
