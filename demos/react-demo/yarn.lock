@@ -1472,9 +1472,9 @@
     "@types/yargs" "^15.0.0"
     "chalk" "^4.0.0"
 
-"@mile-hi-labs/react-data@file:../..":
+"@mile-hi-labs/react-data@^2.1.1":
   "resolved" "file:../.."
-  "version" "2.1.0"
+  "version" "2.1.1"
   dependencies:
     "axios" "^0.19.2"
     "pluralize" "^8.0.0"

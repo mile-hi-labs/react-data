@@ -10,6 +10,7 @@ const StoreContext = React.createContext();
 class StoreProvider extends Component {
   constructor(props) {
     super(props);
+    adapterFor(this.props.adapters, '').set('apiDomain', this.props.apiDomain);
     this.state = {
       apiDomain: this.props.apiDomain || '',
       adapters: this.props.adapters || {},
@@ -39,7 +40,6 @@ class StoreProvider extends Component {
 
   // Hooks
   componentDidMount() {
-    this.adapterFor('').set('apiDomain', this.state.apiDomain);
     logger('React Data: ', this.state);
     this.setState({ loaded: true });
   }
