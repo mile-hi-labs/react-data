@@ -207,9 +207,9 @@ React Native's metro bundler doesn't accept the steps below. Please contact the 
 - Open up the consuming project / demo project and run `npm install path/to/this/project`
 - Repeat the steps above to consume the latest code
 
+
 ## Publish
-- npm publish
-- npm publish --dry-run
+- Run `npm run deploy 'commit message'` to build, deploy, and commit the changes
 
 
 ## Links

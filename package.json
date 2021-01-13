@@ -38,9 +38,11 @@
     "clean": "rimraf ./lib",
     "build": "webpack --env development",
     "build:prod": "webpack --env production",
-    "deploy": "npm run clean && npm run build && npm run build:prod && npm publish",
+    "deploy": "npm run clean && npm run build && npm run build:prod && npm publish &&. npm run git -m",
     "deploy:test": "npm run clean && npm run build && npm run build:prod && npm publish --dry-run",
     "format": "prettier --write src/**/*.jsx",
+    "git": "git add . && git commit -m",
+    "postgit": "git push --all",
     "lint": "eslint src/**/*.js[x]"
   },
   "devDependencies": {
