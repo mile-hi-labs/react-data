@@ -10,7 +10,6 @@
     "unlink": "npm unlink @mile-hi-labs/react-data",
     "packages": "npm install @mile-hi-labs/react-data@latest",
     "format": "prettier --write src/**/*.{js,jsx,scss}",
-    "format:check": "prettier --check src/**/*.{js,jsx,scss}",
     "lint": "eslint src/**/*.js[x]"
   },
   "browserslist": {

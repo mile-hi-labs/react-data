@@ -1,9 +1,9 @@
-export const showTabBar = (navigation) => {
-	const parent = navigation.dangerouslyGetParent();
-  parent.setOptions({ tabBarVisible: true });
-}
-
-export const hideTabBar = (navigation) => {
+export const showTabBar = navigation => {
   const parent = navigation.dangerouslyGetParent();
-  parent.setOptions({ tabBarVisible: false });
-}
+  parent.setOptions({tabBarVisible: true});
+};
+
+export const hideTabBar = navigation => {
+  const parent = navigation.dangerouslyGetParent();
+  parent.setOptions({tabBarVisible: false});
+};

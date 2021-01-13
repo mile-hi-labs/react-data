@@ -1,6 +1,6 @@
 {
 	"root": true,
-  "extends": ["react-app"],
+  "extends": ["@react-native-community"],
   "rules": {
     "no-undef": "error",
     "no-unused-vars": "warn",
