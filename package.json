@@ -40,7 +40,7 @@
     "build:prod": "webpack --env production",
     "deploy": "npm run clean && npm run build && npm run build:prod && npm publish",
     "deploy:test": "npm run clean && npm run build && npm run build:prod && npm publish --dry-run",
-    "format": "prettier --write src/**/*.{js,jsx}",
+    "format": "prettier --write src/**/*.jsx",
     "lint": "eslint src/**/*.js[x]"
   },
   "devDependencies": {
