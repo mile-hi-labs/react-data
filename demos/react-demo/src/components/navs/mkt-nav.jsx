@@ -11,7 +11,8 @@ const MktNav = (props) => {
 	return (
 		<Navbar className='mkt flex-between'>
 			<NavbarBrand to='/' img={<img src={LibLogo}/>} className='mr-15' />
-			<Nav className='flex-end'>
+			<NavbarToggle className={mobileNav.menu && 'is-active'} onClick={() => mobileNav.toggleMenu()} />
+			<Nav className='ml-auto flex-end'>
 				{/*<Button onClick={() => console.log('test')}>Generate Data</Button>*/}
 			</Nav>
 		</Navbar>

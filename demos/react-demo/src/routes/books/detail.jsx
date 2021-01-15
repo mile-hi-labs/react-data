@@ -23,7 +23,7 @@ const BooksDetailRoute = (props) => {
 	const fetchData = async () => {
 		try {
 			setLoading(true);
-			let model = await store.queryRecord('book', bookId, { include: 'authors' })
+			let model = await store.findRecord('book', bookId, { include: 'authors' })
 			toast.showSuccess('Book received!');
 			setBook(model);
 		} catch (e) {
