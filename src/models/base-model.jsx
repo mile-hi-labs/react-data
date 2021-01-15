@@ -1,5 +1,4 @@
 import Pluralize from 'pluralize';
-import Axios from 'services/axios-service';
 import JsonApiError from 'utils/json-api-error';
 import { camelToDash } from 'utils/transforms';
 import { addObject, removeObject, isEmpty, logger } from 'utils/helpers';
@@ -9,6 +8,7 @@ class BaseModel {
     this.id = props.id || '';
     this.type = camelToDash(type).toLowerCase();
     this.store = store || {};
+    this.axios =
 
     this.updatedAt = props.updatedAt || '';
     this.createdAt = props.createdAt || '';
@@ -102,17 +102,15 @@ class BaseModel {
 
   async create(data) {
     let adapter = this.store.adapterFor(this.type);
-    let axios = new Axios({ baseURL: adapter.apiDomain, token: adapter.token }).instance;
     let url = adapter.urlForCreateRecord(this.type);
-    let response = await axios.post(url, data);
+    let response = await this.store.adapterFor().axios.post(url, data);
     return response.data;
   }
 
   async update(data) {
     let adapter = this.store.adapterFor(this.type);
     let url = adapter.urlForUpdateRecord(this.type, this.id);
-    let axios = new Axios({ baseURL: adapter.apiDomain, token: adapter.token }).instance;
-    let response = await axios.put(url, data);
+    let response = await this.store.adapterFor().axios.put(url, data);
     return response.data;
   }
 
@@ -120,9 +118,8 @@ class BaseModel {
     try {
       if (this.id) {
         let adapter = this.store.adapterFor(this.type);
-        let axios = new Axios({ baseURL: adapter.apiDomain, token: adapter.token }).instance;
         let url = adapter.urlForDestroyRecord(this.type, this.id);
-        let response = await axios.delete(url);
+        let response = await this.store.adapterFor().axios.delete(url);
         let formattedResponse = this.store.serializerFor(this.type).normalize(response.data, response.included);
       }
       return this.store.removeRecord(this.type, this);
