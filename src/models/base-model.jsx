@@ -4,12 +4,10 @@ import { camelToDash } from 'utils/transforms';
 import { addObject, removeObject, isEmpty, logger } from 'utils/helpers';
 
 class BaseModel {
-  constructor(type, store, props = {}) {
+  constructor(modelName, store, props = {}) {
     this.id = props.id || '';
-    this.type = camelToDash(type).toLowerCase();
+    this.type = camelToDash(modelName).toLowerCase();
     this.store = store || {};
-    this.axios =
-
     this.updatedAt = props.updatedAt || '';
     this.createdAt = props.createdAt || '';
   }

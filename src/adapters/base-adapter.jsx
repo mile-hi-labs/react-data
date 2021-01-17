@@ -1,5 +1,5 @@
 import Pluralize from 'pluralize';
-import Axios from 'services/axios-service';
+import 'cross-fetch/polyfill';
 import { isEmpty } from 'utils/helpers';
 
 class BaseAdapter {
@@ -7,10 +7,6 @@ class BaseAdapter {
   static token = '';
 
   // Methods
-  static get axios() {
-    return new Axios({ baseURL: this.apiDomain, token: this.token }).instance;
-  }
-
   static baseURL() {
     return this.apiDomain;
   }
@@ -42,10 +38,10 @@ class BaseAdapter {
   }
 
   static formattedParams(params = {}) {
-    let formattedParams = {};
+    let formattedParams = '';
     Object.keys(params).forEach(p => {
       if (!isEmpty(params[p])) {
-        formattedParams[p] = params[p];
+        formattedParams = `${p}=${params[p]}&`;
       }
     });
     return formattedParams;
@@ -82,8 +78,8 @@ class BaseAdapter {
     try {
       let url = this.urlForQuery(modelName);
       let formattedParams = this.formattedParams(params);
-      let response = await this.axios.get(url, { params: formattedParams });
-      return response.data;
+      let response = await fetch(url + formattedParams);
+      return await response.json();
     } catch (e) {
       throw e;
     }
@@ -93,8 +89,8 @@ class BaseAdapter {
     try {
       let url = this.urlForQueryRecord(modelName, recordId);
       let formattedParams = this.formattedParams(params);
-      let response = await this.axios.get(url, { params: formattedParams });
-      return response.data;
+      let response = await fetch(url + formattedParams);
+      return await response.json();
     } catch (e) {
       throw e;
     }

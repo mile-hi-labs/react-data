@@ -62,6 +62,7 @@
   },
   "dependencies": {
     "axios": "^0.19.2",
+    "cross-fetch": "^3.0.6",
     "eslint": "^7.17.0",
     "eslint-config-react-app": "^6.0.0",
     "pluralize": "^8.0.0",

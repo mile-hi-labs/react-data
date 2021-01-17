@@ -3,14 +3,14 @@ import { camelToDash, dashToCamel } from 'utils/transforms';
 import { isEmpty, logger } from 'utils/helpers';
 
 class BaseSerializer {
-  constructor(store) {
-    this.store = store || {};
+  constructor(props) {
+    this.props = props || {};
   }
 
   get attrs() {
     return {
       type: { serialize: false },
-      store: { serialize: false },
+      props: { serialize: false },
       updatedAt: { serialize: false },
       createdAt: { serialize: false },
     };
