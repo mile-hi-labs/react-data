@@ -22,24 +22,24 @@ import ErrorBoundary from './utils/error-boundary';
 
 const Router = (props) => {
   const { store, toast } = props;
-  const passedProps = { store: store, toast: toast }
+  console.log('store: ', store);
 
   // Render
   return (
   	<ErrorBoundary>
 	    <Switch>
-	      <Route exact path='/' render={routeProps => <WelcomeRoute {...passedProps} {...routeProps}/>} />
+	      <Route exact path='/' render={routeProps => <WelcomeRoute {...props} {...routeProps}/>} />
 
-        <Route exact path='/authors' render={routeProps => <AuthorsRoute {...passedProps} {...routeProps}/>} />
-        <Route exact path='/authors/new' render={routeProps => <AuthorsNewRoute {...passedProps} {...routeProps}/>} />
+        <Route exact path='/authors' render={routeProps => <AuthorsRoute {...props} {...routeProps}/>} />
+        <Route exact path='/authors/new' render={routeProps => <AuthorsNewRoute {...props} {...routeProps}/>} />
         <Route path='/authors/:authorId'>
-          <AuthorsDetail {...passedProps} />
+          <AuthorsDetail {...props} />
         </Route>
 
-        <Route exact path='/books' render={routeProps => <BooksRoute {...passedProps} {...routeProps}/>} />
-        <Route exact path='/books/new' render={routeProps => <BooksNewRoute {...passedProps} {...routeProps}/>} />
+        <Route exact path='/books' render={routeProps => <BooksRoute {...props} {...routeProps}/>} />
+        <Route exact path='/books/new' render={routeProps => <BooksNewRoute {...props} {...routeProps}/>} />
         <Route path='/books/:bookId'>
-          <BooksDetail {...passedProps} />
+          <BooksDetail {...props} />
         </Route>
 
         <Route path='/*'>

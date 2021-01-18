@@ -5,13 +5,11 @@ export const timeout = ms => {
 };
 
 export const addObject = (array, record) => {
-  let newArray = !array.includes(record) ? array.push(record) : array;
-  return array;
+  return !array.includes(record) ? array.push(record) : array;
 };
 
 export const removeObject = (array, record) => {
-  let newArray = LodashArray.pull(array, record);
-  return newArray;
+  return LodashArray.pull(array, record);
 };
 
 export const timer = start => {
@@ -36,7 +34,7 @@ export const isEmpty = data => {
     return data.length === 0 ? true : false;
   }
   if (data.constructor === Object) {
-    return Object.keys(data) === 0 ? true : false;
+    return Object.keys(data).length === 0 ? true : false;
   }
   return data.length === 0 ? true : false;
 };

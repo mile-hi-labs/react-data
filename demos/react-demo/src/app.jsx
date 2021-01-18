@@ -1,19 +1,19 @@
 import React, { useEffect } from 'react';
-import { StoreProvider } from '@mile-hi-labs/react-data';
+import { Store, StoreProvider } from '@mile-hi-labs/react-data';
 import { ToastProvider } from 'contexts/toast-context';
 import * as Adapters from 'adapters';
 import * as Serializers from 'serializers';
 import * as Models from 'models';
 import Router from 'router';
 
+const apiDomain = 'https://library-api.milehilabs.dev';
+const store = new Store({ apiDomain: apiDomain, adapters: Adapters, serializers: Serializers, models: Models });
 
 const App = (props) => {
-  const apiDomain = 'https://library-api.milehilabs.dev';
-
 
   // Render
   return (
-    <StoreProvider adapters={Adapters} serializers={Serializers} models={Models} apiDomain={apiDomain}>
+    <StoreProvider context={store}>
       <ToastProvider>
         <Router />
       </ToastProvider>

@@ -1,8 +1,8 @@
 import AppModel from 'models/app';
 
 class Author extends AppModel {
-  constructor(type, store, props = {}) {
-    super(type, store, props);
+  constructor(type, props = {}) {
+    super(type, props);
 
     // Attrs
     this.photo = props.photo;

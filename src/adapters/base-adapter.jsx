@@ -7,6 +7,27 @@ class BaseAdapter {
   static token = '';
 
   // Methods
+  static fetch(...params) {
+    return fetch(...params);
+  }
+
+  static headers() {
+    let headers = {};
+    headers['Content-Type'] = 'application/json';
+    if (this.token) {
+      headers['Authorization'] = this.token;
+    }
+    return headers;
+  };
+
+  static options(method, data) {
+    let options = {};
+    options['method'] = method;
+    options['headers'] = this.headers();
+    options['body'] = JSON.stringify(data);
+    return options;
+  }
+
   static baseURL() {
     return this.apiDomain;
   }
@@ -39,9 +60,10 @@ class BaseAdapter {
 
   static formatParams(params = {}) {
     let formattedParams = '';
-    Object.keys(params).forEach(p => {
-      if (!isEmpty(params[p])) {
-        formattedParams = `${p}=${params[p]}&`;
+    Object.keys(params).forEach((key, index) => {
+      if (!isEmpty(params[key])) {
+        formattedParams = formattedParams.concat(`${key}=${params[key].toString()}`);
+        formattedParams = index < Object.keys(params).length - 1 ? formattedParams.concat('&') : formattedParams;
       }
     });
     return formattedParams;
@@ -79,27 +101,44 @@ class BaseAdapter {
 
   // Network calls
   static async query(modelName, params) {
-    try {
-      let url = this.urlForQuery(modelName);
-      let formattedParams = this.formatParams(params);
-      let formattedUrl = this.formatUrl(url, formattedParams);
-      let response = await fetch(formattedUrl);
-      return await response.json();
-    } catch (e) {
-      throw e;
-    }
+    let url = this.urlForQuery(modelName);
+    let formattedParams = this.formatParams(params);
+    let formattedUrl = this.formatUrl(url, formattedParams);
+    let response = await this.fetch(formattedUrl, this.options('GET'));
+    // if response is not 200, throw error
+    return await response.json();
   }
 
   static async queryRecord(modelName, recordId = null, params = {}) {
-    try {
-      let url = this.urlForQueryRecord(modelName, recordId);
-      let formattedParams = this.formatParams(params);
-      let formattedUrl = this.formatUrl(url, formattedParams);
-      let response = await fetch(formattedUrl);
-      return await response.json();
-    } catch (e) {
-      throw e;
-    }
+    let url = this.urlForQueryRecord(modelName, recordId);
+    let formattedParams = this.formatParams(params);
+    let formattedUrl = this.formatUrl(url, formattedParams);
+    let response = await this.fetch(formattedUrl,this.options('GET'));
+    return await response.json();
+  }
+
+  static async createRecord(modelName, data, params) {
+    let url = this.urlForCreateRecord(modelName);
+    let formattedParams = this.formatParams(params);
+    let formattedUrl = this.formatUrl(url, formattedParams);
+    let response = await this.fetch(formattedUrl, this.options('POST', data));
+    return await response.json();
+  }
+
+  static async updateRecord(modelName, recordId, data, params) {
+    let url = this.urlForUpdateRecord(modelName, recordId);
+    let formattedParams = this.formatParams(params);
+    let formattedUrl = this.formatUrl(url, formattedParams);
+    let response = await this.fetch(formattedUrl, this.options('PUT', data));
+    return await response.json();
+  }
+
+  static async destroyRecord(modelName, recordId, params) {
+    let url = this.urlForDestroyRecord(modelName, recordId);
+    let formattedParams = this.formatParams(params);
+    let formattedUrl = this.formatUrl(url, formattedParams);
+    let response = await this.fetch(formattedUrl, this.options('DELETE'));
+    return await response.json();
   }
 }
 

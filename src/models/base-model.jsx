@@ -103,25 +103,19 @@ class BaseModel {
   }
 
   async create(data) {
-    let adapter = this.store.adapterFor(this.type);
-    let url = adapter.urlForCreateRecord(this.type);
-    let response = await this.store.adapterFor().axios.post(url, data);
+    let response = await this.store.adapterFor(this.type).createRecord(this.type, data);
     return response.data;
   }
 
   async update(data) {
-    let adapter = this.store.adapterFor(this.type);
-    let url = adapter.urlForUpdateRecord(this.type, this.id);
-    let response = await this.store.adapterFor().axios.put(url, data);
+    let response = await this.store.adapterFor(this.type).updateRecord(this.type, this.id, data);
     return response.data;
   }
 
   async destroy() {
     try {
       if (this.id) {
-        let adapter = this.store.adapterFor(this.type);
-        let url = adapter.urlForDestroyRecord(this.type, this.id);
-        let response = await this.store.adapterFor().axios.delete(url);
+        let response = await this.store.adapterFor(this.type).destroyRecord(this.type, this.id);
         let formattedResponse = this.store.serializerFor(this.type).normalize(response.data, response.included);
       }
       return this.store.removeRecord(this.type, this);
