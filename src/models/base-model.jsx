@@ -1,15 +1,19 @@
 import Pluralize from 'pluralize';
+import Store from 'store/store';
 import JsonApiError from 'utils/json-api-error';
 import { camelToDash } from 'utils/transforms';
 import { addObject, removeObject, isEmpty, logger } from 'utils/helpers';
 
 class BaseModel {
-  constructor(modelName, store, props = {}) {
+  constructor(type, props = {}) {
     this.id = props.id || '';
-    this.type = camelToDash(modelName).toLowerCase();
-    this.store = store || {};
+    this.type = camelToDash(type).toLowerCase();
     this.updatedAt = props.updatedAt || '';
     this.createdAt = props.createdAt || '';
+  }
+
+  get store() {
+    return Store();
   }
 
   // Storage
@@ -42,7 +46,7 @@ class BaseModel {
       });
     }
     model[prop] = value;
-    this.store.updateAll(this.type);
+    logger('React Data: ', this.store);
   }
 
   setProps(props = {}) {

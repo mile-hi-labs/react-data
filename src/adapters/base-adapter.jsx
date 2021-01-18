@@ -1,5 +1,5 @@
-import Pluralize from 'pluralize';
 import 'cross-fetch/polyfill';
+import Pluralize from 'pluralize';
 import { isEmpty } from 'utils/helpers';
 
 class BaseAdapter {
@@ -37,7 +37,7 @@ class BaseAdapter {
     return this.baseURL() + `/${resource}`;
   }
 
-  static formattedParams(params = {}) {
+  static formatParams(params = {}) {
     let formattedParams = '';
     Object.keys(params).forEach(p => {
       if (!isEmpty(params[p])) {
@@ -45,6 +45,10 @@ class BaseAdapter {
       }
     });
     return formattedParams;
+  }
+
+  static formatUrl(url, params) {
+    return params ? url.concat(`?${params}`) : url;
   }
 
   // URLs
@@ -77,8 +81,9 @@ class BaseAdapter {
   static async query(modelName, params) {
     try {
       let url = this.urlForQuery(modelName);
-      let formattedParams = this.formattedParams(params);
-      let response = await fetch(url + formattedParams);
+      let formattedParams = this.formatParams(params);
+      let formattedUrl = this.formatUrl(url, formattedParams);
+      let response = await fetch(formattedUrl);
       return await response.json();
     } catch (e) {
       throw e;
@@ -88,8 +93,9 @@ class BaseAdapter {
   static async queryRecord(modelName, recordId = null, params = {}) {
     try {
       let url = this.urlForQueryRecord(modelName, recordId);
-      let formattedParams = this.formattedParams(params);
-      let response = await fetch(url + formattedParams);
+      let formattedParams = this.formatParams(params);
+      let formattedUrl = this.formatUrl(url, formattedParams);
+      let response = await fetch(formattedUrl);
       return await response.json();
     } catch (e) {
       throw e;

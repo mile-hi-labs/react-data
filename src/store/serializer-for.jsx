@@ -1,9 +1,9 @@
 import BaseSerializer from 'serializers/base-serializer';
 import { dashToCapital } from 'utils/transforms';
 
-function serializerFor(serializers, modelName, store) {
+function serializerFor(serializers, modelName = ' ') {
   let Serializer = serializers[dashToCapital(modelName)];
-  return Serializer ? new Serializer(store) : new BaseSerializer(store);
+  return Serializer ? Serializer : BaseSerializer;
 }
 
 export { serializerFor };

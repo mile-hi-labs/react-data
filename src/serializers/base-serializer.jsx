@@ -1,44 +1,36 @@
-import Pluralize from 'pluralize';
 import { camelToDash, dashToCamel } from 'utils/transforms';
 import { isEmpty, logger } from 'utils/helpers';
 
 class BaseSerializer {
-  constructor(props) {
-    this.props = props || {};
-  }
+  static attrs = {
+    type: { serialize: false },
+    updatedAt: { serialize: false },
+    createdAt: { serialize: false },
+  };
 
-  get attrs() {
-    return {
-      type: { serialize: false },
-      props: { serialize: false },
-      updatedAt: { serialize: false },
-      createdAt: { serialize: false },
-    };
-  }
+  static relationships = {};
 
-  get relationships() {
-    return {};
-  }
 
   // Methods
-  checkAttrs(key) {
+  static checkAttrs(key) {
     let keys = Object.keys(this.attrs);
     return keys.includes(key) ? this.attrs[key] : {};
   }
 
-  checkRelationships(key) {
+  static checkRelationships(key) {
     let keys = Object.keys(this.relationships);
     return keys.includes(key) ? this.relationships[key] : {};
   }
 
+
   // Serialize
-  serialize(data) {
+  static serialize(data) {
     let serializedData = this.serializeAttrs(data);
     logger('serializedData: ', serializedData);
     return { data: { attributes: serializedData } };
   }
 
-  serializeAttrs(data) {
+  static serializeAttrs(data) {
     let serializedAttrs = {};
     Object.keys(data).forEach(key => {
       let attr = this.serializeAttr(data, key);
@@ -49,7 +41,7 @@ class BaseSerializer {
     return serializedAttrs;
   }
 
-  serializeAttr(data, key) {
+  static serializeAttr(data, key) {
     if (isEmpty(data[key])) {
       return;
     }
@@ -74,9 +66,12 @@ class BaseSerializer {
     return data[key];
   }
 
-  serializeRelationships(data, key) {
+  static serializeRelationships(data, key) {
     let formattedData = [];
     data[key].forEach(relation => {
+      if (this.ssr) {
+        formattedData.push(this.serializeAttrs(relation));
+      }
       if (this.checkRelationships(key).serialize == true) {
         formattedData.push(this.serializeAttrs(relation));
       }
@@ -87,36 +82,34 @@ class BaseSerializer {
     return formattedData;
   }
 
-  serializeRelationship(data, key) {
-    if (this.checkRelationships(key).serialize == true) {
-      if (isEmpty(data[key])) {
-        return null;
-      }
+  static serializeRelationship(data, key) {
+    if (this.ssr) {
       return this.serializeAttrs(data[key]);
     }
+    if (this.checkRelationships(key).serialize == true) {
+      return isEmpty(data[key]) ? null : this.serializeAttrs(data[key]);
+    }
     if (this.checkRelationships(key).serialize == 'id') {
-      if (isEmpty(data[key])) {
-        return null;
-      }
-      return { id: parseInt(data[key].id) };
+      return isEmpty(data[key]) ? null : { id: parseInt(data[key].id) };
     }
   }
 
+
   // Normalize
-  normalizeArray(data = [], included = []) {
+  static normalizeArray(data = [], included = []) {
     let normalizedData = [];
     data.forEach(record => normalizedData.push(this.normalizeAttrs(record, included)));
     logger('normalizedData: ', normalizedData);
     return normalizedData;
   }
 
-  normalize(data, included = []) {
+  static normalize(data, included = []) {
     let normalizedData = this.normalizeAttrs(data, included);
     logger('normalizedData: ', normalizedData);
     return normalizedData;
   }
 
-  normalizeMeta(meta) {
+  static normalizeMeta(meta) {
     let normalizedMeta = {};
     Object.keys(meta).forEach(key => {
       normalizedMeta[dashToCamel(key)] = parseInt(meta[key]);
@@ -125,7 +118,7 @@ class BaseSerializer {
     return normalizedMeta;
   }
 
-  normalizeAttrs(data, included = []) {
+  static normalizeAttrs(data, included = []) {
     let normalizedAttrs = {};
     if (isEmpty(data)) {
       return;
@@ -145,11 +138,11 @@ class BaseSerializer {
     return normalizedAttrs;
   }
 
-  normalizeAttr(data, key) {
+  static normalizeAttr(data, key) {
     return data[key];
   }
 
-  normalizeRelationships(data, included) {
+  static normalizeRelationships(data, included) {
     let formattedRelationships = {};
     if (isEmpty(data)) {
       return;
@@ -157,9 +150,7 @@ class BaseSerializer {
 
     Object.keys(data).forEach(key => {
       let relationshipData = data[key].data;
-      if (isEmpty(relationshipData)) {
-        return;
-      }
+      if (isEmpty(relationshipData)) return;
 
       if (Array.isArray(relationshipData)) {
         return (formattedRelationships[dashToCamel(key)] = relationshipData.map(relationship => this.normalizeRelationship(relationship, included)));
@@ -172,7 +163,7 @@ class BaseSerializer {
     return formattedRelationships;
   }
 
-  normalizeRelationship(relationship, included) {
+  static normalizeRelationship(relationship, included) {
     let include = included.find(include => include.type == relationship.type && include.id == relationship.id);
     return !isEmpty(include) ? this.normalizeAttrs(include) : {};
   }

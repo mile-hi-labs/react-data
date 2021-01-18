@@ -12,14 +12,13 @@ class Store {
     this.adapters = props.adapters || {};
     this.models = props.models || {};
     this.serializers = props.serializers || {};
-    this.state = {};
     adapterFor('').set('apiDomain', props.apiDomain);
   }
 
 
   // Methods
   setState(...context) {
-    Object.assign(this.state, ...context);
+    Object.assign(this, ...context);
   }
 
   // Helpers
@@ -28,11 +27,11 @@ class Store {
   }
 
   modelFor(modelName, data) {
-    return modelFor(this.models, modelName, {}, data);
+    return modelFor(this.models, modelName, data);
   }
 
   serializerFor(modelName) {
-    return serializerFor(this.serializers, modelName, this);
+    return serializerFor(this.serializers, modelName);
   }
 
   // Store Records
@@ -41,15 +40,8 @@ class Store {
     let storeRecord = this.modelFor(modelName, data);
     storeRecords.push(storeRecord);
     this.setState({ [modelName]: storeRecords });
-    logger('SSR React Data: ', this);
+    logger('React Data: ', this);
     return storeRecord;
-  }
-
-  updateAll(modelName) {
-    // We can do better here
-    let storeRecords = this.peekAll(modelName);
-    this.setState({ [modelName]: storeRecords });
-    logger('SSR React Data: ', this);
   }
 
   updateRecord(modelName, storeRecord, record) {
@@ -68,7 +60,7 @@ class Store {
   }
 
   peekAll(modelName) {
-    return this.state[modelName] || [];
+    return this[modelName] || [];
   }
 
   peekRecord(modelName, recordId) {
@@ -83,18 +75,18 @@ class Store {
   }
 
   removeRecord(modelName, record = {}) {
-    let storeRecords = this.state[modelName] || [];
+    let storeRecords = this[modelName] || [];
     let storeRecord = record.id ? this.peekRecord(modelName, record.id) : storeRecords.find(model => isEmpty(model.id));
     storeRecords = removeObject(storeRecords, storeRecord);
     this.setState({ [modelName]: storeRecords });
-    logger('SSR React Data: ', this);
+    logger('React Data: ', this);
     return null;
   }
 
   removeAll(modelName, records) {
-    this.state[modelName] = [];
-    this.setState(this.state);
-    logger('SSR React Data: ', this);
+    this[modelName] = [];
+    this.setState(this);
+    logger('React Data: ', this);
     return null;
   }
 
@@ -145,4 +137,4 @@ const StoreSingleton = (...props) => {
   return StoreInstance;
 }
 
-export default Store;
+export default StoreSingleton;
