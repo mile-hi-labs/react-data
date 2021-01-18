@@ -2,11 +2,18 @@
 React Data is a state management library for React and React Native applications. The library is lightweight and configurable so you can quickly connect React Data to your API and then grow with it over time.
 
 
+-------
+
+
 ## How it Works
 React Data uses the [Context Hooks](https://reactjs.org/docs/context.html) to construct a global data store that connects the Adapters, Serializers, and Models in your project to communicate with your API and store local data. This way, you can access data fetched via previous network calls and manage that data via the local store. As an alternative, you can also bypass the local store and simply use React Data to fetch data from your API and make it available in your component. The choice is yours. React Data is designed to work with a [JSON-API](https://jsonapi.org/) and REST patterns though you're welcome to override / configure the BaseAdapter and BaseSerializer to match your needs. To learn more about React Data, please visit the [API Documentation](https://app.gitbook.com/@mile-hi-labs/s/react-data/).
 
 
+-------
+
+
 ## Quick Start
+
 
 ### Install
 `npm install @mile-hi-labs/react-data`
@@ -19,26 +26,27 @@ Add the following to your `app.jsx` file or near the top of your application.
 # app.jsx
 
 import React from 'react';
-import { StoreProvider } from '@mile-hi-labs/react-data';
+import { Store, StoreProvider } from '@mile-hi-labs/react-data';
 import * as Adapters from 'adapters';
 import * as Models from 'models';
 import * as Serializers from 'serializers';
 import Router from 'router';
 
+const apiDomain = 'https://library-api.milehilabs.dev';
+const store = new Store({ apiDomain: apiDomain, adapters: Adapters, serializers: Serializers, models: Models });
 
 const App = (props) => {
 
   return (
-    <div id='application' className='application'>
-      <StoreProvider apiDomain='http://api.yourdomain.com' adapters={Adapters} serialiers={Serializers} models={Models}>
-      	<Router />
-    	</StoreContext>
-  	</div>
+    <StoreProvider context={store}>
+    	<Router />
+  	</StoreContext>
 	)
 }
 
 export default App;
 ```
+
 
 ### Store Consumer
 Then, you can access the store from any route or component like so:
@@ -91,6 +99,9 @@ export default withStore(MktIndex);
 ```
 
 
+-------
+
+
 ## Core Components
 While React Data is designed to work with minimal configuration, you'll likely end up writing your own Adapters, Serializers, and Models to construct your local data store and customize network calls. As such, it's important to understand the core components of this library, how they interconnect, and how to configure them.
 
@@ -137,8 +148,8 @@ import { BaseModel } from '@mile-hi-labs/react-data';
 
 
 class UserModel extends BaseModel {
-	constructor(type, store, props = {}) {
-		super(type, store, props);
+	constructor(type, props = {}) {
+		super(type, props);
 
 		this.firstName = props.firstName;
 		this.lasttName = props.lastName;
@@ -160,31 +171,28 @@ Serializers handle data serialization and normalization when passing data to and
 
 ```
 # serializers/user.jsx
-
 import { BaseSerializer } from '@mile-hi-labs/react-data';
 
 
 class UserSerializer extends BaseSerializer {
-	constructor(type, store, props = {}) {
-		super(type, store, props);
-	}
-
-
 	// Overrides
-	get serializeAttrs() {
+	static attrs = {
 		fullName: false
-	}
+	};
 
 
-	get serializeRelationships() {
+	static relationships = {
 		location: { id: true },
 		cards: true,
-	}
+	};
 
 }
 
 export default UserSerializer;
 ```
+
+-------
+
 
 ## Demo
 This project comes with a built-in React and React Native demo.
@@ -193,11 +201,13 @@ This project comes with a built-in React and React Native demo.
 ## Development
 This projects uses Webpack to build the project. Please see `package.json` for available scripts.
 
+
 ### Web
 - Clone this repository
 - Run `npm link` from this library
 - Open up the consuming project / demo project and run `npm link @mile-hi-labs/react-data`
 - Run `npm run build` to push code from the library to your project
+
 
 ### Native
 React Native's metro bundler doesn't accept the steps below. Please contact the project author for an alternative path.
@@ -206,6 +216,9 @@ React Native's metro bundler doesn't accept the steps below. Please contact the 
 - Run `npm run build` from this library
 - Open up the consuming project / demo project and run `npm install path/to/this/project`
 - Repeat the steps above to consume the latest code
+
+
+-------
 
 
 ## Publish
