@@ -2,8 +2,8 @@ import {BaseModel} from '@mile-hi-labs/react-data';
 import Moment from 'moment';
 
 class App extends BaseModel {
-  constructor(type, store, props = {}) {
-    super(type, store, props);
+  constructor(type, props = {}) {
+    super(type, props);
 
     // Attrs
     this.icon = 'info';

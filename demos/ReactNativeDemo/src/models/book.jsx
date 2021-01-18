@@ -2,8 +2,8 @@ import AppModel from 'models/app';
 import {truncate} from 'utils/transforms';
 
 class Book extends AppModel {
-  constructor(type, store, props = {}) {
-    super(type, store, props);
+  constructor(type, props = {}) {
+    super(type, props);
 
     // Attrs
     this.photo = props.photo;

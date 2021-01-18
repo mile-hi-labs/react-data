@@ -5,7 +5,7 @@
   "scripts": {
     "start": "react-native start",
     "restart": "react-native start --reset-cache",
-    "pod-install": "cd ios && pod install && cd ..",
+    "pods": "cd ios && pod install && cd ..",
     "android": "react-native run-android",
     "ios": "react-native run-ios",
     "test": "jest",
@@ -13,7 +13,7 @@
     "lint": "eslint src/**/*.js[x]"
   },
   "dependencies": {
-    "@mile-hi-labs/react-data": "^2.1.2",
+    "@mile-hi-labs/react-data": "^3.0.0",
     "@react-native-community/masked-view": "^0.1.10",
     "@react-navigation/bottom-tabs": "^5.11.1",
     "@react-navigation/native": "^5.8.9",
