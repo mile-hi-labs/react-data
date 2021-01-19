@@ -110,7 +110,7 @@ class Store {
   async query(modelName, params) {
     try {
       let response = await this.adapterFor(modelName).query(modelName, params);
-      let records = this.serializerFor(modelName).normalizeArray(response.data, response.included);
+      let records = this.serializerFor(modelName).normalize(response.data, response.included);
       let storeRecords = this.pushAll(modelName, records);
       storeRecords.meta = this.serializerFor(modelName).normalizeMeta(response.meta);
       return storeRecords;

@@ -11,7 +11,7 @@ const BooksRoute = (props) => {
 	const { store = {}, toast, history } = props;
 	const [ books, setBooks ] = useState([]);
 	const [ page, setPage ] = useState(0);
-	const [ pageSize, setPageSize ] = useState(2);
+	const [ pageSize, setPageSize ] = useState(20);
 	const [ sortProp, setSortProp ] = useState('id');
 	const [ sortValue, setSortValue ] = useState('asc');
 	const [ loading, setLoading ] = useState(false);

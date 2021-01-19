@@ -1,6 +1,6 @@
-import { BaseSerializer } from '@mile-hi-labs/react-data';
+import { JsonApiSerializer } from '@mile-hi-labs/react-data';
 
-class AppSerializer extends BaseSerializer {
+class AppSerializer extends JsonApiSerializer {
   static attrs = {
     ...super.attrs,
     icon: { serialize: false },

@@ -3,7 +3,7 @@ import { StoreContext, StoreProvider, withStore } from 'contexts/store-context';
 import BaseAdapter from 'adapters/base-adapter';
 import BaseSerializer from 'serializers/base-serializer';
 import BaseModel from 'models/base-model';
-import PlainSerializer from 'serializers/plain-serializer';
+import JsonApiSerializer from 'serializers/json-api-serializer';
 import JsonApiError from 'utils/json-api-error';
 
 export {
@@ -14,6 +14,6 @@ export {
 	BaseAdapter,
 	BaseSerializer,
 	BaseModel,
-	PlainSerializer,
+	JsonApiSerializer,
 	JsonApiError
 }
