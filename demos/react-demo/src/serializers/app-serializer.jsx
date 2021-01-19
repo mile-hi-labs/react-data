@@ -7,12 +7,6 @@ class AppSerializer extends JsonApiSerializer {
     createdAt: { serialize: false },
     updatedAt: { serialize: false },
   };
-
-  // Methods
-  static serializeAttr(data, key) {
-    let formattedKey = super.serializeAttr(data, key);
-    return formattedKey;
-  }
 }
 
 export default AppSerializer;

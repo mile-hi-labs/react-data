@@ -25,7 +25,7 @@ export const isEmpty = data => {
   if (Array.isArray(data)) {
     return data.length == 0 ? true : false;
   }
-  if (data.constructor == Object) {
+  if (typeof data == 'object') {
     return Object.keys(data).length == 0 ? true : false;
   }
   return data.length == 0 ? true : false;

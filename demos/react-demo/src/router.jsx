@@ -22,7 +22,6 @@ import ErrorBoundary from './utils/error-boundary';
 
 const Router = (props) => {
   const { store, toast } = props;
-  console.log('store: ', store);
 
   // Render
   return (

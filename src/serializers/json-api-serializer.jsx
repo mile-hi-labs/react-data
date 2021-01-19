@@ -1,8 +1,7 @@
-import BaseSerializer from 'serializers/base-serializer';
 import { camelToDash, dashToCamel } from 'utils/transforms';
 import { isEmpty, logger } from 'utils/helpers';
 
-class JsonApiSerializer extends BaseSerializer {
+class JsonApiSerializer {
   static attrs = {
     type: { serialize: false },
     updatedAt: { serialize: false },
@@ -26,44 +25,96 @@ class JsonApiSerializer extends BaseSerializer {
 
   // Serialize
   static serialize(data) {
-    let serializedData = super.serialize(data);
+    let serializedData;
+    if (Array.isArray(data)) {
+      serializedData = [];
+      data.forEach(record => serializedData.push(this.serializeAttrs(record)));
+    } else {
+      serializedData = {};
+      Object.assign(serializedData, this.serializeAttrs(data));
+    }
+    logger('serializedData: ', serializedData);
     return { data: { attributes: serializedData } };
   }
 
   static serializeAttrs(data) {
-    let serializedAttrs = super.serializeAttrs(data);
+    let serializedAttrs = {};
+    Object.keys(data).forEach(key => {
+      let attr = this.serializeAttr(data, key);
+      if (attr) return serializedAttrs[camelToDash(key)] = attr;
+    });
     return serializedAttrs;
   }
 
   static serializeAttr(data, key) {
-   let serializedAttr = super.serializeAttr(data);
-   return serializedAttr;
+    if (isEmpty(data[key])) return;
+    if (this.checkAttrs(key).serialize == false) return;
+
+    if (key == 'id') {
+      return parseInt(data[key]);
+    }
+    if (Array.isArray(data[key])) {
+      return this.serializeRelationships(data, key);
+    }
+    if (typeof data[key] == 'object') {
+      return this.serializeRelationship(data, key);
+    }
+    return data[key];
   }
 
   static serializeRelationships(data, key) {
-   let serializedRelationships = super.serializeRelationships(data);
-   return serializedRelationships;
+    let serializedRelationship = [];
+
+    data[key].forEach(relation => {
+      if (this.checkRelationships(key).serialize == 'id') {
+        return serializedRelationship.push({ id: parseInt(relation.id) });
+      }
+      if (this.checkRelationships(key).serialize == true) {
+        return serializedRelationship.push(this.serializeAttrs(relation));
+      }
+    });
+    return serializedRelationship;
   }
 
   static serializeRelationship(data, key) {
-    let serializedRelationship = super.serializeRelationship(data);
-    return serializedRelationship;
+    if (this.checkRelationships(key).serialize == 'id') {
+      return { id: parseInt(data[key].id) };
+    }
+    if (this.checkRelationships(key).serialize == true) {
+      return this.serializeAttrs(data[key]);
+    }
   }
 
 
   // Normalize
   static normalize(data, included = []) {
-    let normalizedData = super.normalize(data, included);
+    let normalizedData;
+    if (Array.isArray(data)) {
+      normalizedData = [];
+      data.forEach(record => normalizedData.push(this.normalizeAttrs(record, included)));
+    } else {
+      normalizedData = this.normalizeAttrs(data, included);
+    }
+    logger('normalizedData: ', normalizedData);
     return normalizedData;
   }
 
   static normalizeMeta(meta) {
-    let normalizedMeta = super.normalizeMeta(meta);
+    let normalizedMeta = {};
+    Object.keys(meta).forEach(key => {
+      normalizedMeta[dashToCamel(key)] = parseInt(meta[key]);
+    });
+    logger('normalizedMeta: ', normalizedMeta);
     return normalizedMeta;
   }
 
   static normalizeAttrs(data, included = []) {
-    let normalizedAttrs = super.normalizeAttrs(data, included);
+    let normalizedAttrs = {};
+    if (isEmpty(data)) return;
+
+    Object.keys(data).forEach(key => {
+      return Object.assign(normalizedAttrs, this.normalizeAttr(data, key, included));
+    });
     return normalizedAttrs;
   }
 
@@ -77,7 +128,7 @@ class JsonApiSerializer extends BaseSerializer {
       }
       return this.normalizeAttrs(data[key], included);
     }
-    return super.normalizeAttr(data, key);
+    return { [dashToCamel(key)]: data[key] };
   }
 
   static normalizeRelationships(data, included) {

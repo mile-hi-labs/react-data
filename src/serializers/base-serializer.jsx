@@ -4,8 +4,6 @@ import { isEmpty, logger } from 'utils/helpers';
 class BaseSerializer {
   static attrs = {};
 
-  static relationships = {};
-
 
   // Methods
   static checkAttrs(key) {
@@ -37,56 +35,19 @@ class BaseSerializer {
     let serializedAttrs = {};
     Object.keys(data).forEach(key => {
       let attr = this.serializeAttr(data, key);
-      if (attr) serializedAttrs[camelToDash(key)] = attr;
+      if (attr) return serializedAttrs[camelToDash(key)] = attr;
     });
     return serializedAttrs;
   }
 
   static serializeAttr(data, key) {
-    if (isEmpty(data[key])) {
-      return;
-    }
-    if (this.checkAttrs(key).serialize == false) {
-      return;
-    }
+    if (isEmpty(data[key])) return;
+    if (this.checkAttrs(key).serialize == false) return;
+
     if (key == 'id') {
       return parseInt(data[key]);
     }
-    if (Array.isArray(data[key])) {
-      if (isEmpty(data[key])) {
-        return null;
-      }
-      if (typeof data[key][0] == 'object') {
-        return this.serializeRelationships(data, key);
-      }
-      return JSON.stringify(data[key]);
-    }
-    if (typeof data[key] == 'object') {
-      return this.serializeRelationship(data, key);
-    }
     return data[key];
-  }
-
-  static serializeRelationships(data, key) {
-    let formattedData = [];
-    data[key].forEach(relation => {
-      if (this.checkRelationships(key).serialize == true) {
-        formattedData.push(this.serializeAttrs(relation));
-      }
-      if (this.checkRelationships(key).serialize == 'id') {
-        formattedData.push({ id: parseInt(relation.id) });
-      }
-    });
-    return formattedData;
-  }
-
-  static serializeRelationship(data, key) {
-    if (this.checkRelationships(key).serialize == true) {
-      return isEmpty(data[key]) ? null : this.serializeAttrs(data[key]);
-    }
-    if (this.checkRelationships(key).serialize == 'id') {
-      return isEmpty(data[key]) ? null : { id: parseInt(data[key].id) };
-    }
   }
 
 
@@ -115,6 +76,7 @@ class BaseSerializer {
   static normalizeAttrs(data, included = []) {
     let normalizedAttrs = {};
     if (isEmpty(data)) return;
+
     Object.keys(data).forEach(key => {
       return Object.assign(normalizedAttrs, this.normalizeAttr(data, key, included));
     });

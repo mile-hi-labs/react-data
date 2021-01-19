@@ -4,9 +4,9 @@ import { logger } from 'utils/helpers';
 class JsonApiError {
   static format(e) {
     try {
-      if (e.response) {
-        logger('Server error: ', e.response.data.errors);
-        return this.formatErrors(e.response.data.errors);
+      if (e.errors) {
+        logger('Server error: ', e.errors);
+        return this.formatErrors(e.errors);
       }
       if (e.request) {
         logger('Request error: ', e.request);
