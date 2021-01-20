@@ -35,14 +35,16 @@
     "react component"
   ],
   "scripts": {
-    "clean": "rimraf ./lib",
+    "clean": "rimraf ./lib && rimraf ./releases",
     "build": "webpack --env development",
     "build:prod": "webpack --env production",
-    "deploy": "npm run clean && npm run build && npm run build:prod && npm publish",
-    "deploy:test": "npm run clean && npm run build && npm run build:prod && npm publish --dry-run",
+    "version": "npm run build && git add .",
+    "postversion": "npm run deploy",
+    "predeploy": "npm run clean",
+    "deploy": "npm run build && npm publish",
+    "postdeploy": "npm run git -m",
+    "git": "git push --all",
     "format": "prettier --write src/**/*.jsx",
-    "git": "git add . && git commit -m",
-    "postgit": "git push --all",
     "lint": "eslint src/**/*.js[x]"
   },
   "devDependencies": {
