@@ -43,7 +43,8 @@
     "predeploy": "npm run clean",
     "deploy": "npm run build && npm publish",
     "postdeploy": "npm run git -m",
-    "git": "git push --all",
+    "git": "git push --tags",
+    "postgit": "npm run clean",
     "format": "prettier --write src/**/*.jsx",
     "lint": "eslint src/**/*.js[x]"
   },
