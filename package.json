@@ -65,7 +65,7 @@
     "webpack-cli": "^3.2.1"
   },
   "dependencies": {
-    "axios": "^0.19.2",
+    "axios": "^0.21.1",
     "cross-fetch": "^3.0.6",
     "eslint": "^7.17.0",
     "eslint-config-react-app": "^6.0.0",
