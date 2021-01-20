@@ -167,25 +167,26 @@ export default UserModel;
 
 
 ### Serializers
-Serializers handle data serialization and normalization when passing data to and from your server. This way, we're able to format your requests appropriately while giving you the opportunity to customize your data as it comes in (or goes out) as you see fit. When authoring a serializer, you should inherit from the `BaseSerializer` provided by React Data like so:
+Serializers handle data serialization and normalization when passing data to and from your server. This way, we're able to format your requests appropriately while giving you the opportunity to customize your data as it comes in (or goes out) as you see fit. When authoring a serializer, you should inherit from the `JsonApiSerializer` provided by React Data like so:
 
 ```
 # serializers/user.jsx
-import { BaseSerializer } from '@mile-hi-labs/react-data';
+import { JsonApiSerializer } from '@mile-hi-labs/react-data';
 
-
-class UserSerializer extends BaseSerializer {
+class UserSerializer extends JsonApiSerializer {
 	// Overrides
 	static attrs = {
-		fullName: false
-	};
+		fullName: { serialize: false }
+	}
 
 
-	static relationships = {
-		location: { id: true },
-		cards: true,
-	};
-
+	static serializeAttr(data, key) {
+		let formattedAttr = super.serializeAttr(data, key);
+		if (key == 'age') {
+			return parseInt(data[key])
+		}
+		return formattedAttr;
+	}
 }
 
 export default UserSerializer;

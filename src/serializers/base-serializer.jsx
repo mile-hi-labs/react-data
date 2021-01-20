@@ -11,11 +11,6 @@ class BaseSerializer {
     return keys.includes(key) ? this.attrs[key] : {};
   }
 
-  static checkRelationships(key) {
-    let keys = Object.keys(this.relationships);
-    return keys.includes(key) ? this.relationships[key] : {};
-  }
-
 
   // Serialize
   static serialize(data) {
@@ -58,6 +53,7 @@ class BaseSerializer {
       normalizedData = [];
       data.forEach(record => normalizedData.push(this.normalizeAttrs(record, included)));
     } else {
+      normalizedData = {};
       normalizedData = this.normalizeAttrs(data, included);
     }
     logger('normalizedData: ', normalizedData);

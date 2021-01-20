@@ -19,6 +19,7 @@ class Store {
   // Methods
   setState(...context) {
     Object.assign(this, ...context);
+    logger('React Data: ', this);
   }
 
   // Helpers
@@ -40,7 +41,6 @@ class Store {
     let storeRecord = this.modelFor(modelName, data);
     storeRecords.push(storeRecord);
     this.setState({ [modelName]: storeRecords });
-    logger('React Data: ', this);
     return storeRecord;
   }
 
@@ -74,21 +74,20 @@ class Store {
     return storeRecord ? storeRecord : this.createRecord(modelName, record);
   }
 
+  removeAll(modelName, records) {
+    this[modelName] = [];
+    this.setState(this);
+    return null;
+  }
+
   removeRecord(modelName, record = {}) {
     let storeRecords = this[modelName] || [];
     let storeRecord = record.id ? this.peekRecord(modelName, record.id) : storeRecords.find(model => isEmpty(model.id));
     storeRecords = removeObject(storeRecords, storeRecord);
     this.setState({ [modelName]: storeRecords });
-    logger('React Data: ', this);
     return null;
   }
 
-  removeAll(modelName, records) {
-    this[modelName] = [];
-    this.setState(this);
-    logger('React Data: ', this);
-    return null;
-  }
 
   // Network calls
   async findAll(modelName, params) {

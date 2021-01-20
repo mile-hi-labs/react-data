@@ -12,28 +12,34 @@ class BaseModel {
     this.createdAt = props.createdAt || '';
   }
 
+
+  // Computed
   get store() {
     return Store();
   }
 
-  // Storage
+
+  // Methods
   attr(type, prop = '') {
     switch (type) {
       case 'decimal':
-        return parseFloat(prop) || 0;
+      return parseFloat(prop) || 0;
 
       case 'integer':
-        return parseInt(prop) || 0;
+      return parseInt(prop) || 0;
 
       case 'string':
-        return prop.toString() || '';
+      return prop.toString() || '';
 
       default:
-        return prop;
+      return prop;
     }
   }
 
-  // Methods
+  get(prop) {
+    return this[prop];
+  }
+
   set(prop = '', value) {
     let model = this;
     let formattedProp = prop;

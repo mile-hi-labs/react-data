@@ -8,6 +8,14 @@ class BaseAdapter {
 
 
   // Methods
+  static get(prop) {
+    return this[prop];
+  }
+
+  static set(prop, value) {
+    return this[prop] = value;
+  }
+
   static async networkCall(...args) {
     let response = await fetch(...args)
     if (!response.ok) throw await response.json();
@@ -35,24 +43,6 @@ class BaseAdapter {
     return this.apiDomain;
   }
 
-  static get(prop) {
-    return this[prop];
-  }
-
-  static set(prop, value) {
-    let adapter = this;
-    let formattedProp = prop;
-    if (prop.includes('.')) {
-      prop.split('.').map((p, index) => {
-        prop = p;
-        if (index < prop.split('.').length) {
-          adapter = adapter[p];
-        }
-      });
-    }
-    adapter[prop] = value;
-  }
-
   static buildURL(resource, id) {
     if (id) {
       let formattedId = id.toString();
@@ -72,7 +62,7 @@ class BaseAdapter {
     return formattedParams;
   }
 
-  static formatUrl(url, params) {
+  static formatURL(url, params) {
     return params ? url.concat(`?${params}`) : url;
   }
 
@@ -106,35 +96,35 @@ class BaseAdapter {
   static async query(modelName, params) {
     let url = this.urlForQuery(modelName);
     let formattedParams = this.formatParams(params);
-    let formattedUrl = this.formatUrl(url, formattedParams);
+    let formattedUrl = this.formatURL(url, formattedParams);
     return await this.networkCall(formattedUrl, this.options('GET'));
   }
 
-  static async queryRecord(modelName, recordId = null, params = {}) {
+  static async queryRecord(modelName, recordId, params = {}) {
     let url = this.urlForQueryRecord(modelName, recordId);
     let formattedParams = this.formatParams(params);
-    let formattedUrl = this.formatUrl(url, formattedParams);
+    let formattedUrl = this.formatURL(url, formattedParams);
     return await this.networkCall(formattedUrl,this.options('GET'));
   }
 
   static async createRecord(modelName, data, params) {
     let url = this.urlForCreateRecord(modelName);
     let formattedParams = this.formatParams(params);
-    let formattedUrl = this.formatUrl(url, formattedParams);
+    let formattedUrl = this.formatURL(url, formattedParams);
     return await this.networkCall(formattedUrl, this.options('POST', data));
   }
 
   static async updateRecord(modelName, recordId, data, params) {
     let url = this.urlForUpdateRecord(modelName, recordId);
     let formattedParams = this.formatParams(params);
-    let formattedUrl = this.formatUrl(url, formattedParams);
+    let formattedUrl = this.formatURL(url, formattedParams);
     return await this.networkCall(formattedUrl, this.options('PUT', data));
   }
 
   static async destroyRecord(modelName, recordId, params) {
     let url = this.urlForDestroyRecord(modelName, recordId);
     let formattedParams = this.formatParams(params);
-    let formattedUrl = this.formatUrl(url, formattedParams);
+    let formattedUrl = this.formatURL(url, formattedParams);
     return await this.networkCall(formattedUrl, this.options('DELETE'));
   }
 }
