@@ -90,19 +90,36 @@ class Store {
 
 
   // Network calls
+  async $query(modelName, params) {
+    try {
+      let response = await this.adapterFor(modelName).query(modelName, params);
+      let records = this.serializerFor(modelName).normalize(response.data, response.included);
+      records.meta = this.serializerFor(modelName).normalizeMeta(response.meta);
+      return records;
+    } catch (e) {
+      throw JsonApiError.format(e);
+    }
+  }
+
+  async $queryRecord(modelName, recordId, params) {
+    try {
+      let response = await this.adapterFor(modelName).queryRecord(modelName, recordId, params);
+      let record = this.serializerFor(modelName).normalize(response.data, response.included);
+      return record;
+    } catch (e) {
+      throw JsonApiError.format(e);
+    }
+  }
+
   async findAll(modelName, params) {
     let storeRecords = this.peekAll(modelName);
-    if (!isEmpty(storeRecords)) {
-      return storeRecords;
-    }
+    if (!isEmpty(storeRecords)) return storeRecords;
     return await this.query(modelName, params);
   }
 
   async findRecord(modelName, recordId, params) {
     let storeRecord = this.peekRecord(modelName, recordId);
-    if (!isEmpty(storeRecord)) {
-      return storeRecord;
-    }
+    if (!isEmpty(storeRecord)) return storeRecord;
     return await this.queryRecord(modelName, recordId, params);
   }
 
