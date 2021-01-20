@@ -1,4 +1,4 @@
-import JsonApiSerializer from 'serializers/base-serializer';
+import JsonApiSerializer from 'serializers/json-api-serializer';
 import { dashToCapital } from 'utils/transforms';
 
 function serializerFor(serializers, modelName = ' ') {

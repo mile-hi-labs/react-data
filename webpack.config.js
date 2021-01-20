@@ -32,12 +32,7 @@ function generalConfig(config, env) {
   };
   config.resolve = {
     modules: [Path.join(__dirname, 'src'), 'node_modules'],
-    extensions: [
-      '.js',
-      '.jsx',
-      '.ts',
-      '.tsx',
-    ]
+    extensions: ['.js', '.jsx', '.ts', '.tsx']
   }
   return config;
 }

@@ -42,7 +42,7 @@
     "version": "npm run deploy",
     "predeploy": "npm run build && npm run build:prod",
     "deploy": "npm publish",
-    "postdeploy": "npm run git -m",
+    "postdeploy": "npm run git",
     "pregit": "git add .",
     "git": "git push --tags",
     "postgit": "npm run clean",
