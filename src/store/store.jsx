@@ -90,27 +90,6 @@ class Store {
 
 
   // Network calls
-  async $query(modelName, params) {
-    try {
-      let response = await this.adapterFor(modelName).query(modelName, params);
-      let records = this.serializerFor(modelName).normalize(response.data, response.included);
-      records.meta = this.serializerFor(modelName).normalizeMeta(response.meta);
-      return records;
-    } catch (e) {
-      throw JsonApiError.format(e);
-    }
-  }
-
-  async $queryRecord(modelName, recordId, params) {
-    try {
-      let response = await this.adapterFor(modelName).queryRecord(modelName, recordId, params);
-      let record = this.serializerFor(modelName).normalize(response.data, response.included);
-      return record;
-    } catch (e) {
-      throw JsonApiError.format(e);
-    }
-  }
-
   async findAll(modelName, params) {
     let storeRecords = this.peekAll(modelName);
     if (!isEmpty(storeRecords)) return storeRecords;
@@ -140,6 +119,27 @@ class Store {
       let response = await this.adapterFor(modelName).queryRecord(modelName, recordId, params);
       let record = this.serializerFor(modelName).normalize(response.data, response.included);
       return this.pushRecord(modelName, record);
+    } catch (e) {
+      throw JsonApiError.format(e);
+    }
+  }
+
+  async $query(modelName, params) {
+    try {
+      let response = await this.adapterFor(modelName).query(modelName, params);
+      let records = this.serializerFor(modelName).normalize(response.data, response.included);
+      records.meta = this.serializerFor(modelName).normalizeMeta(response.meta);
+      return records;
+    } catch (e) {
+      throw JsonApiError.format(e);
+    }
+  }
+
+  async $queryRecord(modelName, recordId, params) {
+    try {
+      let response = await this.adapterFor(modelName).queryRecord(modelName, recordId, params);
+      let record = this.serializerFor(modelName).normalize(response.data, response.included);
+      return record;
     } catch (e) {
       throw JsonApiError.format(e);
     }

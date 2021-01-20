@@ -6,45 +6,43 @@ import { Container, Row, Col } from 'components/basics/grids';
 import { SectionBlock, SectionHeader, SectionBody, SectionFooter } from 'components/basics/sections';
 import { timeout } from 'utils/helpers';
 
-const AuthorsNewRoute = (props) => {
-	const { store = {}, toast, history } = props;
+const BooksEditRoute = (props) => {
+	const { bookId, store = {}, toast, history } = props;
 	const [ book, setBook ] = useState({});
 	const [ loading, setLoading ] = useState(false);
 
 
 	// Hooks
 	useEffect(() => {
-		createBook();
-		return () => {
-			removeBook()
-		};
+		fetchData();
+		return () => console.log('rollback changes...');
 	}, [])
 
 
 	// Methods
-  const viewBook = () => {
-    history.push(`/books/${book.id}`)
-  }
-
-  const createBook = () => {
-  	let book = store.createRecord('book');
-  	setBook(book);
-  }
-
-  const removeBook = () => {
-  	store.removeRecord('book', book);
-  }
+	const fetchData = async () => {
+		try {
+			setLoading(true);
+			let model = await store.queryRecord('book', bookId, { include: 'authors' })
+			toast.showSuccess('Book received!');
+			setBook(model);
+		} catch (e) {
+			toast.showError(e)
+		} finally {
+			setLoading(false);
+		}
+	}
 
 
 	return (
-		<MktRoute title='Library - New Book'>
+		<MktRoute title='Library - Edit Book'>
 			<Container className='pt-3 pb-3'>
 
 				<SectionBlock>
 					<BookForm
-						title='New Book'
+						title='Edit Book'
 						book={book}
-						nextAction={() => viewBook()}
+						nextAction={() => history.push(`/books/${book.id}`)}
 					/>
 				</SectionBlock>
 
@@ -53,4 +51,4 @@ const AuthorsNewRoute = (props) => {
 	);
 }
 
-export default AuthorsNewRoute;
+export default BooksEditRoute;

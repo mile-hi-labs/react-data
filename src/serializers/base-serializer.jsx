@@ -15,6 +15,7 @@ class BaseSerializer {
   // Serialize
   static serialize(data) {
     let serializedData;
+    if (isEmpty(data)) return;
     if (Array.isArray(data)) {
       serializedData = [];
       data.forEach(record => serializedData.push(this.serializeAttrs(record)));
@@ -28,6 +29,7 @@ class BaseSerializer {
 
   static serializeAttrs(data) {
     let serializedAttrs = {};
+    if (isEmpty(data)) return;
     Object.keys(data).forEach(key => {
       let attr = this.serializeAttr(data, key);
       if (attr) return serializedAttrs[camelToDash(key)] = attr;
@@ -49,6 +51,7 @@ class BaseSerializer {
   // Normalize
   static normalize(data, included = []) {
     let normalizedData;
+    if (isEmpty(data)) return;
     if (Array.isArray(data)) {
       normalizedData = [];
       data.forEach(record => normalizedData.push(this.normalizeAttrs(record, included)));
@@ -72,7 +75,6 @@ class BaseSerializer {
   static normalizeAttrs(data, included = []) {
     let normalizedAttrs = {};
     if (isEmpty(data)) return;
-
     Object.keys(data).forEach(key => {
       return Object.assign(normalizedAttrs, this.normalizeAttr(data, key, included));
     });

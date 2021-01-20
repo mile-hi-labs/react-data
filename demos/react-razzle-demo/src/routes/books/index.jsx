@@ -5,16 +5,17 @@ import { MktRoute } from 'components/basics/routes';
 import { Container, Row, Col } from 'components/basics/grids';
 import { SectionBlock, SectionHeader, SectionBody, SectionFooter } from 'components/basics/sections';
 import { Pagination } from 'components/basics/pagination';
-import { timeout } from 'utils/helpers';
+import { isEmpty, logger, timeout, timer } from 'utils/helpers';
 
-const AuthorsIndexRoute = (props) => {
-	const { store = {}, toast, history } = props;
+const BooksIndexRoute = (props) => {
+	const { ssrData = [], store, toast, history } = props;
 	const [ books, setBooks ] = useState([]);
 	const [ page, setPage ] = useState(0);
-	const [ pageSize, setPageSize ] = useState(5);
+	const [ pageSize, setPageSize ] = useState(20);
 	const [ sortProp, setSortProp ] = useState('id');
 	const [ sortValue, setSortValue ] = useState('asc');
 	const [ loading, setLoading ] = useState(false);
+	const model = !isEmpty(books) ? books : ssrData;
 
 
 	// Hooks
@@ -27,13 +28,15 @@ const AuthorsIndexRoute = (props) => {
 	const fetchData = async () => {
 		try {
 			setLoading(true);
-			let model = await store.query('book', {
+			let start = new Date();
+			let model = await store.$query('book', {
         page: page,
         pageSize: pageSize,
         sortProp: sortProp,
         sortValue: sortValue,
         include: 'authors,categories,publishers'
 			})
+			logger('Time elapsed: ', timer(start));
 			setBooks(model);
 		} catch (e) {
 			toast.showError(e)
@@ -58,10 +61,10 @@ const AuthorsIndexRoute = (props) => {
 						<LinkBtn to='books/new' className='btn-sm btn-primary'>Add New</LinkBtn>
 					</SectionHeader>
 					<SectionBody>
-						<BookList books={books} loading={loading} />
+						<BookList books={model} loading={loading} />
 					</SectionBody>
 					<SectionFooter>
-						<Pagination meta={books.meta} setPage={page => setPage(page)}/>
+						<Pagination meta={model.meta} setPage={page => setPage(page)}/>
 					</SectionFooter>
 				</SectionBlock>
 
@@ -70,4 +73,14 @@ const AuthorsIndexRoute = (props) => {
 	);
 }
 
-export default AuthorsIndexRoute;
+BooksIndexRoute.getInitialProps = async (store) => {
+  try {
+    return await store.$query('book', { include: 'authors,categories,publishers' });
+  } catch (e) {
+    console.log('Fetch Error: ', e);
+  }
+}
+
+
+
+export default BooksIndexRoute;

@@ -5,12 +5,13 @@ import { BookDetailCard }from 'components/book/book-card';
 import { MktRoute } from 'components/basics/routes';
 import { Container, Row, Col } from 'components/basics/grids';
 import { SectionBlock, SectionHeader, SectionBody, SectionFooter } from 'components/basics/sections';
-import { timeout } from 'utils/helpers';
+import { isEmpty, timeout } from 'utils/helpers';
 
-const AuthorsDetailRoute = (props) => {
-	const { bookId, store, toast, history } = props;
+const BooksDetailRoute = (props) => {
+	const { ssrData, bookId, store, toast, history } = props;
 	const [ book, setBook ] = useState({});
 	const [ loading, setLoading ] = useState(false);
+	const model = !isEmpty(book) ? book : ssrData;
 
 
 	// Hooks
@@ -23,9 +24,7 @@ const AuthorsDetailRoute = (props) => {
 	const fetchData = async () => {
 		try {
 			setLoading(true);
-			let model = await store.queryRecord('book', bookId, {
-				include: 'authors,categories,publishers'
-			})
+			let model = await store.findRecord('book', bookId, { include: 'authors' })
 			toast.showSuccess('Book received!');
 			setBook(model);
 		} catch (e) {
@@ -40,7 +39,7 @@ const AuthorsDetailRoute = (props) => {
 			<Container className='pt-3 pb-3'>
 
 				<SectionBlock>
-					<SectionHeader title={`Book #${bookId}`} className='flex-between'>
+					<SectionHeader title={`Book #${bookId}`} className='flex-between no-b'>
 						<BookActions book={book} />
 					</SectionHeader>
 				</SectionBlock>
@@ -48,12 +47,12 @@ const AuthorsDetailRoute = (props) => {
 				<Row>
 
 					<Col xs={12} md={4}>
-						<BookDetailCard book={book} loading={loading} />
+						<BookDetailCard book={model} loading={loading} />
 
 						<SectionBlock>
 							<SectionHeader title='Authors' />
 							<SectionBody className='xs'>
-								<AuthorList authors={book.authors} loading={loading} />
+								<AuthorList authors={model.authors} loading={loading} />
 							</SectionBody>
 						</SectionBlock>
 					</Col>
@@ -62,7 +61,7 @@ const AuthorsDetailRoute = (props) => {
 						<SectionBlock>
 							<SectionHeader title='Description' />
 							<SectionBody>
-								<p>{book.description}</p>
+								<p>{model.description}</p>
 							</SectionBody>
 						</SectionBlock>
 
@@ -75,4 +74,12 @@ const AuthorsDetailRoute = (props) => {
 	);
 }
 
-export default AuthorsDetailRoute;
+BooksDetailRoute.getInitialProps = async (store, params) => {
+  try {
+    return await store.$queryRecord('book', params.bookId, { include: 'authors,categories,publishers' });
+  } catch (e) {
+    console.log('Fetch Error: ', e);
+  }
+}
+
+export default BooksDetailRoute;

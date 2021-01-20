@@ -4,20 +4,14 @@ import { withStore } from '@mile-hi-labs/react-data';
 import { withToast } from 'contexts/toast-context';
 
 // Routes
-import WelcomeRoute from './routes/welcome';
-
-import BooksRoute from './routes/books/index';
-import BooksNewRoute from './routes/books/new';
-import BooksDetailRoute from './routes/books/detail';
-import BooksEditRoute from './routes/books/edit';
-
-import AuthorsRoute from './routes/authors/index';
-import AuthorsNewRoute from './routes/authors/new';
-import AuthorsDetailRoute from './routes/authors/detail';
-import AuthorsEditRoute from './routes/authors/edit';
+import WelcomeRoute from 'routes/index';
+import BooksRoute from 'routes/books/index';
+import BooksNewRoute from 'routes/books/new';
+import BooksDetailRoute from 'routes/books/detail';
+import BooksEditRoute from 'routes/books/edit';
 
 // Utils
-import ErrorBoundary from './utils/error-boundary';
+import ErrorBoundary from 'utils/error-boundary';
 
 
 const Router = (props) => {
@@ -28,13 +22,6 @@ const Router = (props) => {
   	<ErrorBoundary>
 	    <Switch>
 	      <Route exact path='/' render={routeProps => <WelcomeRoute {...props} {...routeProps}/>} />
-
-        <Route exact path='/authors' render={routeProps => <AuthorsRoute {...props} {...routeProps}/>} />
-        <Route exact path='/authors/new' render={routeProps => <AuthorsNewRoute {...props} {...routeProps}/>} />
-        <Route path='/authors/:authorId'>
-          <AuthorsDetail {...props} />
-        </Route>
-
         <Route exact path='/books' render={routeProps => <BooksRoute {...props} {...routeProps}/>} />
         <Route exact path='/books/new' render={routeProps => <BooksNewRoute {...props} {...routeProps}/>} />
         <Route path='/books/:bookId'>
@@ -47,28 +34,6 @@ const Router = (props) => {
 	    </Switch>
     </ErrorBoundary>
   );
-}
-
-const AuthorsDetail = (props) => {
-  const { path } = useRouteMatch();
-  const { authorId } = useParams();
-
-  return (
-    <Switch>
-      <Route exact
-        path={path}
-        render={routeProps => (
-          <AuthorsDetailRoute authorId={authorId} {...props} {...routeProps} />
-        )}
-      />
-      <Route exact
-        path={path + '/edit'}
-        render={routeProps => (
-          <AuthorsEditRoute authorId={authorId} {...props} {...routeProps} />
-        )}
-      />
-    </Switch>
-  )
 }
 
 const BooksDetail = (props) => {
