@@ -68,7 +68,7 @@ class StoreProvider extends Component {
 
   updateRecord(modelName, record) {
     let storeRecords = this.peekAll(modelName);
-    let storeRecord = this.peekRecord(modelName, record);
+    let storeRecord = this.peekRecord(modelName, null, record.internalId);
     replaceObject(storeRecords, storeRecord);
     this.setState({ [modelName]: storeRecords }, () => logger('React Data: ', this.state));
   }
@@ -87,9 +87,9 @@ class StoreProvider extends Component {
     return this.state[modelName] || [];
   }
 
-  peekRecord(modelName, record) {
+  peekRecord(modelName, recordId, internalId) {
     let storeRecords = this.peekAll(modelName);
-    let storeRecord = record.id ? storeRecords.find(model => model.id == record.id) : storeRecords.find(model => model.internalId == record.internalId);
+    let storeRecord = recordId ? storeRecords.find(model => model.id == recordId) : storeRecords.find(model => model.internalId == internalId);
     return storeRecord ? storeRecord : null;
   }
 
