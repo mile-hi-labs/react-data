@@ -27,7 +27,6 @@ class JsonApiSerializer {
   // Serialize
   static serialize(data) {
     let serializedData;
-    if (isEmpty(data)) return;
     if (Array.isArray(data)) {
       serializedData = [];
       data.forEach(record => serializedData.push(this.serializeAttrs(record)));
@@ -92,7 +91,6 @@ class JsonApiSerializer {
   // Normalize
   static normalize(data, included = []) {
     let normalizedData;
-    if (isEmpty(data)) return;
     if (Array.isArray(data)) {
       normalizedData = [];
       data.forEach(record => normalizedData.push(this.normalizeAttrs(record, included)));

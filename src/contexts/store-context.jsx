@@ -71,10 +71,10 @@ class StoreProvider extends Component {
     let storeRecord = this.peekRecord(modelName, null, record.internalId);
     replaceObject(storeRecords, storeRecord);
     this.setState({ [modelName]: storeRecords }, () => logger('React Data: ', this.state));
+    return storeRecord;
   }
 
   pushAll(modelName, records) {
-    let storeRecords = this.peekAll(modelName);
     return records.map(record => this.pushRecord(modelName, record));
   }
 
