@@ -4,6 +4,7 @@ import { isEmpty, logger } from 'utils/helpers';
 class JsonApiSerializer {
   static attrs = {
     type: { serialize: false },
+    store: { serialize: false },
     updatedAt: { serialize: false },
     createdAt: { serialize: false },
   };

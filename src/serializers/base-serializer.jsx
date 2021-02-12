@@ -2,7 +2,9 @@ import { camelToDash, dashToCamel } from 'utils/transforms';
 import { isEmpty, logger } from 'utils/helpers';
 
 class BaseSerializer {
-  static attrs = {};
+  static attrs = {
+    store: { serialize: false },
+  };
 
 
   // Methods
