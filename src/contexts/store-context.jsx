@@ -68,7 +68,7 @@ class StoreProvider extends Component {
 
   updateRecord(modelName, record) {
     let storeRecords = this.peekAll(modelName);
-    let storeRecord = this.peekRecord(modelName, null, record.internalId);
+    let storeRecord = this.peekRecord(modelName, record.id, record.internalId);
     replaceObject(storeRecords, storeRecord);
     this.setState({ [modelName]: storeRecords }, () => logger('React Data: ', this.state));
     return storeRecord;
