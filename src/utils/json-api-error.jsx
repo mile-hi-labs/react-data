@@ -10,7 +10,7 @@ class JsonApiError {
       }
       if (e.request) {
         logger('Request error: ', e.request);
-        return [this.formatError(500, 'Request Error', e)];
+        return [this.formatError(500, 'Request Error', e.message)];
       }
       logger('App error: ', e);
       return [this.formatError(500, 'App Error', e.message)];

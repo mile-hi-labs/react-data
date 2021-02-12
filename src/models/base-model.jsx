@@ -49,7 +49,7 @@ class BaseModel {
       });
     }
     model[prop] = value;
-    this.store.updateRecord(this.type, this);
+    this.store.updateInternalRecord(this.type, this);
   }
 
   setProps(props = {}) {

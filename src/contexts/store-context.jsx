@@ -21,6 +21,7 @@ class StoreProvider extends Component {
       serializerFor: this.serializerFor.bind(this),
       createRecord: this.createRecord.bind(this),
       updateRecord: this.updateRecord.bind(this),
+      updateInternalRecord: this.updateInternalRecord.bind(this),
       pushAll: this.pushAll.bind(this),
       pushRecord: this.pushRecord.bind(this),
       peekAll: this.peekAll.bind(this),
@@ -58,7 +59,7 @@ class StoreProvider extends Component {
   }
 
   // Store Records
-  createRecord(modelName, data, isNew = true) {
+  createRecord(modelName, data) {
     let storeRecords = this.peekAll(modelName);
     let storeRecord = this.modelFor(modelName, data);
     storeRecords.push(storeRecord);
@@ -66,7 +67,14 @@ class StoreProvider extends Component {
     return storeRecord;
   }
 
-  updateRecord(modelName, record) {
+  updateRecord(modelName, record) { // Used to replace records via store queries
+    let storeRecords = this.peekAll(modelName);
+    let storeRecord = this.createRecord(modelName, record);
+    replaceObject(storeRecords, storeRecord);
+    return storeRecord;
+  }
+
+  updateInternalRecord(modelName, record) { // Used to update records via model methods
     let storeRecords = this.peekAll(modelName);
     let storeRecord = this.peekRecord(modelName, record.id, record.internalId);
     replaceObject(storeRecords, storeRecord);
@@ -106,7 +114,7 @@ class StoreProvider extends Component {
 
   removeRecord(modelName, record = {}) {
     let storeRecords = this.state[modelName] || [];
-    let storeRecord = record.id ? this.peekRecord(modelName, record.id) : storeRecords.find(model => isEmpty(model.id));
+    let storeRecord = this.peekRecord(modelName, null, record.internalId);
     storeRecords = removeObject(storeRecords, storeRecord);
     this.setState({ [modelName]: storeRecords }, () => logger('React Data: ', this.state));
     return null;

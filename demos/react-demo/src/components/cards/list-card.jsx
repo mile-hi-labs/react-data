@@ -26,7 +26,7 @@ const ListCard = (props) => {
 					{subtitle && <h6 className='subtitle'>{subtitle}</h6>}
 					{line1 && <h6>{line1}</h6>}
 					{line2 && <h6>{line2}</h6>}
-					<Link to={link}>Learn more <FarIcon icon='chevron-right'/></Link>
+					{link && <Link to={link}>Learn more <FarIcon icon='chevron-right'/></Link>}
 					{children && children}
 				</div>
 			</CardBody>
