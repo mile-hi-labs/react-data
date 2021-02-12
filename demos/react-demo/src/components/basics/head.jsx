@@ -1,5 +1,5 @@
 import React from 'react';
-import { Helmet } from 'react-helmet-async';
+import { Helmet } from 'react-helmet';
 import { useLocation } from 'react-router-dom';
 import { LibIcon } from 'utils/assets/branding';
 

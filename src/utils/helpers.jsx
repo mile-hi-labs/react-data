@@ -8,6 +8,11 @@ export const removeObject = (array, record) => {
   return LodashArray.pull(array, record);
 };
 
+export const replaceObject = (array, record) => {
+  let index = LodashArray.findIndex(array, record);
+  return array.splice(index, record);
+};
+
 export const timer = start => {
   return Date.now() - start + 'ms';
 };

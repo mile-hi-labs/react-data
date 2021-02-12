@@ -11,7 +11,7 @@ function pushAll(store, records) {
 
 function pushRecord(store, record) {
   let records = store[record.type] || [];
-  let storeRecord = modelFor(store.models, record.type, record)
+  let storeRecord = modelFor(store.models, record.type, store, record)
   records.push(storeRecord);
   return store[record.type] = records;
 }

@@ -23,7 +23,7 @@ const BooksNewRoute = (props) => {
 
 	// Methods
   const createBook = () => {
-  	let book = store.createRecord('book');
+  	let book = store.createRecord('book', { selectAll: false });
   	setBook(book);
   }
 

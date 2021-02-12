@@ -1,4 +1,5 @@
 import React, { Fragment } from 'react';
+import SwitchWrapper from 'components/vendors/switch-wrapper';
 import { SectionBlock, SectionHeader, SectionBody, SectionFooter } from 'components/basics/sections';
 import { Form, FormGroup, FormControl, FormControlPrepend, FormSelect, FormTextArea } from 'components/basics/forms';
 import { isEmpty, logger } from 'utils/helpers';
@@ -43,6 +44,14 @@ const BookFields = (props) => {
           placeholder='tell us about it...'
           value={book.description}
           onChange={e => book.set('description', e.target.value)}
+        />
+      </FormGroup>
+
+      <FormGroup>
+        <SwitchWrapper
+          label='Send to all users?'
+          value={book.selectAll}
+          onChange={v => book.set('selectAll', v)}
         />
       </FormGroup>
 

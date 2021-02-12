@@ -1,22 +1,19 @@
 import Pluralize from 'pluralize';
-import Store from 'store/store';
+import UniqueID from 'uniqid';
 import JsonApiError from 'utils/json-api-error';
 import { camelToDash } from 'utils/transforms';
 import { addObject, removeObject, isEmpty, logger } from 'utils/helpers';
 
 class BaseModel {
-  constructor(type, props = {}) {
+  constructor(type, store, props = {}) {
     this.id = props.id || '';
+    this.internalId = UniqueID();
+    this.store = store;
     this.type = camelToDash(type).toLowerCase();
     this.updatedAt = props.updatedAt || '';
     this.createdAt = props.createdAt || '';
   }
 
-
-  // Computed
-  get store() {
-    return Store();
-  }
 
 
   // Methods
@@ -52,7 +49,7 @@ class BaseModel {
       });
     }
     model[prop] = value;
-    logger('React Data: ', this.store);
+    this.store.updateRecord(this.type, this);
   }
 
   setProps(props = {}) {
@@ -65,12 +62,12 @@ class BaseModel {
 
   pushProp(prop, value) {
     addObject(this[prop], value);
-    logger('Store: ', this.store);
+    logger('React Data: ', this.store);
   }
 
   removeProp(prop, value) {
     removeObject(this[prop], value);
-    logger('Store: ', this.store);
+    logger('React Data: ', this.store);
   }
 
   setRelation(relation, value) {
@@ -79,12 +76,12 @@ class BaseModel {
 
   pushRelation(relation, value) {
     addObject(this[relation], value);
-    logger('Store: ', this.store);
+    logger('React Data: ', this.store);
   }
 
   removeRelation(relation, value) {
     removeObject(this[relation], value);
-    logger('Store: ', this.store);
+    logger('React Data: ', this.store);
   }
 
   belongsTo(modelName, data = {}) {

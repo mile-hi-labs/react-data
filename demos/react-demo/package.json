@@ -25,10 +25,11 @@
     ]
   },
   "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^1.2.34",
     "@fortawesome/free-regular-svg-icons": "^5.15.1",
     "@fortawesome/free-solid-svg-icons": "^5.15.1",
     "@fortawesome/react-fontawesome": "^0.1.14",
-    "@mile-hi-labs/react-data": "^2.1.1",
+    "@mile-hi-labs/react-data": "^3.0.6",
     "bootstrap": "^4.5.3",
     "moment": "^2.29.1",
     "node-sass": "^4.14.1",
@@ -39,6 +40,7 @@
     "react-loading-skeleton": "^2.1.1",
     "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.1",
+    "react-switch": "^6.0.0",
     "react-transition-group": "^4.4.1"
   },
   "devDependencies": {

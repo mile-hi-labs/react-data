@@ -4,7 +4,7 @@ import { withStore } from '@mile-hi-labs/react-data';
 import { withToast } from 'contexts/toast-context';
 
 // Routes
-import WelcomeRoute from 'routes/index';
+import WelcomeRoute from 'routes/welcome';
 import BooksRoute from 'routes/books/index';
 import BooksNewRoute from 'routes/books/new';
 import BooksDetailRoute from 'routes/books/detail';

@@ -28,7 +28,7 @@ const BooksRoute = (props) => {
 		try {
 			setLoading(true);
 			let start = new Date();
-			let model = await store.$query('book', {
+			let model = await store.query('book', {
         page: page,
         pageSize: pageSize,
         sortProp: sortProp,

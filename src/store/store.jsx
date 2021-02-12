@@ -4,7 +4,6 @@ import { modelFor } from 'store/model-for';
 import { serializerFor } from 'store/serializer-for';
 import JsonApiError from 'utils/json-api-error';
 import { addObject, removeObject, timeElapsed, logger, isEmpty } from 'utils/helpers';
-var StoreInstance = null;
 
 class Store {
   constructor(props) {
@@ -28,7 +27,7 @@ class Store {
   }
 
   modelFor(modelName, data) {
-    return modelFor(this.models, modelName, data);
+    return modelFor(this.models, modelName, this, data);
   }
 
   serializerFor(modelName) {
@@ -47,6 +46,10 @@ class Store {
   updateRecord(modelName, storeRecord, record) {
     this.removeRecord(modelName, storeRecord);
     return this.createRecord(modelName, record, false);
+  }
+
+  updateStore(modelName, storeRecord) {
+    this.setState(this)
   }
 
   pushAll(modelName, records) {
@@ -146,11 +149,4 @@ class Store {
   }
 }
 
-const StoreSingleton = (...props) => {
-  if (!StoreInstance) {
-    StoreInstance = new Store(...props);
-  }
-  return StoreInstance;
-}
-
-export default StoreSingleton;
+export default Store;

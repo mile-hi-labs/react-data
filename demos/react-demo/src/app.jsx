@@ -13,7 +13,7 @@ const App = (props) => {
 
   // Render
   return (
-    <StoreProvider context={store}>
+    <StoreProvider apiDomain={apiDomain} adapters={Adapters} serializers={Serializers} models={Models}>
       <ToastProvider>
         <Router />
       </ToastProvider>

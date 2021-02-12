@@ -69,6 +69,7 @@
     "eslint": "^7.17.0",
     "eslint-config-react-app": "^6.0.0",
     "pluralize": "^8.0.0",
-    "prettier": "^2.2.1"
+    "prettier": "^2.2.1",
+    "uniqid": "^5.2.0"
   }
 }
