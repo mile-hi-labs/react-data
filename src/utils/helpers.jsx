@@ -8,9 +8,9 @@ export const removeObject = (array, record) => {
   return LodashArray.pull(array, record);
 };
 
-export const replaceObject = (array, record) => {
-  let index = LodashArray.findIndex(array, record);
-  return array.splice(index, record);
+export const replaceObject = (array, oldRecord, newRecord) => {
+  let index = LodashArray.findIndex(array, oldRecord);
+  return array.splice(index, newRecord);
 };
 
 export const timer = start => {

@@ -21,7 +21,6 @@ class StoreProvider extends Component {
       serializerFor: this.serializerFor.bind(this),
       createRecord: this.createRecord.bind(this),
       updateRecord: this.updateRecord.bind(this),
-      updateInternalRecord: this.updateInternalRecord.bind(this),
       pushAll: this.pushAll.bind(this),
       pushRecord: this.pushRecord.bind(this),
       peekAll: this.peekAll.bind(this),
@@ -59,27 +58,21 @@ class StoreProvider extends Component {
   }
 
   // Store Records
-  createRecord(modelName, data) {
+  createRecord(modelName, data, isNew = true) {
     let storeRecords = this.peekAll(modelName);
-    let storeRecord = this.modelFor(modelName, data);
-    storeRecords.push(storeRecord);
-    this.setState({ [modelName]: storeRecords }, () => logger('React Data: ', this.state));
-    return storeRecord;
+    let newRecord = this.modelFor(modelName, data);
+    storeRecords.push(newRecord);
+    this.setState({ [modelName]: storeRecords }, () => isNew && logger('React Data: ', this.state));
+    return newRecord;
   }
 
-  updateRecord(modelName, record) { // Used to replace records via store queries
-    let storeRecords = this.peekAll(modelName);
-    let storeRecord = this.createRecord(modelName, record);
-    replaceObject(storeRecords, storeRecord);
-    return storeRecord;
-  }
-
-  updateInternalRecord(modelName, record) { // Used to update records via model methods
+  updateRecord(modelName, record) {
     let storeRecords = this.peekAll(modelName);
     let storeRecord = this.peekRecord(modelName, record.id, record.internalId);
-    replaceObject(storeRecords, storeRecord);
+    let newRecord = this.createRecord(modelName, record, false);
+    replaceObject(storeRecords, storeRecord, newRecord);
     this.setState({ [modelName]: storeRecords }, () => logger('React Data: ', this.state));
-    return storeRecord;
+    return newRecord;
   }
 
   pushAll(modelName, records) {
@@ -107,13 +100,12 @@ class StoreProvider extends Component {
   }
 
   removeAll(modelName, records) {
-    this.state[modelName] = [];
-    this.setState(this, () => logger('React Data: ', this.state));
+    this.setState({ [modelName]: []}, () => logger('React Data: ', this.state));
     return null;
   }
 
   removeRecord(modelName, record = {}) {
-    let storeRecords = this.state[modelName] || [];
+    let storeRecords = this.peekAll(modelName);
     let storeRecord = this.peekRecord(modelName, null, record.internalId);
     storeRecords = removeObject(storeRecords, storeRecord);
     this.setState({ [modelName]: storeRecords }, () => logger('React Data: ', this.state));
