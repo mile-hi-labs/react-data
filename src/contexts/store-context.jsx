@@ -33,6 +33,7 @@ class StoreProvider extends Component {
       query: this.query.bind(this),
       queryRecord: this.queryRecord.bind(this),
     }
+    adapterFor('').set('apiDomain', this.props.apiDomain);
     if(!isEmpty(this.props.data)) loadContext(this.state, this.props.data);
   }
 
