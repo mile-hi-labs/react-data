@@ -62,12 +62,12 @@ class BaseModel {
 
   pushProp(prop, value) {
     addObject(this[prop], value);
-    logger('React Data: ', this.store);
+    this.store.updateRecord(this.type, this);
   }
 
   removeProp(prop, value) {
     removeObject(this[prop], value);
-    logger('React Data: ', this.store);
+    this.store.updateRecord(this.type, this);
   }
 
   setRelation(relation, value) {
@@ -76,12 +76,12 @@ class BaseModel {
 
   pushRelation(relation, value) {
     addObject(this[relation], value);
-    logger('React Data: ', this.store);
+    this.store.updateRecord(this.type, this);
   }
 
   removeRelation(relation, value) {
     removeObject(this[relation], value);
-    logger('React Data: ', this.store);
+    this.store.updateRecord(this.type, this);
   }
 
   belongsTo(modelName, data = {}) {
