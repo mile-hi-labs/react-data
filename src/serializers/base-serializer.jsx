@@ -4,6 +4,7 @@ import { isEmpty, logger } from 'utils/helpers';
 class BaseSerializer {
   static attrs = {
     store: { serialize: false },
+    internalId: { serialize: false },
   };
 
 

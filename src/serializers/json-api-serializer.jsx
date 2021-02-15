@@ -5,6 +5,7 @@ class JsonApiSerializer {
   static attrs = {
     type: { serialize: false },
     store: { serialize: false },
+    internalId: { serialize: false },
     updatedAt: { serialize: false },
     createdAt: { serialize: false },
   };
@@ -43,7 +44,7 @@ class JsonApiSerializer {
     if (isEmpty(data)) return;
     Object.keys(data).forEach(key => {
       let attr = this.serializeAttr(data, key);
-      if (attr) return serializedAttrs[camelToDash(key)] = attr;
+      if (!isEmpty(attr)) return serializedAttrs[camelToDash(key)] = attr;
     });
     return serializedAttrs;
   }
