@@ -223,7 +223,8 @@ React Native's metro bundler doesn't accept the steps below. Please contact the 
 
 
 ## Publish
-- Run `npm version patch` to build, deploy, commit, and tag the changes.
+- Commit changes
+- Run `npm version patch` (or minor / major) to bump the version, build, deploy, and commit the new version.
 https://docs.npmjs.com/cli/v6/commands/npm-version
 
 
