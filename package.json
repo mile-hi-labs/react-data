@@ -1,6 +1,6 @@
 {
   "name": "@mile-hi-labs/react-data",
-  "version": "3.7.3",
+  "version": "3.7.4",
   "description": "A state management library for React and React Native applications.",
   "homepage": "https://github.com/mile-hi-labs/react-data#readme",
   "license": "MIT",
@@ -12,8 +12,8 @@
   },
   "repository": "https://github.com/mile-hi-labs/react-data.git",
   "publishConfig": {
-    "registry":"https://npm.pkg.github.com"
-  },  
+    "registry": "https://npm.pkg.github.com"
+  },
   "bugs": {
     "url": "https://github.com//mile-hi-labs/react-data/issues"
   },
@@ -43,7 +43,7 @@
     "predeploy": "npm run build:prod",
     "deploy": "npm publish",
     "postdeploy": "npm run git",
-    "pregit": "git add .",
+    "pregit": "git commit .",
     "git": "git push --tags",
     "postgit": "npm run clean",
     "format": "prettier --write src/**/*.jsx",
