@@ -37,7 +37,7 @@
     "express": "^4.17.1",
     "js-beautify": "^1.13.4",
     "moment": "^2.29.1",
-    "node-sass": "^4.14.1",
+    "node-sass": "^7.0.0",
     "razzle": "^3.3.11",
     "razzle-plugin-scss": "^3.3.11",
     "react": "^17.0.1",
