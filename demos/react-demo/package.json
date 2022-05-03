@@ -32,7 +32,7 @@
     "@mile-hi-labs/react-data": "^3.0.6",
     "bootstrap": "^4.5.3",
     "moment": "^2.29.1",
-    "node-sass": "^4.14.1",
+    "node-sass": "^7.0.0",
     "react": "^17.0.1",
     "react-bootstrap": "^1.4.0",
     "react-dom": "^17.0.1",
