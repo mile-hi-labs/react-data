@@ -43,7 +43,7 @@
     "predeploy": "npm run build:prod",
     "deploy": "npm publish",
     "postdeploy": "npm run git",
-    "pregit": "git commit .",
+    "pregit": "git add .",
     "git": "git push --tags",
     "postgit": "npm run clean",
     "format": "prettier --write src/**/*.jsx",
